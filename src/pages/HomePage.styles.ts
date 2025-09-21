@@ -36,8 +36,9 @@ export const Title = styled.h1`
 
 export const Description = styled.p`
   ${(props) => props.theme.fonts.body.l400}
-  color: ${(props) => props.theme.colors.grayScale.black};
-  margin-bottom: 2rem;
+  color: ${(props) => props.theme.colors.grayScale.gy600};
+  margin-top:1rem;
+  white-space: pre-wrap;
 `;
 
 
@@ -57,6 +58,13 @@ export const Notice = styled.p`
   color: ${(props) => props.theme.colors.primary.gn};
   text-align: center;
   margin: 0;
+`;
+
+export const TeamLegacy = styled.p`
+  ${(props) => props.theme.fonts.body.m400}
+  color: ${(props) => props.theme.colors.grayScale.gy600};
+  text-align: center;
+  margin-top: px;
 `;
 
 export const ButtonContainer = styled.div`
