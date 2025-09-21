@@ -38,6 +38,7 @@ const QuestionForm = ({
                   option="A"
                   isSelected={field.value === 'A'}
                   hasAnySelection={!!field.value}
+                  imageUrl={question.imageA}
                   onClick={(option) => {
                     field.onChange(option);
                     handleChoiceSelect();
@@ -50,6 +51,7 @@ const QuestionForm = ({
                   option="B"
                   isSelected={field.value === 'B'}
                   hasAnySelection={!!field.value}
+                  imageUrl={question.imageB}
                   onClick={(option) => {
                     field.onChange(option);
                     handleChoiceSelect();

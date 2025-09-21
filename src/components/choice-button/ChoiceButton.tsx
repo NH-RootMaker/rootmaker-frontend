@@ -19,7 +19,7 @@ const ChoiceButton = ({
   return (
     <S.ChoiceContainer $isSelected={isSelected} $hasAnySelection={hasAnySelection} onClick={handleClick} type="button">
       {imageUrl && (
-        <img src={imageUrl} alt={`Option ${option}`} style={{ width: '60px', height: '60px', marginBottom: '12px' }} />
+        <img src={imageUrl} alt={`Option ${option}`} style={{ width: '110px', height: '110px', marginTop: '7px' }} />
       )}
       <S.ChoiceText $isSelected={isSelected} $hasAnySelection={hasAnySelection}>
         {children}

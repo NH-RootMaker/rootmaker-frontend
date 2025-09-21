@@ -6,6 +6,8 @@ export interface Question {
   title: string;
   optionA: string;
   optionB: string;
+  imageA?: string;
+  imageB?: string;
 }
 
 /**
