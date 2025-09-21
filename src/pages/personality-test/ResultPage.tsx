@@ -71,7 +71,9 @@ const ResultPage = () => {
       </S.ResultDescription>
         
       <S.ResultImageContainer>
-        {/* 결과 타입별 이미지 추가 예정 */}
+        {resultInfo.image && (
+          <S.ResultImage src={resultInfo.image} alt={resultInfo.name} />
+        )}
       </S.ResultImageContainer>
 
       <S.ButtonContainer>

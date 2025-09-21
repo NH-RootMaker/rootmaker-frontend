@@ -56,12 +56,18 @@ export const ResultImageContainer = styled.div`
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  background: ${(props) => props.theme.colors.secondary.yg};
-  margin-top: 50px;
-  margin-bottom: 32px;
+  background: transparents;
+  margin-top: 100px;
+  margin-bottom: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const ResultImage = styled.img`
+  width: 400px;
+  height: 400px;
+  object-fit: contain;
 `;
 
 export const ResultDescription = styled.div`
