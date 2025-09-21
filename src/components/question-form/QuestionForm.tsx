@@ -12,7 +12,7 @@ const QuestionForm = ({
   const { control, handleSubmit, watch, reset } = useForm<FormData>();
   const selectedOption = watch('selectedOption');
 
-  const handleChoiceSelect = (option: 'A' | 'B') => {
+  const handleChoiceSelect = () => {
     // 답안 선택 시에는 폼 상태만 업데이트
   };
 
@@ -39,7 +39,7 @@ const QuestionForm = ({
                   isSelected={field.value === 'A'}
                   onClick={(option) => {
                     field.onChange(option);
-                    handleChoiceSelect(option);
+                    handleChoiceSelect();
                   }}
                 >
                   {question.optionA}
@@ -50,7 +50,7 @@ const QuestionForm = ({
                   isSelected={field.value === 'B'}
                   onClick={(option) => {
                     field.onChange(option);
-                    handleChoiceSelect(option);
+                    handleChoiceSelect();
                   }}
                 >
                   {question.optionB}

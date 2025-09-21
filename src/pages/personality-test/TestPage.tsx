@@ -69,7 +69,7 @@ export default function TestPage() {
   if (currentQuestionIndex < 0 || currentQuestionIndex >= PERSONALITY_QUESTIONS.length) {
     return (
       <S.Container>
-        <TopNav isBack title="성격 테스트" onBackClick={handleBackClick} />
+        <TopNav isBack title="나의 유형" onBackClick={handleBackClick} />
         <S.Main>
           <div>Loading...</div>
         </S.Main>

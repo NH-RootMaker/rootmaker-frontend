@@ -10,7 +10,7 @@ export const ChipsContainer = styled.div`
   align-items: center;
   font-weight: 600;
   border-radius: 24px;
-  background: ${(props) => props.theme.colors.primary.gn}25;
+  background: ${(props) => props.theme.colors.transparency.gn25};
   color: ${(props) => props.theme.colors.primary.gn};
   margin-bottom: 0px;
   margin-top: 32px;
