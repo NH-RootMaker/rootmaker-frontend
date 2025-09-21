@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ChoiceContainer = styled.button<{ $isSelected: boolean }>`
+export const ChoiceContainer = styled.button<{ $isSelected: boolean; $hasAnySelection: boolean }>`
   display: flex;
   width: 155px;
   height: 204px;
@@ -9,10 +9,15 @@ export const ChoiceContainer = styled.button<{ $isSelected: boolean }>`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  border-color:transparent;
+  border: none;
   border-radius: 16px;
-  background: var(--GrayScale-WT, #FAFAFA);
-  box-shadow: 0 0 16px 0 rgba(66, 206, 121, 0.75);
+  background-color: ${({ $isSelected, $hasAnySelection, theme }) => 
+    $isSelected ? theme.colors.transparency.gn25 :
+    $hasAnySelection ? theme.colors.grayScale.gy200 : theme.colors.grayScale.white};
+  box-shadow: ${({ $isSelected, $hasAnySelection, theme }) => 
+    $isSelected ? `0 0 16px 0 ${theme.colors.transparency.gn75}` :
+    $hasAnySelection ? `0 0 16px 0 ${theme.colors.transparency.wt50}` : 
+    `0 0 16px 0 ${theme.colors.transparency.gn75}`};;
   cursor: pointer;
   transition: all 0.3s ease;
   
@@ -34,10 +39,11 @@ export const ChoiceContainer = styled.button<{ $isSelected: boolean }>`
   }
 `;
 
-export const ChoiceText = styled.div<{ $isSelected: boolean }>`
-  font-size: 16px;
-  font-weight: ${({ $isSelected }) => $isSelected ? '600' : '400'};
-  color: ${({ $isSelected }) => $isSelected ? '#007bff' : '#333'};
+export const ChoiceText = styled.div<{ $isSelected: boolean; $hasAnySelection: boolean }>`
+  ${(props) => props.theme.fonts.header.h3}
+  color: ${({ $isSelected, $hasAnySelection, theme }) => 
+    $isSelected ? theme.colors.secondary.gn :
+    $hasAnySelection ? theme.colors.grayScale.gy600 : theme.colors.primary.gn};
   line-height: 1.5;
   white-space: pre-wrap;
 

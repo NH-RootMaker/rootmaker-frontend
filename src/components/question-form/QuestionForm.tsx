@@ -37,6 +37,7 @@ const QuestionForm = ({
                 <ChoiceButton
                   option="A"
                   isSelected={field.value === 'A'}
+                  hasAnySelection={!!field.value}
                   onClick={(option) => {
                     field.onChange(option);
                     handleChoiceSelect();
@@ -48,6 +49,7 @@ const QuestionForm = ({
                 <ChoiceButton
                   option="B"
                   isSelected={field.value === 'B'}
+                  hasAnySelection={!!field.value}
                   onClick={(option) => {
                     field.onChange(option);
                     handleChoiceSelect();
