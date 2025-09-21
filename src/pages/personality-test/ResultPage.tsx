@@ -31,7 +31,7 @@ const ResultPage = () => {
   const username = location.state?.username || '익명';
 
   const handleRetakeTest = () => {
-    navigate('/test', { replace: true });
+    navigate('/', { replace: true });
   };
 
   const handleGoHome = () => {
@@ -96,7 +96,7 @@ const ResultPage = () => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         title="서비스 준비중"
-        content={`${resultInfo.name.split(' ')[1]} 맞춤 서비스를 준비하고 있습니다!\n곧 만나뵐 수 있도록 열심히 개발 중이에요!\n두둠칫 개발자 올림`}
+        content={`${resultInfo.name.split(' ')[1]} 맞춤 서비스를 준비하고 있습니다!\n곧 만나뵐 수 있도록 열심히 개발 중이에요!\n\n- 두둠칫 개발자 올림 -`}
         buttonText="확인"
       />
     </S.ResultContainer>

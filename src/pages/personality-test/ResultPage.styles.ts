@@ -53,20 +53,18 @@ export const ResultContent = styled.div`
 `;
 
 export const ResultImageContainer = styled.div`
-  width: 200px;
-  height: 200px;
+  width: 350px;
+  height: 350px;
   border-radius: 50%;
   background: transparents;
-  margin-top: 100px;
-  margin-bottom: 25px;
+  margin-top: auto;
+  margin-bottom: auto;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 export const ResultImage = styled.img`
-  width: 400px;
-  height: 400px;
   object-fit: contain;
 `;
 
