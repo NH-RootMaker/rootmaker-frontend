@@ -47,8 +47,6 @@ export const RightSection = styled.div<{ $opacity?: boolean; $whiteIcons?: boole
 
 export const Title = styled.p<{ $opacity?: boolean }>`
   ${(props) => props.theme.fonts.header.h4}
-  display:flex;
-  justify-content: center;
   text-align: center;
   color: ${(props) => props.theme.colors.grayScale.black};
 `;

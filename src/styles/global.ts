@@ -1,4 +1,4 @@
-import { fontFaces } from '@/styles/fonts';
+import { fontFaces } from '@/styles/fonts.';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
