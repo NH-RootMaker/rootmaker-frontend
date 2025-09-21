@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useImagePreloader } from '@/hooks/useImagePreloader';
+import { PERSONALITY_QUESTIONS } from '@/constants/personality-test';
+import { RESULT_TYPES } from '@/constants/result-types';
 import CommonButton from '@/components/common-button';
 import CommonInput from '@/components/common-input';
 import { Container, Title, Description, InputSection, ButtonContainer } from './HomePage.styles';
@@ -8,6 +11,17 @@ import * as S from './HomePage.styles';
 const HomePage = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
+
+  // 첫 번째 질문의 이미지들과 결과 페이지 이미지들을 미리 로드
+  const firstQuestionImages = PERSONALITY_QUESTIONS.length > 0 
+    ? [PERSONALITY_QUESTIONS[0].imageA, PERSONALITY_QUESTIONS[0].imageB].filter(Boolean) as string[]
+    : [];
+  
+  const resultImages = Object.values(RESULT_TYPES)
+    .map(result => result.image)
+    .filter(Boolean) as string[];
+
+  useImagePreloader([...firstQuestionImages, ...resultImages]);
 
   const handleStartTest = () => {
     if (username.trim()) {
