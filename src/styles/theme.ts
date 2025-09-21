@@ -55,24 +55,23 @@ const colors = {
 
 const fonts = {
   body: {
-    large400: createFontStyle(1.125, 400, 154, -0.0225),
-    large500: createFontStyle(1.125, 500, 154, -0.0225),
-    medium400: createFontStyle(1, 400, 150, -0.02),
-    medium500: createFontStyle(1, 500, 150, -0.02),
-    small400: createFontStyle(0.875, 400, 142, -0.0175),
-    small500: createFontStyle(0.875, 500, 142, -0.0175),
-    s500: createFontStyle(0.875, 500, 142, -0.0175),
-    small600: createFontStyle(0.875, 600, 142, -0.0175),
-    xsmall400: createFontStyle(0.75, 400, 150, -0.015),
-    xsmall500: createFontStyle(0.75, 500, 150, -0.015),
-    xsmall600: createFontStyle(0.75, 600, 150, -0.015),
+    xl400: createFontStyle(1, 400, 150, 0), // 16px, 400, 150%
+    xl500: createFontStyle(1, 500, 150, 0), // 16px, 500, 150%
+    l400: createFontStyle(0.875, 400, 150, 0), // 14px, 400, 150%
+    l500: createFontStyle(0.875, 500, 150, 0), // 14px, 500, 150%
+    l600: createFontStyle(0.875, 600, 150, 0), // 14px, 600, 150%
+    m400: createFontStyle(0.75, 400, 150, 0), // 12px, 400, 150%
+    m500: createFontStyle(0.75, 500, 150, 0), // 12px, 500, 150%
+    m600: createFontStyle(0.75, 600, 150, 0), // 12px, 600, 150%
+    s400: createFontStyle(0.625, 400, 150, 0), // 10px, 400, 150%
+    s500: createFontStyle(0.625, 500, 150, 0), // 10px, 500, 150%
+    
+    
   },
   header: {
-    h1: createFontStyle(1.75, 700, 130, -0.035),
-    h2: createFontStyle(1.5, 700, 134, -0.03),
-    h3: createFontStyle(1.25, 600, 142, -0.025),
-    h4: createFontStyle(1, 500, 150, -0.02),
-    h4_600: createFontStyle(1, 600, 150, -0.02),
+    h1: createFontStyle(1.5, 700, 150, 0), // 24px, 700, 150%
+    h2: createFontStyle(1.25, 600, 150, 0), // 20px, 600, 150%
+    h3: createFontStyle(1, 600, 150, 0), // 16px, 600, 150%
   },
 };
 

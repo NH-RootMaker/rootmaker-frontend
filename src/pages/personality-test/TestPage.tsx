@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ProgressBar from '@/components/progress-bar';
 import Chips from '@/components/chips';
 import QuestionForm from '@/components/question-form';
@@ -10,27 +10,12 @@ import type { Answer } from '@/types/personality-test.types';
 import * as S from './TestPage.styles';
 
 export default function TestPage() {
-  const { step } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const username = location.state?.username || '익명';
   
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
-
-  // URL 파라미터에서 step을 읽어와서 현재 질문 인덱스 설정
-  useEffect(() => {
-    if (step) {
-      const stepNumber = parseInt(step, 10);
-      if (stepNumber >= 1 && stepNumber <= PERSONALITY_QUESTIONS.length) {
-        setCurrentQuestionIndex(stepNumber - 1);
-      } else {
-        // 잘못된 step이면 첫 번째 질문으로 리다이렉트
-        navigate('/personality-test/1');
-      }
-    } else {
-      // step이 없으면 첫 번째 질문으로 리다이렉트
-      navigate('/personality-test/1');
-    }
-  }, [step, navigate]);
 
   const handleAnswer = (option: 'A' | 'B') => {
     const newAnswer: Answer = {
@@ -44,22 +29,32 @@ export default function TestPage() {
     });
   };
 
-  const handleNext = () => {
+  const handleNext = (selectedOption: 'A' | 'B') => {
+    // 현재 답변을 즉시 추가
+    const currentAnswer: Answer = {
+      questionId: PERSONALITY_QUESTIONS[currentQuestionIndex].id,
+      selectedOption: selectedOption,
+    };
+    
+    const updatedAnswers = [...answers.filter(a => a.questionId !== currentAnswer.questionId), currentAnswer];
+    
     if (currentQuestionIndex < PERSONALITY_QUESTIONS.length - 1) {
-      const nextStep = currentQuestionIndex + 2;
-      navigate(`/personality-test/${nextStep}`);
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // 테스트 완료
-      console.log('테스트 완료!', answers);
-      alert(`테스트 완료! 총 ${answers.length}개 답변이 저장되었습니다.`);
-      navigate('/'); // 홈으로 이동
+      // 테스트 완료 - 최신 답변 배열 전달
+      console.log('테스트 완료, 답변:', updatedAnswers);
+      console.log('답변 개수:', updatedAnswers.length);
+      
+      navigate('/result', { 
+        state: { answers: updatedAnswers, username },
+        replace: true 
+      });
     }
   };
 
   const handleBackClick = () => {
     if (currentQuestionIndex > 0) {
-      const prevStep = currentQuestionIndex;
-      navigate(`/personality-test/${prevStep}`);
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
     } else {
       navigate('/'); // 첫 번째 질문에서 뒤로 가면 홈으로
     }
