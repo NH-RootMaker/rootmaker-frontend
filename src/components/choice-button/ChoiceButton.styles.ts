@@ -46,7 +46,7 @@ export const ChoiceText = styled.div<{ $isSelected: boolean; $hasAnySelection: b
     $hasAnySelection ? theme.colors.grayScale.gy600 : theme.colors.primary.gn};
   line-height: 1.5;
   white-space: pre-wrap;
-  padding: 8px 0;
+  padding: 8px 2px;
 
   @media (max-width: 768px) {
     font-size: 15px;

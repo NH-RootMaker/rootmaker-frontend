@@ -88,13 +88,11 @@ export const ResultDescription = styled.div`
 
 export const ButtonContainer = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 16px;
   width: 100%;
   max-width: 400px;
   margin-top: auto;
-
-  @media (max-width: 480px) {
-    flex-direction: column;
-  }
+  margin-bottom:auto;
 `;
 

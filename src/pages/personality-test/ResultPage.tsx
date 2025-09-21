@@ -66,10 +66,11 @@ const ResultPage = () => {
         <S.ResultType>
           <S.ResultTypeHighlight $color={resultInfo.color}>{resultInfo.name}</S.ResultTypeHighlight> 타입이에요!
         </S.ResultType>
+        <S.ResultDescription>
+          <p>{resultInfo.description}</p>
+        </S.ResultDescription>
       </S.ResultHeader>
-      <S.ResultDescription>
-        <p>{resultInfo.description}</p>
-      </S.ResultDescription>
+      
         
       <S.ResultImageContainer>
         {resultInfo.image && (

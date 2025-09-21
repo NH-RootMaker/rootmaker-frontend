@@ -24,7 +24,7 @@ export const Input = styled.input`
   padding: 16px 20px;
   border: 2px solid ${(props) => props.theme.colors.grayScale.gy200};
   border-radius: 16px;
-  ${(props) => props.theme.fonts.body.m400}
+  ${(props) => props.theme.fonts.body.xl400}
   color: ${(props) => props.theme.colors.grayScale.black};
   background: ${(props) => props.theme.colors.grayScale.white};
   transition: border-color 0.3s ease;
@@ -36,7 +36,7 @@ export const Input = styled.input`
   }
 
   &::placeholder {
-    ${(props) => props.theme.fonts.body.l400}
+    ${(props) => props.theme.fonts.body.xl400}
     color: ${(props) => props.theme.colors.grayScale.gy400};
   }
 
