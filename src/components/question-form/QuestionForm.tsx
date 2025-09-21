@@ -1,5 +1,6 @@
 import { useForm, Controller } from 'react-hook-form';
 import ChoiceButton from '@/components/choice-button';
+import CommonButton from '@/components/common-button';
 import type { QuestionFormProps, FormData } from './QuestionForm.types';
 import * as S from './QuestionForm.styles';
 
@@ -18,7 +19,7 @@ const QuestionForm = ({
 
   const handleFormSubmit = (data: FormData) => {
     onAnswer(data.selectedOption);
-    onSubmit();
+    onSubmit(data.selectedOption);
     reset();
   };
 
@@ -66,13 +67,13 @@ const QuestionForm = ({
       </S.QuestionContainer>
       
       <S.SubmitButtonContainer>
-        <S.SubmitButton
+        <CommonButton
+          variant="primary"
           type="submit"
-          $disabled={!selectedOption}
           disabled={!selectedOption}
         >
           {isLastQuestion ? '결과 보기' : '다음으로'}
-        </S.SubmitButton>
+        </CommonButton>
       </S.SubmitButtonContainer>
     </S.FormContainer>
   );

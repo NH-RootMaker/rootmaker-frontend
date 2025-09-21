@@ -7,7 +7,7 @@ import type { ChipsProps } from './Chips.types';
 const Chips = ({ currentStep, totalSteps }: ChipsProps) => {
   return (
     <S.ChipsContainer>
-      {currentStep} / {totalSteps}
+      {currentStep}/{totalSteps}
     </S.ChipsContainer>
   );
 };
