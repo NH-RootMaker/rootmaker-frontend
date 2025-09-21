@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useNextQuestionPreloader } from '@/hooks/useImagePreloader';
 import ProgressBar from '@/components/progress-bar';
 import Chips from '@/components/chips';
 import QuestionForm from '@/components/question-form';
@@ -16,6 +17,9 @@ export default function TestPage() {
   
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
+
+  // 다음 질문의 이미지들을 미리 로드
+  useNextQuestionPreloader(currentQuestionIndex, PERSONALITY_QUESTIONS);
 
   const handleAnswer = (option: 'A' | 'B') => {
     const newAnswer: Answer = {

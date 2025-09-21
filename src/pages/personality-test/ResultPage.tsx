@@ -5,6 +5,7 @@ import type { Answer } from '@/types/personality-test.types';
 import { getResultTypeInfo } from '@/constants/result-types';
 import CommonButton from '@/components/common-button';
 import Modal from '@/components/modal';
+import OptimizedImage from '@/components/optimized-image';
 import * as S from './ResultPage.styles';
 import TopNav from '@/components/topnav/TopNav';
 
@@ -72,7 +73,12 @@ const ResultPage = () => {
         
       <S.ResultImageContainer>
         {resultInfo.image && (
-          <S.ResultImage src={resultInfo.image} alt={resultInfo.name} />
+          <OptimizedImage 
+            src={resultInfo.image} 
+            alt={resultInfo.name}
+            priority={true}
+            style={{ maxWidth: '100%', height: 'auto' }}
+          />
         )}
       </S.ResultImageContainer>
 
