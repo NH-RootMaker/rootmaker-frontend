@@ -71,7 +71,7 @@ const QuestionForm = ({
           $disabled={!selectedOption}
           disabled={!selectedOption}
         >
-          {isLastQuestion ? '결과 보기' : '다음'}
+          {isLastQuestion ? '결과 보기' : '다음으로'}
         </S.SubmitButton>
       </S.SubmitButtonContainer>
     </S.FormContainer>
