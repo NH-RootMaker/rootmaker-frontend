@@ -12,13 +12,16 @@ export const QuestionContainer = styled.div`
   box-sizing: border-box;
 `;
 
-export const QuestionTitle = styled.h2`
+export const QuestionTitle = styled.h2 ` 
+  ${(props) => props.theme.fonts.header.h2}
   font-size: 24px;
   font-weight: 600;
   color: ${(props) => props.theme.colors.grayScale.black};
   margin-bottom: 42px;
   line-height: 1.4;
-  margin-left: calc(50% - 167.5px);
+  margin-left: calc(50% - 164.5px);
+  white-space: pre-wrap;
+  line-height: 1.5;
 
   @media (max-width: 768px) {
     font-size: 20px;

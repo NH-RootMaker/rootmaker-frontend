@@ -37,6 +37,8 @@ const QuestionForm = ({
                 <ChoiceButton
                   option="A"
                   isSelected={field.value === 'A'}
+                  hasAnySelection={!!field.value}
+                  imageUrl={question.imageA}
                   onClick={(option) => {
                     field.onChange(option);
                     handleChoiceSelect();
@@ -48,6 +50,8 @@ const QuestionForm = ({
                 <ChoiceButton
                   option="B"
                   isSelected={field.value === 'B'}
+                  hasAnySelection={!!field.value}
+                  imageUrl={question.imageB}
                   onClick={(option) => {
                     field.onChange(option);
                     handleChoiceSelect();
@@ -67,7 +71,7 @@ const QuestionForm = ({
           $disabled={!selectedOption}
           disabled={!selectedOption}
         >
-          {isLastQuestion ? '결과 보기' : '다음'}
+          {isLastQuestion ? '결과 보기' : '다음으로'}
         </S.SubmitButton>
       </S.SubmitButtonContainer>
     </S.FormContainer>
