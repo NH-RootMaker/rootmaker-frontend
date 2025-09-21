@@ -95,7 +95,7 @@ const HomePage = () => {
           isOpen={isWelcomeModalOpen}
           onClose={handleCloseWelcomeModal}
           title={'NH RootMaker Demo'}
-          content={`저희 서비스에 오신 것을 환영합니다!\n\n이 서비스는 개인 맞춤형 청약 가이드를 위한\n핵심 기능인 유형테스트를 체험해볼 수 있는\n프로토타입 데모입니다.\n\n실제 서비스에서는 더욱 정교한 분석과\n개인화된 청약 상품 추천을 제공할 예정입니다.\n\n- Team 두둠칫 -`}
+          content={`저희 서비스에 오신 것을 환영합니다!\n\n이 서비스는 개인 맞춤형 청약 가이드를 위한\n핵심 기능인 유형테스트를 체험해볼 수 있는\n프로토타입 데모입니다.\n\n실제 서비스에서는 더욱 정교한 분석과\n개인화된 컨설팅 플로우를 제공할 예정입니다.\n\n- Team 두둠칫 -`}
           buttonText="체험 시작하기"
         />
 
