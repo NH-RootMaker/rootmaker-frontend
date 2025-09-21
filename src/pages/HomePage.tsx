@@ -19,10 +19,10 @@ const HomePage = () => {
 
   return (
       <Container>
-        <Title>NH 루트메이커</Title>
+        <Title>NH RootMaker</Title>
         <Description>
-          당신의 청약 저축 유형을 알아보세요
-        </Description>
+            {'나만의 저축 성향을 알아보고\n맞춤형 청약 가이드를 받아보세요!'}
+          </Description>
         
         <InputSection>
           <CommonInput
@@ -41,6 +41,10 @@ const HomePage = () => {
           <S.Notice>
             ※ 테스트 결과는 저장되지 않습니다
           </S.Notice>
+          
+          <S.TeamLegacy>
+            Made by Team 두둠칫
+          </S.TeamLegacy>
         </InputSection>
       </Container>
   );
