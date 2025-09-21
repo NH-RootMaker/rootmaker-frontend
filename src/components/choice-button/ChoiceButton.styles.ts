@@ -39,6 +39,7 @@ export const ChoiceText = styled.div<{ $isSelected: boolean }>`
   font-weight: ${({ $isSelected }) => $isSelected ? '600' : '400'};
   color: ${({ $isSelected }) => $isSelected ? '#007bff' : '#333'};
   line-height: 1.5;
+  white-space: pre-wrap;
 
   @media (max-width: 768px) {
     font-size: 15px;

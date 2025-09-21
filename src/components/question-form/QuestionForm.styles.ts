@@ -19,6 +19,7 @@ export const QuestionTitle = styled.h2`
   margin-bottom: 42px;
   line-height: 1.4;
   margin-left: calc(50% - 167.5px);
+  white-space: pre-wrap;
 
   @media (max-width: 768px) {
     font-size: 20px;
