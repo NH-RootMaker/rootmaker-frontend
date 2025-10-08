@@ -43,6 +43,9 @@ const HomePage = () => {
       setIsModalOpen(true);
     }
   };
+  const handleStartBuffer = () => {
+    navigate('/buffer');
+  };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -82,6 +85,9 @@ const HomePage = () => {
               나의 나무 알아보기
             </CommonButton>
           </ButtonContainer>
+            <CommonButton variant="secondary" onClick={handleStartBuffer} width="100%">
+             청약 납입 내역 확인하기
+            </CommonButton>
           <S.Notice>
             ※ 테스트 결과는 저장되지 않습니다
           </S.Notice>
