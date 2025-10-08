@@ -16,3 +16,41 @@ export const ChipsContainer = styled.div`
   margin-top: 32px;
   margin-left: calc(50% - 167.5px);
 `;
+
+interface LevelChipsContainerProps {
+  $size?: 'small' | 'medium' | 'large';
+}
+
+export const LevelChipsContainer = styled.div<LevelChipsContainerProps>`
+  display: flex;
+  width: 99px;
+  height: 29px;
+  padding: 1px 12px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 24px;
+  border: 1px solid ${(props) => props.theme.colors.transparency.gn25};
+  background: ${(props) => props.theme.colors.transparency.gn75};
+  color: ${(props) => props.theme.colors.grayScale.white};
+  white-space: nowrap;
+  
+  ${({ $size, theme }) => {
+    switch ($size) {
+      case 'small':
+        return `
+          ${theme.fonts.body.l500}
+        `;
+      case 'large':
+        return `
+          ${theme.fonts.body.xl500}
+        `;
+      case 'medium':
+      default:
+        return `
+          ${theme.fonts.body.l500}
+        `;
+    }
+  }}
+`;
