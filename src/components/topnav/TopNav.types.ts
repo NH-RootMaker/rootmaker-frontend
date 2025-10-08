@@ -9,4 +9,6 @@ export interface HeaderProps {
   onCloseClick?: () => void;
   opacity?: boolean;
   backPath?: number | string;
+  transparent?: boolean;
+  whiteBackground?: boolean;
 }
