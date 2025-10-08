@@ -4,6 +4,7 @@ import HomePage from '../pages/HomePage';
 import TestPage from '../pages/personality-test/TestPage';
 import ResultPage from '../pages/personality-test/ResultPage';
 import ErrorPage from '../pages/ErrorPage';
+import BufferPage from '../pages/buffer-account/BufferPage';
 
 const routes: RouteObject[] = [
   {
@@ -18,6 +19,10 @@ const routes: RouteObject[] = [
   {
     path: '/result',
     element: <ResultPage />,
+  },
+  {
+    path: '/buffer',
+    element: <BufferPage />,
   },
 ];
 
