@@ -1,17 +1,34 @@
 import styled from 'styled-components';
 
-export const Container = styled.header<{ $opacity?: boolean }>`
+export const Container = styled.header<{ $opacity?: boolean; $transparent?: boolean; $whiteBackground?: boolean }>`
   display: flex;
   width: 100vw;
+  max-width: 480px;
   height: 3.875rem;
   padding: 0rem 1.25rem;
   justify-content: space-between;
   align-items: center;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 99;
   box-sizing: border-box;
+  background: ${(props) => {
+    if (props.$transparent) return 'transparent';
+    if (props.$whiteBackground) return props.theme.colors.gradients.topNavWhiteBackground;
+    return props.theme.colors.gradients.primaryBackground;
+  }};
+  backdrop-filter: ${(props) => props.$transparent ? 'none' : 'blur(10px)'};
+  -webkit-backdrop-filter: ${(props) => props.$transparent ? 'none' : 'blur(10px)'};
+  
+  ${(props) => props.theme.media.tablet} {
+    max-width: 600px;
+  }
+  
+  ${(props) => props.theme.media.desktop} {
+    max-width: 768px;
+  }
 `;
 
 export const LeftSection = styled.div<{

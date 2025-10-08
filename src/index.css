@@ -1,6 +1,9 @@
+html,
 body {
   margin: 0 !important;
   padding: 0 !important;
+  overscroll-behavior: none;
+  -webkit-overscroll-behavior: none;
 }
 
 :root {

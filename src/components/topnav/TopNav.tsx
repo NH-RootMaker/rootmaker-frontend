@@ -17,6 +17,8 @@ const TopNav : React.FC<HeaderProps> = ({
   onBackClick,
   backPath = -1,
   opacity = false,
+  transparent = false,
+  whiteBackground = false,
 }) => {
   const navigate = useNavigate();
 
@@ -35,7 +37,7 @@ const TopNav : React.FC<HeaderProps> = ({
   };
 
   return (
-    <S.Container>
+    <S.Container $transparent={transparent} $whiteBackground={whiteBackground}>
       <S.LeftSection $opacity={opacity}>
         {isBack ? (
           <BackIcon

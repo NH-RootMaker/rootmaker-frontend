@@ -17,6 +17,7 @@ export const ResultContainer = styled.div`
   padding: 40px 30px;
   overflow: hidden;
   box-sizing: border-box;
+  background-color: ${(props) => props.theme.colors.grayScale.white};
 `;
 
 export const ResultHeader = styled.div`
