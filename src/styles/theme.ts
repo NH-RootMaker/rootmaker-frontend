@@ -51,6 +51,18 @@ const colors = {
     wt50: 'rgba(250, 250, 250, 0.50)',
     wt75: 'rgba(250, 250, 250, 0.75)',
   },
+  trees: {
+    pine: '#42CE7A',      
+    cherry: '#EE5D90',   
+    apple: '#D03537',     
+    maple: '#F6795E',    
+  },
+  gradients: {
+    primaryBackground: 'linear-gradient(114deg, #F3FFE9 -0.93%, #C7FFE8 97.27%)',
+    primaryBackgroundBlur: 'linear-gradient(114deg, rgba(243, 255, 233, 0.95) -0.93%, rgba(199, 255, 232, 0.95) 97.27%)',
+    topNavBackground: '#F3FFE9',
+    topNavWhiteBackground: '#FAFAFA',
+  },
 };
 
 const fonts = {
@@ -86,6 +98,9 @@ const effects = {
     ds300: css`
       box-shadow: 0px 0px 4px 0px rgba(0 0 0 0.2);
     `,
+    dsDefault: css`
+      box-shadow: 0 0 16px 0 rgba(66, 206, 121, 0.75);
+    `,
   },
 };
 
@@ -94,6 +109,9 @@ const media = {
   standalone: '@media (display-mode: standalone)',
   standaloneLike:
     '@media (display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui)',
+  mobile: '@media (max-width: 480px)', // SE 기준
+  tablet: '@media (min-width: 481px) and (max-width: 768px)',
+  desktop: '@media (min-width: 769px)',
 };
 
 export const theme = {

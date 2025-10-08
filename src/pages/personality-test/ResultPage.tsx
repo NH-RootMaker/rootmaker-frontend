@@ -60,7 +60,7 @@ const ResultPage = () => {
 
   return (
     <S.ResultContainer>
-      <TopNav isBack title='나의 유형' onBackClick={handleGoHome}/>
+      <TopNav isBack title='나의 유형' onBackClick={handleGoHome} whiteBackground />
       <S.ResultHeader>
         <S.ResultTitle>{username}님은</S.ResultTitle>
         <S.ResultType>
