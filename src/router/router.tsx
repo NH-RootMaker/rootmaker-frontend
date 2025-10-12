@@ -5,6 +5,7 @@ import TestPage from '../pages/personality-test/TestPage';
 import ResultPage from '../pages/personality-test/ResultPage';
 import ErrorPage from '../pages/ErrorPage';
 import BufferPage from '../pages/buffer-account/BufferPage';
+import PaybackPage from '../pages/payback/PaybackPage';
 
 const routes: RouteObject[] = [
   {
@@ -23,6 +24,10 @@ const routes: RouteObject[] = [
   {
     path: '/buffer',
     element: <BufferPage />,
+  },
+  {
+    path: '/payback',
+    element: <PaybackPage />,
   },
 ];
 
