@@ -3,7 +3,7 @@ import * as S from './TopNav.styles';
 import type { HeaderProps } from './TopNav.types';
 import { useNavigate } from 'react-router-dom';
 
-import BackIcon from '@/assets/icons/Back.svg?react';
+// import BackIcon from '@/assets/icons/Back.svg?react';
 
 
 /**
@@ -40,10 +40,10 @@ const TopNav : React.FC<HeaderProps> = ({
     <S.Container $transparent={transparent} $whiteBackground={whiteBackground}>
       <S.LeftSection $opacity={opacity}>
         {isBack ? (
-          <BackIcon
-            style={{ cursor: 'pointer' }}
-            width={'0.95rem'}
-            height={'0.95rem'}
+          <img 
+            src="/src/assets/icons/Back.svg"
+            alt="뒤로가기"
+            style={{ cursor: 'pointer', width: '0.95rem', height: '0.95rem' }}
             onClick={handleBack}
           />
         ) : null}
