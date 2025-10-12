@@ -7,6 +7,7 @@ import CommonButton from '@/components/common-button';
 import CommonInput from '@/components/common-input';
 import OptimizedImage from '@/components/optimized-image';
 import Modal from '@/components/modal';
+import { useLayoutStore } from '@/stores/useLayoutStore';
 import { Container, Title, Description, InputSection, ButtonContainer } from './HomePage.styles';
 import * as S from './HomePage.styles';
 
@@ -15,6 +16,7 @@ const HomePage = () => {
   const [username, setUsername] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
+  const { setIsNav } = useLayoutStore();
 
   // 첫 번째 질문의 이미지들과 결과 페이지 이미지들을 미리 로드
   const firstQuestionImages = PERSONALITY_QUESTIONS.length > 0 
@@ -26,6 +28,12 @@ const HomePage = () => {
     .filter(Boolean) as string[];
 
   useImagePreloader([...firstQuestionImages, ...resultImages]);
+
+  // TopNav 숨기기
+  useEffect(() => {
+    setIsNav(false);
+    return () => setIsNav(true); // 컴포넌트 언마운트 시 복원
+  }, [setIsNav]);
 
   // 첫 접속 시 웰컴 모달 표시
   useEffect(() => {

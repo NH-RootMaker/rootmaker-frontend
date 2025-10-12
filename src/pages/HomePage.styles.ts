@@ -50,7 +50,7 @@ export const InputSection = styled.div`
   align-items: center;
   gap: 15px;
   margin-top: 2rem;
-  padding-bottom: 40px;
+  padding-bottom: 120px;
   width: 100%;
   max-width: 300px;
 `;

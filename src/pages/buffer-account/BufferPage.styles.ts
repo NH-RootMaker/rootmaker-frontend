@@ -25,7 +25,7 @@ export const TopSection = styled.div`
 export const BottomSection = styled.div`
   background: ${(props) => props.theme.colors.grayScale.white};
   padding: 20px;
-  padding-bottom: 100px;
+  padding-bottom: 120px;
   min-height: 40vh;
 `;
 
@@ -71,7 +71,7 @@ export const LevelImageContainer = styled.div`
 
 export const FixedButtonContainer = styled.div`
   position: fixed;
-  bottom: 0;
+  bottom: 95px;
   left: 50%;
   transform: translateX(-50%);
   max-width: 480px;

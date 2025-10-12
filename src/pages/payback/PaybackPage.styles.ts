@@ -2,22 +2,13 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   min-height: 100vh;
-  max-width: 480px;
-  margin: 0 auto;
-  
-  ${(props) => props.theme.media.tablet} {
-    max-width: 600px;
-  }
-  
-  ${(props) => props.theme.media.desktop} {
-    max-width: 768px;
-  }
+  width: 100%;
 `;
 
 export const MainSection = styled.div`
   background: ${(props) => props.theme.colors.gradients.primaryBackground};
   padding: 20px;
-  padding-bottom: 100px;
+  padding-bottom: 120px;
   display: flex;
   flex-direction: column;
   position: relative;
