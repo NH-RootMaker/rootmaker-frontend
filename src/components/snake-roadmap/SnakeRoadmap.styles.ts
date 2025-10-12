@@ -4,7 +4,6 @@ export const Container = styled.div<{ height: number }>`
   position: relative;
   width: 100%;
   height: ${props => props.height}px;
-  overflow: hidden;
   z-index: 1;
 `;
 
@@ -31,10 +30,6 @@ export const NodeButton = styled.div`
     height: 100%;
     object-fit: contain;
   }
-
-  &:hover {
-    transform: scale(1.1);
-  }
 `;
 
 export const NodeContent = styled.div<{ isLeft?: boolean }>`
@@ -51,11 +46,11 @@ export const NodeContent = styled.div<{ isLeft?: boolean }>`
 
 export const WateringIcon = styled.div`
   position: relative;
-  top: -15px;
+  top: 9px;
   
   img {
-    width: 72px;
-    height: 72px;
+    width: 65px;
+    height: 65px;
     object-fit: contain;
     transform: rotate(-15deg);
   }
@@ -65,18 +60,37 @@ export const AmountText = styled.div`
   position: relative;
   ${(props) => props.theme.fonts.body.m600}
   color: ${props => props.theme.colors.secondary.gn};
-  line-height: 1;
-  top: -25px;
+  top: 13px;
+  white-space: nowrap;
+`;
+
+export const RoundNumber = styled.div`
+  position: relative;
+  ${(props) => props.theme.fonts.header.h1}
+  color: ${props => props.theme.colors.transparency.gn50};
+  top: 9px;
+`;
+
+export const PaybackPointText = styled.div`
+  position: relative;
+  ${(props) => props.theme.fonts.body.m600}
+  color: ${props => props.theme.colors.transparency.gn50};
+  top: 30px;
+  white-space: nowrap;
 `;
 
 export const CheckSticker = styled.div`
   position: absolute;
-  top: 48px;
-  right: -3px;
+  top: 50px;
+  right: 3px;
   z-index: 10;
   
   img {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
   }
+`;
+
+export const ConnectionLine = styled.div`
+  z-index: 0;
 `;

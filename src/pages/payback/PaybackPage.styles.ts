@@ -8,7 +8,6 @@ export const Container = styled.div`
 export const MainSection = styled.div`
   background: ${(props) => props.theme.colors.gradients.primaryBackground};
   padding: 20px;
-  padding-bottom: 120px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -22,8 +21,8 @@ export const HeaderSection = styled.div`
   align-items: left;
   justify-content: left;
   margin-left: 10px;
-  margin-top: 60px;
-  margin-bottom: 24px;
+  margin-top: 70px;
+  margin-bottom: 30px;
   white-space: pre-line;
   
   ${(props) => props.theme.media.tablet} {
@@ -40,21 +39,19 @@ export const HeaderSection = styled.div`
 export const ContentSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
 `;
 
-export const ChallengeCard = styled.div`
-  background: ${(props) => props.theme.colors.grayScale.white};
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-`;
 
 export const ChallengeTitle = styled.h2`
   ${(props) => props.theme.fonts.header.h2}
   color: ${(props) => props.theme.colors.grayScale.black};
-  margin-bottom: 8px;
+  margin-bottom: 0px;
+`;
+
+export const ChallengeSubtitle = styled.h2`
+  ${(props) => props.theme.fonts.body.l500}
+  color: ${(props) => props.theme.colors.grayScale.gy600};
+  margin-bottom: 0px;
 `;
 
 export const HighlightText = styled.span`
@@ -63,7 +60,7 @@ export const HighlightText = styled.span`
 `;
 
 export const RoadmapContainer = styled.div`
-  margin: 20px 0;
+  margin-top: 20px 0;
   padding: 20px 0;
 `;
 
