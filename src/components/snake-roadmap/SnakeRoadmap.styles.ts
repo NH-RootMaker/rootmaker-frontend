@@ -4,7 +4,6 @@ export const Container = styled.div<{ height: number }>`
   position: relative;
   width: 100%;
   height: ${props => props.height}px;
-  overflow: hidden;
   z-index: 1;
 `;
 

@@ -18,16 +18,16 @@ interface SnakeRoadmapProps {
 
 const SnakeRoadmap: React.FC<SnakeRoadmapProps> = ({
   nodes,
-  containerHeight = 600,
+  containerHeight = 100,
 }) => {
   const calculateNodePosition = (index: number) => {
     const nodesPerRow = 3;
     const row = Math.floor(index / nodesPerRow);
     const col = index % nodesPerRow;
     
-    const horizontalSpacing = 30; // 가로 간격 (%)
+    const horizontalSpacing = 38; // 가로 간격 (%)
     const verticalSpacing = 135; // 세로 간격 (px)
-    const startX = 20; // 시작 X 위치 (%)
+    const startX = 12.5; // 시작 X 위치 (%)
     const startY = 40; // 시작 Y 위치 (px)
 
     // 지그재그: 홀수 줄은 순서 반대
