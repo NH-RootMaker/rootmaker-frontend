@@ -11,23 +11,17 @@ const PaybackPage = () => {
         navigate('/');
     };
 
-    // 현재 월의 일수 계산
+    // 9개 노드 생성
     const generateMonthlyNodes = (): RoadmapNode[] => {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = now.getMonth();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        const today = now.getDate();
-        
-        return Array.from({ length: daysInMonth }, (_, index) => {
+        return Array.from({ length: 9 }, (_, index) => {
             const day = index + 1;
             
             return {
                 id: day.toString(),
                 title: '',
                 amount: '',
-                completed: day < today,
-                current: day === today
+                completed: day <= 4, // 처음 4개만 완료
+                current: day === 5
             };
         });
     };
