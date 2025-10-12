@@ -1,30 +1,20 @@
 import type { NavItem } from './nav-types';
 
+// 네비게이션 아이콘 import
+import CoinSvg from '@/assets/icons/nav/Coin.svg?react';
+import PeopleSvg from '@/assets/icons/nav/People.svg?react';
+import MapSvg from '@/assets/icons/nav/Map.svg?react';
+import ReportSvg from '@/assets/icons/nav/Report.svg?react';
+
 // 네비게이션 아이콘 컴포넌트들
-const CoinIcon = () => (
-  <img src="/assets/icons/nav/Coin.svg" alt="Coin" width="24" height="24" />
-);
-const CoinActiveIcon = () => (
-  <img src="/assets/icons/nav/Coin.svg" alt="Coin" width="24" height="24" />
-);
-const PeopleIcon = () => (
-  <img src="/assets/icons/nav/People.svg" alt="People" width="24" height="24" />
-);
-const PeopleActiveIcon = () => (
-  <img src="/assets/icons/nav/People.svg" alt="People" width="24" height="24" />
-);
-const MapIcon = () => (
-  <img src="/assets/icons/nav/Map.svg" alt="Map" width="24" height="24" />
-);
-const MapActiveIcon = () => (
-  <img src="/assets/icons/nav/Map.svg" alt="Map" width="24" height="24" />
-);
-const ReportIcon = () => (
-  <img src="/assets/icons/nav/Report.svg" alt="Report" width="24" height="24" />
-);
-const ReportActiveIcon = () => (
-  <img src="/assets/icons/nav/Report.svg" alt="Report" width="24" height="24" />
-);
+const CoinIcon = () => <CoinSvg width="24" height="24" />;
+const CoinActiveIcon = () => <CoinSvg width="24" height="24" />;
+const PeopleIcon = () => <PeopleSvg width="24" height="24" />;
+const PeopleActiveIcon = () => <PeopleSvg width="24" height="24" />;
+const MapIcon = () => <MapSvg width="24" height="24" />;
+const MapActiveIcon = () => <MapSvg width="24" height="24" />;
+const ReportIcon = () => <ReportSvg width="24" height="24" />;
+const ReportActiveIcon = () => <ReportSvg width="24" height="24" />;
 
 export const NAV_ITEMS: NavItem[] = [
   {
