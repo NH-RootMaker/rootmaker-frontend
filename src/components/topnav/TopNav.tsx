@@ -41,7 +41,7 @@ const TopNav : React.FC<HeaderProps> = ({
       <S.LeftSection $opacity={opacity}>
         {isBack ? (
           <img 
-            src="/src/assets/icons/Back.svg"
+            src="/assets/icons/Back.svg"
             alt="뒤로가기"
             style={{ cursor: 'pointer', width: '0.95rem', height: '0.95rem' }}
             onClick={handleBack}
