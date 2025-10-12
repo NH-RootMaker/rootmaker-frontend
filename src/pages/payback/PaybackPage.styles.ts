@@ -8,10 +8,11 @@ export const Container = styled.div`
 export const MainSection = styled.div`
   background: ${(props) => props.theme.colors.gradients.primaryBackground};
   padding: 20px;
+  padding-bottom: 120px;
   display: flex;
   flex-direction: column;
   position: relative;
-  min-height: calc(100vh - 60px);
+  min-height: 100vh;
 `;
 
 export const HeaderSection = styled.div`

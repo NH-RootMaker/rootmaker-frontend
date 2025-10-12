@@ -3,7 +3,7 @@ import TopNav from '@/components/topnav';
 import BottomNav from '@/components/bottom-nav';
 import { AnimatePresence } from 'framer-motion';
 import { useLayoutStore } from '@/stores/useLayoutStore';
-import { Outlet } from 'react-router-dom';
+import { Outlet, ScrollRestoration } from 'react-router-dom';
 
 
 
@@ -26,6 +26,7 @@ export default function Layout() {
         </AnimatePresence>
       </S.Content>
       <BottomNav />
+      <ScrollRestoration />
     </S.Container>
   );
 }
