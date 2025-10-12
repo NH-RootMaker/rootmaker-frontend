@@ -1,7 +1,9 @@
 import * as S from './Layout.styles';
 import TopNav from '@/components/topnav';
+import BottomNav from '@/components/bottom-nav';
 import { AnimatePresence } from 'framer-motion';
 import { useLayoutStore } from '@/stores/useLayoutStore';
+import { Outlet } from 'react-router-dom';
 
 
 
@@ -18,8 +20,12 @@ export default function Layout() {
   return (
     <S.Container>
       {isNav && <TopNav />}
-      <AnimatePresence mode="wait">
-      </AnimatePresence>
+      <S.Content>
+        <AnimatePresence mode="wait">
+          <Outlet />
+        </AnimatePresence>
+      </S.Content>
+      <BottomNav />
     </S.Container>
   );
 }
