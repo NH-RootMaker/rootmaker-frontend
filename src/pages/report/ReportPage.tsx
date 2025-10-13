@@ -10,6 +10,9 @@ import * as S from './ReportPage.styles';
 const ReportPage = () => {
   const { setIsNav } = useLayoutStore();
   const navigate = useNavigate();
+  
+  // TODO: 실제로는 props나 store에서 받아올 값
+  const username = "민규";
 
   useEffect(() => {
     setIsNav(false);
@@ -29,7 +32,7 @@ const ReportPage = () => {
 
       <S.StatsSection>
         <S.StatsTitle>
-          민규님은 또래 대비 청약 입금액<br />
+          {username}님은 또래 대비 청약 입금액<br />
           <S.Highlight>상위 40%</S.Highlight>에요!
         </S.StatsTitle>
         
@@ -49,9 +52,9 @@ const ReportPage = () => {
           </S.ComparisonItem>
           <S.ComparisonItem>
             <S.ImageContainer $isUser={true}>
-              <img src="/growth 1.webp" alt="민규님" />
+              <img src="/growth 1.webp" alt={`${username}님`} />
             </S.ImageContainer>
-            <S.Label $isUser={true}>민규님</S.Label>
+            <S.Label $isUser={true}>{username}님</S.Label>
             <S.Amount $isUser={true}>598,765원</S.Amount>
           </S.ComparisonItem>
         </S.ComparisonContainer>

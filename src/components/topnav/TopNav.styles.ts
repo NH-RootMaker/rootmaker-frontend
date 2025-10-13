@@ -22,12 +22,14 @@ export const Container = styled.header<{ $opacity?: boolean; $transparent?: bool
   backdrop-filter: ${(props) => props.$transparent ? 'none' : 'blur(10px)'};
   -webkit-backdrop-filter: ${(props) => props.$transparent ? 'none' : 'blur(10px)'};
   
-  ${(props) => props.theme.media.tablet} {
-    max-width: 600px;
+  @media (max-width: 768px) {
+    max-width: 100vw;
+    padding: 0rem 1rem;
   }
   
-  ${(props) => props.theme.media.desktop} {
-    max-width: 768px;
+  @media (max-width: 480px) {
+    padding: 0rem 0.75rem;
+    height: 3.5rem;
   }
 `;
 
@@ -66,4 +68,12 @@ export const Title = styled.p<{ $opacity?: boolean }>`
   ${(props) => props.theme.fonts.header.h3}
   text-align: center;
   color: ${(props) => props.theme.colors.grayScale.black};
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 `;

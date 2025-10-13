@@ -6,11 +6,11 @@ export const Container = styled.div`
   margin: 0 auto;
   
   ${(props) => props.theme.media.tablet} {
-    max-width: 600px;
+    max-width: 768px;
   }
   
   ${(props) => props.theme.media.desktop} {
-    max-width: 768px;
+    max-width: 1024px;
   }
 `;
 
@@ -81,11 +81,11 @@ export const FixedButtonContainer = styled.div`
   justify-content: center;
   
   ${(props) => props.theme.media.tablet} {
-    max-width: 600px;
+    max-width: 768px;
   }
   
   ${(props) => props.theme.media.desktop} {
-    max-width: 768px;
+    max-width: 1024px;
   }
   
   &::before {

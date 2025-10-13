@@ -12,6 +12,10 @@ export const Container = styled.div`
   padding-right: 0;
   box-sizing: border-box;
   overflow-x: hidden;
+
+  @media (max-width: 320px) {
+    padding-top: 3.5rem;
+  }
 `;
 
 export const Main = styled.main`
@@ -26,4 +30,8 @@ export const Main = styled.main`
   margin: 0;
   height: calc(100vh - 3.875rem);
   overflow: hidden;
+
+  @media (max-width: 320px) {
+    height: calc(100vh - 3.5rem);
+  }
 `;

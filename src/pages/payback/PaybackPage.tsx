@@ -2,14 +2,22 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './PaybackPage.styles';
 import TopNav from '@/components/topnav';
 import SnakeRoadmap from '@/components/snake-roadmap';
-import SpeechBubble from '@/components/speech-bubble';
+import ToastMessage from '@/components/toast-message';
+import { useDailyToast } from '@/hooks/useDailyToast';
 import type { RoadmapNode } from '@/components/snake-roadmap/SnakeRoadmap';
 
 const PaybackPage = () => {
     const navigate = useNavigate();
+    const { shouldShowToast, hideToast } = useDailyToast('payback-daily-toast');
 
     const handleBackClick = () => {
         navigate('/');
+    };
+
+    // 개발용: 토스트 테스트 함수
+    const handleTestToast = () => {
+        localStorage.removeItem('payback-daily-toast');
+        window.location.reload();
     };
 
     // 9개 노드 생성
@@ -31,11 +39,32 @@ const PaybackPage = () => {
     const completedCount = roadmapNodes.filter(node => node.completed).length;
     const totalCount = roadmapNodes.length;
     
-    const containerHeight = 450;
+    const containerHeight = 350;
 
     return (
         <S.Container>
             <TopNav isBack title="나의 로드맵" onBackClick={handleBackClick} />
+            
+            {/* 개발용 테스트 버튼 - 배포 시 제거 */}
+            {import.meta.env.DEV && (
+                <button 
+                    onClick={handleTestToast}
+                    style={{
+                        position: 'fixed',
+                        top: '80px',
+                        right: '10px',
+                        zIndex: 999,
+                        background: 'red',
+                        color: 'white',
+                        border: 'none',
+                        padding: '8px',
+                        borderRadius: '4px',
+                        fontSize: '12px'
+                    }}
+                >
+                    토스트 테스트
+                </button>
+            )}
             
             <S.MainSection>
                 <S.HeaderSection>
@@ -49,14 +78,18 @@ const PaybackPage = () => {
 
                 <S.ContentSection>
                     <SnakeRoadmap nodes={roadmapNodes} containerHeight={containerHeight} />
-                    <div style={{ display: 'flex', justifyContent: 'center', padding: '0', marginTop: '-40px' }}>
-                        <SpeechBubble variant="pine" tailPosition="top" size="medium">
-                            해당하는 회차의 스탬프를 클릭하면{'\n'}오늘의 미션 금액을 입금할 수 있어요!
-                        </SpeechBubble>
-                    </div>
                 </S.ContentSection>
             </S.MainSection>
 
+            {shouldShowToast && (
+                <ToastMessage
+                    message={`해당하는 회차의 스탬프를 클릭하면
+오늘의 미션 금액을 입금할 수 있어요!`}
+                    variant="pine"
+                    duration={4000}
+                    onClose={hideToast}
+                />
+            )}
         </S.Container>
     );
 };

@@ -15,6 +15,11 @@ export const ChipsContainer = styled.div`
   margin-bottom: 0px;
   margin-top: 32px;
   margin-left: calc(50% - 167.5px);
+
+  @media (max-width: 320px) {
+    margin-left: calc(50% - 140px);
+    margin-top: 24px;
+  }
 `;
 
 interface LevelChipsContainerProps {

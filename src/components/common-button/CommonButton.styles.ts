@@ -32,6 +32,24 @@ export const Button = styled.button<ButtonProps>`
     box-shadow: none;
   `}
 
+  @media (max-width: 768px) {
+    height: 50px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    height: 48px;
+    font-size: 0.9rem;
+    border-radius: 12px;
+  }
+
+  @media (max-width: 320px) {
+    height: 44px;
+    font-size: 0.8rem;
+    padding: 16px 16px 15px 16px;
+    border-radius: 8px;
+    width: ${({ $width }) => $width === '100%' ? '100%' : $width};
+  }
 
   &:active {
     ${({ $disabled }) => !$disabled && `

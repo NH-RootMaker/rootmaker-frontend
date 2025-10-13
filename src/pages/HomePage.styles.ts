@@ -38,9 +38,20 @@ export const Title = styled.h1`
 export const Description = styled.p`
   ${(props) => props.theme.fonts.body.l400}
   color: ${(props) => props.theme.colors.grayScale.gy600};
-  margin-top:1rem;
+  margin-top: 1rem;
   margin-bottom: 2rem;
   white-space: pre-wrap;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+  }
 `;
 
 
@@ -53,6 +64,20 @@ export const InputSection = styled.div`
   padding-bottom: 120px;
   width: 100%;
   max-width: 300px;
+
+  @media (max-width: 768px) {
+    max-width: 280px;
+    margin-top: 1.5rem;
+    padding-bottom: 100px;
+  }
+
+  @media (max-width: 480px) {
+    max-width: 260px;
+    margin-top: 1rem;
+    padding-bottom: 80px;
+    padding: 0 1rem;
+    gap: 12px;
+  }
 `;
 
 export const Notice = styled.p`
@@ -79,6 +104,14 @@ export const MockupImageContainer = styled.div`
   align-items: center;
   width: 50%;
   max-width: 280px;
-  
 
+  @media (max-width: 768px) {
+    width: 60%;
+    max-width: 250px;
+  }
+
+  @media (max-width: 480px) {
+    width: 70%;
+    max-width: 200px;
+  }
 `;
