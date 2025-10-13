@@ -7,6 +7,7 @@ import ResultPage from '../pages/personality-test/ResultPage';
 import ErrorPage from '../pages/ErrorPage';
 import BufferPage from '../pages/buffer-account/BufferPage';
 import PaybackPage from '../pages/payback/PaybackPage';
+import ReportPage from '../pages/report/ReportPage';
 
 const routes: RouteObject[] = [
   {
@@ -33,6 +34,10 @@ const routes: RouteObject[] = [
       {
         path: '/payback',
         element: <PaybackPage />,
+      },
+      {
+        path: '/report',
+        element: <ReportPage />,
       },
     ],
   },
