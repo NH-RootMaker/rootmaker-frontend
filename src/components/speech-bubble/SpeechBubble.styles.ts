@@ -65,9 +65,10 @@ const getSizeStyles = (size: string, theme: any) => {
 };
 
 const getTailStyles = (tailPosition: string, backgroundColor: string, variant?: string) => {
-  const tailSize = '9px';
+  const tailWidth = '13.302px';
+  const tailHeight = '11.52px';
   const shadowStyle = variant === 'info' ? `
-    filter: drop-shadow(0 0 16px rgba(66, 206, 121, 0.75));
+    filter: drop-shadow(0 4px 12px rgba(66, 206, 121, 0.8));
   ` : '';
   
   switch (tailPosition) {
@@ -76,20 +77,20 @@ const getTailStyles = (tailPosition: string, backgroundColor: string, variant?: 
         &::after {
           content: '';
           position: absolute;
-          bottom: -${tailSize};
+          bottom: -${tailHeight};
           left: 50%;
           transform: translateX(-50%);
           width: 0;
           height: 0;
-          border-left: ${tailSize} solid transparent;
-          border-right: ${tailSize} solid transparent;
-          border-top: ${tailSize} solid ${backgroundColor};
+          border-left: ${parseFloat(tailWidth)/2}px solid transparent;
+          border-right: ${parseFloat(tailWidth)/2}px solid transparent;
+          border-top: ${tailHeight} solid ${backgroundColor};
           ${shadowStyle}
         }
         &::before {
           content: '';
           position: absolute;
-          bottom: -${parseInt(tailSize) + 1}px;
+          bottom: -${parseFloat(tailHeight) + 1}px;
           left: 50%;
           transform: translateX(-50%);
           width: 0;
@@ -102,20 +103,20 @@ const getTailStyles = (tailPosition: string, backgroundColor: string, variant?: 
         &::after {
           content: '';
           position: absolute;
-          top: -${tailSize};
+          top: -${tailHeight};
           left: 50%;
           transform: translateX(-50%);
           width: 0;
           height: 0;
-          border-left: ${tailSize} solid transparent;
-          border-right: ${tailSize} solid transparent;
-          border-bottom: ${tailSize} solid ${backgroundColor};
+          border-left: ${parseFloat(tailWidth)/2}px solid transparent;
+          border-right: ${parseFloat(tailWidth)/2}px solid transparent;
+          border-bottom: ${tailHeight} solid ${backgroundColor};
           ${shadowStyle}
         }
         &::before {
           content: '';
           position: absolute;
-          top: -${parseInt(tailSize) + 1}px;
+          top: -${parseFloat(tailHeight) + 1}px;
           left: 50%;
           transform: translateX(-50%);
           width: 0;
@@ -135,7 +136,7 @@ export const SpeechBubbleContainer = styled.div<SpeechBubbleContainerProps>`
   line-height: 1.5;
   white-space: pre-line;
   margin-top: 20px;
-  ${(props) => props.theme.effects.dropShadow.dsDefault}
+  box-shadow: 0 1px 16px 0 rgba(66, 206, 121, 0.75);
   
   ${({ $variant = 'pine', theme }) => {
     const colors = getVariantColors($variant, theme);
@@ -150,7 +151,7 @@ export const SpeechBubbleContainer = styled.div<SpeechBubbleContainerProps>`
   ${({ $tailPosition, $variant = 'pine', theme }) => {
     if ($tailPosition) {
       const colors = getVariantColors($variant, theme);
-      return getTailStyles($tailPosition, colors.background);
+      return getTailStyles($tailPosition, colors.background, $variant);
     }
     return '';
   }}

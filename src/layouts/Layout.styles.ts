@@ -7,7 +7,7 @@ export const Container = styled.div`
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${(props) => props.theme.colors.grayScale.white};
   position: relative;
   padding-bottom: 80px;
 `;

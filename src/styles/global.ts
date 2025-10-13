@@ -37,7 +37,7 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
 
-        /* background-color: ${(props) => props.theme.colors.grayScale.white}; */
+        background-color: ${(props) => props.theme.colors.grayScale.white};
         font-family: Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     }
     
@@ -48,7 +48,7 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
         overflow-x: hidden;
 
-        /* background-color: ${(props) => props.theme.colors.grayScale.white}; */
+        background-color: ${(props) => props.theme.colors.grayScale.white};
     }
 
     * {
