@@ -56,6 +56,7 @@ const OnboardingPage = () => {
 
   const handleTouchMove = (e: React.TouchEvent) => {
     setTouchEnd(e.targetTouches[0].clientX);
+    e.preventDefault(); // 스크롤 방지
   };
 
   const handleTouchEnd = () => {
@@ -81,21 +82,19 @@ const OnboardingPage = () => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          onWheel={(e) => e.preventDefault()}
         >
           {ONBOARDING_SLIDES.map((slide, index) => {
             let position: 'prev' | 'current' | 'next' = 'current';
             
             if (index === currentSlide) {
               position = 'current';
-            } else if (index === (currentSlide + 1) % ONBOARDING_SLIDES.length) {
+            } else if (index === currentSlide + 1) {
               position = 'next';
-            } else if (index === (currentSlide - 1 + ONBOARDING_SLIDES.length) % ONBOARDING_SLIDES.length) {
+            } else if (index === currentSlide - 1) {
               position = 'prev';
-            }
-            
-            // 현재, 이전, 다음 카드만 렌더링
-            if (position !== 'current' && position !== 'next' && position !== 'prev') {
-              return null;
+            } else {
+              return null; // 현재, 이전, 다음이 아닌 카드는 렌더링하지 않음
             }
 
             return (

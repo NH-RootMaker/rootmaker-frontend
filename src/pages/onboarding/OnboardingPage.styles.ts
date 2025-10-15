@@ -52,8 +52,9 @@ export const CarouselContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow-y: visible;
+  overflow: hidden;
   padding: 0 100px;
+  touch-action: pan-y;
 
   @media (max-width: 320px) {
     height: 400px;
