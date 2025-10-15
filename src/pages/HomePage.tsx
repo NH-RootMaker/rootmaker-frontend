@@ -91,7 +91,6 @@ const HomePage = () => {
         <Description>
             {'나만의 저축 성향을 알아보고\n맞춤형 청약 가이드를 받아보세요!'}
         </Description>
-<<<<<<< Updated upstream
         
         <S.MockupImageContainer>
           <OptimizedImage 
@@ -101,8 +100,6 @@ const HomePage = () => {
             style={{ maxWidth: '100%', height: 'auto' }}
           />
         </S.MockupImageContainer>
-=======
->>>>>>> Stashed changes
         
         <InputSection>
           {isLoggedIn ? (
