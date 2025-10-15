@@ -37,6 +37,14 @@ export const ChoiceContainer = styled.button<{ $isSelected: boolean; $hasAnySele
     margin: 4px 0;
     border-radius: 8px;
   }
+
+  @media (max-width: 320px) {
+    width: 130px;
+    height: 180px;
+    padding: 12px 16px;
+    margin: 2px 0;
+    border-radius: 12px;
+  }
 `;
 
 export const ChoiceText = styled.div<{ $isSelected: boolean; $hasAnySelection: boolean }>`
@@ -54,5 +62,10 @@ export const ChoiceText = styled.div<{ $isSelected: boolean; $hasAnySelection: b
 
   @media (max-width: 480px) {
     font-size: 14px;
+  }
+
+  @media (max-width: 320px) {
+    font-size: 13px;
+    padding: 6px 1px;
   }
 `;

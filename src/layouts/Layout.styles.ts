@@ -5,10 +5,11 @@ export const Container = styled.div`
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
   background-color: ${(props) => props.theme.colors.grayScale.white};
   position: relative;
+  padding: 0;
   padding-bottom: 80px;
 `;
 

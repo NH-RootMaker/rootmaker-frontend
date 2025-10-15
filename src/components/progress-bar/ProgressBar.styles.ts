@@ -16,6 +16,11 @@ export const ProgressBarContainer = styled.div`
   border-radius: 24px;
   overflow: hidden;
   box-sizing: border-box;
+
+  @media (max-width: 320px) {
+    width: 280px;
+    height: 12px;
+  }
 `;
 
 export const ProgressFill = styled.div<{ $progress: number }>`

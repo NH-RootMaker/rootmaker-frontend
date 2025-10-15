@@ -55,6 +55,13 @@ const getSizeStyles = (size: string, theme: any) => {
         padding: 12px 20px;
         border-radius: 40px;
       `;
+    case 'large':
+      return `
+        ${theme.fonts.body.m600}
+        padding: 12px 20px;
+        border-radius: 40px;
+        min-width: 240px;
+      `;
     default:
       return `
         ${theme.fonts.body.m600}
@@ -103,7 +110,7 @@ const getTailStyles = (tailPosition: string, backgroundColor: string, variant?: 
         &::after {
           content: '';
           position: absolute;
-          top: -${tailHeight};
+          top: -${parseFloat(tailHeight) - 0.5}px;
           left: 50%;
           transform: translateX(-50%);
           width: 0;
@@ -112,16 +119,6 @@ const getTailStyles = (tailPosition: string, backgroundColor: string, variant?: 
           border-right: ${parseFloat(tailWidth)/2}px solid transparent;
           border-bottom: ${tailHeight} solid ${backgroundColor};
           ${shadowStyle}
-        }
-        &::before {
-          content: '';
-          position: absolute;
-          top: -${parseFloat(tailHeight) + 1}px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 0;
-          height: 0;
-          z-index: -1;
         }
       `;
     default:

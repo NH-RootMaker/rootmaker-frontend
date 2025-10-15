@@ -1,16 +1,40 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import * as S from './PaybackPage.styles';
 import TopNav from '@/components/topnav';
 import SnakeRoadmap from '@/components/snake-roadmap';
-import SpeechBubble from '@/components/speech-bubble';
+import ToastMessage from '@/components/toast-message';
+import Modal from '@/components/modal';
 import type { RoadmapNode } from '@/components/snake-roadmap/SnakeRoadmap';
 
 const PaybackPage = () => {
     const navigate = useNavigate();
+    const [shouldShowToast, setShouldShowToast] = useState(true);
+    const [isTypeTestModalOpen, setIsTypeTestModalOpen] = useState(false);
+    
+    // 로그인 상태 확인
+    const isLoggedIn = localStorage.getItem('user-logged-in') === 'true';
+
+    const hideToast = () => {
+        setShouldShowToast(false);
+    };
 
     const handleBackClick = () => {
         navigate('/');
     };
+
+    const handleTypeTestModalClose = () => {
+        setIsTypeTestModalOpen(false);
+        navigate('/home');
+    };
+
+    // empty 상태일 때 모달 표시
+    useEffect(() => {
+        if (!isLoggedIn) {
+            setIsTypeTestModalOpen(true);
+        }
+    }, [isLoggedIn]);
+
 
     // 9개 노드 생성
     const generateMonthlyNodes = (): RoadmapNode[] => {
@@ -21,8 +45,8 @@ const PaybackPage = () => {
                 id: day.toString(),
                 title: '',
                 amount: '',
-                completed: day <= 3 || day === 5, // 1,2,3번째와 5번째 완료
-                current: day === 6
+                completed: isLoggedIn ? (day <= 3 || day === 5) : false, // empty 상태에서는 완료된 것 없음
+                current: isLoggedIn ? day === 6 : day === 1 // empty 상태에서는 첫 번째가 current
             };
         });
     };
@@ -31,7 +55,7 @@ const PaybackPage = () => {
     const completedCount = roadmapNodes.filter(node => node.completed).length;
     const totalCount = roadmapNodes.length;
     
-    const containerHeight = 450;
+    const containerHeight = 350;
 
     return (
         <S.Container>
@@ -49,14 +73,27 @@ const PaybackPage = () => {
 
                 <S.ContentSection>
                     <SnakeRoadmap nodes={roadmapNodes} containerHeight={containerHeight} />
-                    <div style={{ display: 'flex', justifyContent: 'center', padding: '0', marginTop: '-40px' }}>
-                        <SpeechBubble variant="pine" tailPosition="top" size="medium">
-                            해당하는 회차의 스탬프를 클릭하면{'\n'}오늘의 미션 금액을 입금할 수 있어요!
-                        </SpeechBubble>
-                    </div>
                 </S.ContentSection>
             </S.MainSection>
 
+            {shouldShowToast && isLoggedIn && (
+                <ToastMessage
+                    message={`해당하는 회차의 스탬프를 클릭하면
+오늘의 미션 금액을 입금할 수 있어요!`}
+                    variant="pine"
+                    duration={4000}
+                    onClose={hideToast}
+                />
+            )}
+
+            <Modal
+                isOpen={isTypeTestModalOpen}
+                onClose={handleTypeTestModalClose}
+                title="안내"
+                content={`청약 상품 추천을 위해서는 당신의 유형이 필요해요.
+원활한 진행을 위해 청약 테스트 먼저 진행해 주세요!`}
+                buttonText="청약 유형 테스트하러 가기"
+            />
         </S.Container>
     );
 };

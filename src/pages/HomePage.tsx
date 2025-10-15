@@ -16,7 +16,11 @@ const HomePage = () => {
   const [username, setUsername] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
-  const { setIsNav } = useLayoutStore();
+  const { setIsTopNav, setIsBottomNav } = useLayoutStore();
+  
+  // 로그인 상태 확인
+  const isLoggedIn = localStorage.getItem('user-logged-in') === 'true';
+  const loggedInUserName = localStorage.getItem('user-name') || '';
 
   // 첫 번째 질문의 이미지들과 결과 페이지 이미지들을 미리 로드
   const firstQuestionImages = PERSONALITY_QUESTIONS.length > 0 
@@ -29,30 +33,44 @@ const HomePage = () => {
 
   useImagePreloader([...firstQuestionImages, ...resultImages]);
 
-  // TopNav 숨기기
+  // Top Nav 숨기기, Bottom Nav 표시
   useEffect(() => {
-    setIsNav(false);
-    return () => setIsNav(true); // 컴포넌트 언마운트 시 복원
-  }, [setIsNav]);
+    setIsTopNav(false);
+    setIsBottomNav(true);
+    return () => {
+      setIsTopNav(true);
+      setIsBottomNav(true);
+    };
+  }, [setIsTopNav, setIsBottomNav]);
 
-  // 첫 접속 시 웰컴 모달 표시
+  // 첫 접속 시 온보딩 페이지로 리다이렉트 또는 웰컴 모달 표시
   useEffect(() => {
     const hasVisited = localStorage.getItem('nh-rootmaker-visited');
+    const hasCompletedOnboarding = localStorage.getItem('nh-rootmaker-onboarding-completed');
+    
+    if (!hasVisited && !hasCompletedOnboarding) {
+      navigate('/');
+      return;
+    }
+    
     if (!hasVisited) {
       setIsWelcomeModalOpen(true);
       localStorage.setItem('nh-rootmaker-visited', 'true');
     }
-  }, []);
+  }, [navigate]);
 
   const handleStartTest = () => {
-    if (username.trim()) {
-      navigate('/test', { state: { username: username.trim() } });
+    if (isLoggedIn) {
+      // 로그인한 경우 저장된 이름 사용
+      navigate('/test', { state: { username: loggedInUserName } });
     } else {
-      setIsModalOpen(true);
+      // 로그인하지 않은 경우 입력된 이름 확인
+      if (username.trim()) {
+        navigate('/test', { state: { username: username.trim() } });
+      } else {
+        setIsModalOpen(true);
+      }
     }
-  };
-  const handleStartBuffer = () => {
-    navigate('/buffer');
   };
 
   const handleCloseModal = () => {
@@ -61,6 +79,10 @@ const HomePage = () => {
 
   const handleCloseWelcomeModal = () => {
     setIsWelcomeModalOpen(false);
+  };
+
+  const handleSignupClick = () => {
+    navigate('/login');
   };
 
   return (
@@ -80,29 +102,45 @@ const HomePage = () => {
         </S.MockupImageContainer>
         
         <InputSection>
-          <CommonInput
-            placeholder="이름을 입력하세요"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleStartTest()}
-            width="100%"
-          />
+          {isLoggedIn ? (
+            // 로그인한 경우
+            <>
+              <S.WelcomeMessage>
+                {loggedInUserName}님, 반가워요!
+              </S.WelcomeMessage>
+              
+              <ButtonContainer>
+                <CommonButton variant="primary" onClick={handleStartTest} width="100%">
+                  나의 나무 알아보기
+                </CommonButton>
+              </ButtonContainer>
+            </>
+          ) : (
+            // 로그인하지 않은 경우
+            <>
+              <CommonInput
+                placeholder="이름을 입력하세요"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleStartTest()}
+                width="100%"
+              />
+              
+              <ButtonContainer>
+                <CommonButton variant="primary" onClick={handleStartTest} width="100%">
+                  나의 나무 알아보기
+                </CommonButton>
+              </ButtonContainer>
+            </>
+          )}
           
-          <ButtonContainer>
-            <CommonButton variant="primary" onClick={handleStartTest} width="100%">
-              나의 나무 알아보기
-            </CommonButton>
-          </ButtonContainer>
-            <CommonButton variant="secondary" onClick={handleStartBuffer} width="100%">
-             청약 납입 내역 확인하기
-            </CommonButton>
           <S.Notice>
             ※ 테스트 결과는 저장되지 않습니다
           </S.Notice>
           
-          <S.TeamLegacy>
-            Made by Team 두둠칫
-          </S.TeamLegacy>
+          <S.UnderlineButton onClick={handleSignupClick}>
+            회원가입하러 가기
+          </S.UnderlineButton>
         </InputSection>
 
         <Modal

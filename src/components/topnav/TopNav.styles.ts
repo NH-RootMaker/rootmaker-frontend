@@ -22,12 +22,14 @@ export const Container = styled.header<{ $opacity?: boolean; $transparent?: bool
   backdrop-filter: ${(props) => props.$transparent ? 'none' : 'blur(10px)'};
   -webkit-backdrop-filter: ${(props) => props.$transparent ? 'none' : 'blur(10px)'};
   
-  ${(props) => props.theme.media.tablet} {
-    max-width: 600px;
+  @media (max-width: 768px) {
+    max-width: 100vw;
+    padding: 0rem 1rem;
   }
   
-  ${(props) => props.theme.media.desktop} {
-    max-width: 768px;
+  @media (max-width: 480px) {
+    padding: 0rem 0.75rem;
+    height: 3.5rem;
   }
 `;
 
@@ -61,9 +63,37 @@ export const RightSection = styled.div<{ $opacity?: boolean; $whiteIcons?: boole
   }
 `;
 
+export const ServiceIntroButton = styled.button`
+  ${(props) => props.theme.fonts.body.m600}
+  background: none;
+  border: none;
+  color: ${(props) => props.theme.colors.primary.gn};
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: ${(props) => props.theme.colors.transparency.gn25};
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+  }
+`;
+
 
 export const Title = styled.p<{ $opacity?: boolean }>`
   ${(props) => props.theme.fonts.header.h3}
   text-align: center;
   color: ${(props) => props.theme.colors.grayScale.black};
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 `;

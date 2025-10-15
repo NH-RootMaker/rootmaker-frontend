@@ -14,7 +14,8 @@ import { useEffect } from 'react';
  */
 
 export default function Layout() {
-  const isNav = useLayoutStore((state) => state.isNav);
+  const isTopNav = useLayoutStore((state) => state.isTopNav);
+  const isBottomNav = useLayoutStore((state) => state.isBottomNav);
   const location = useLocation();
 
   // 페이지 변경 시 스크롤을 맨 위로
@@ -34,13 +35,13 @@ export default function Layout() {
 
   return (
     <S.Container>
-      {isNav && <TopNav />}
+      {isTopNav && <TopNav />}
       <S.Content>
         <AnimatePresence mode="wait">
           <Outlet />
         </AnimatePresence>
       </S.Content>
-      <BottomNav />
+      {isBottomNav && <BottomNav />}
     </S.Container>
   );
 }

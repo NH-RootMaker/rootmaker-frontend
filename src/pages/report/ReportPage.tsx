@@ -1,19 +1,48 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLayoutStore } from '@/stores/useLayoutStore';
 import CommonButton from '@/components/common-button';
 import TopNav from '@/components/topnav';
 import SpeechBubble from '@/components/speech-bubble';
 import RecommendationCard from '@/components/recommendation-card';
+import Modal from '@/components/modal';
 import * as S from './ReportPage.styles';
 
 const ReportPage = () => {
-  const { setIsNav } = useLayoutStore();
+  const { setIsTopNav, setIsBottomNav } = useLayoutStore();
   const navigate = useNavigate();
+  const [isTypeTestModalOpen, setIsTypeTestModalOpen] = useState(false);
+  
+  // 로그인 상태 확인
+  const isLoggedIn = localStorage.getItem('user-logged-in') === 'true';
+  
+  // 사용자 이름과 통계 설정
+  const username = isLoggedIn ? 
+    localStorage.getItem('user-name') || "민규" : 
+    "농협";
+  const percentageText = isLoggedIn ? "상위 40%" : "상위 n%";
+  const amountText = isLoggedIn ? "55,555원 더 많아요" : "n원 더 많아요";
 
   useEffect(() => {
-    setIsNav(false);
-  }, [setIsNav]);
+    setIsTopNav(false);
+    setIsBottomNav(true);
+    return () => {
+      setIsTopNav(true);
+      setIsBottomNav(true);
+    };
+  }, [setIsTopNav, setIsBottomNav]);
+
+  const handleTypeTestModalClose = () => {
+    setIsTypeTestModalOpen(false);
+    navigate('/home');
+  };
+
+  // empty 상태일 때 모달 표시
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setIsTypeTestModalOpen(true);
+    }
+  }, [isLoggedIn]);
 
   const handlePaybackClick = () => {
     navigate('/payback');
@@ -29,13 +58,13 @@ const ReportPage = () => {
 
       <S.StatsSection>
         <S.StatsTitle>
-          민규님은 또래 대비 청약 입금액<br />
-          <S.Highlight>상위 40%</S.Highlight>에요!
+          {username}님은 또래 대비 청약 입금액<br />
+          <S.Highlight>{percentageText}</S.Highlight>에요!
         </S.StatsTitle>
         
         <S.SpeechBubbleContainer>
           <SpeechBubble variant="info" size="medium" tailPosition="bottom">
-            또래 평균 대비<br /><S.AmountHighlight>55,555원 더 많아요</S.AmountHighlight>
+            또래 평균 대비<br /><S.AmountHighlight>{amountText}</S.AmountHighlight>
           </SpeechBubble>
         </S.SpeechBubbleContainer>
         
@@ -49,9 +78,9 @@ const ReportPage = () => {
           </S.ComparisonItem>
           <S.ComparisonItem>
             <S.ImageContainer $isUser={true}>
-              <img src="/growth 1.webp" alt="민규님" />
+              <img src="/growth 1.webp" alt={`${username}님`} />
             </S.ImageContainer>
-            <S.Label $isUser={true}>민규님</S.Label>
+            <S.Label $isUser={true}>{username}님</S.Label>
             <S.Amount $isUser={true}>598,765원</S.Amount>
           </S.ComparisonItem>
         </S.ComparisonContainer>
@@ -91,6 +120,15 @@ const ReportPage = () => {
           커피값 아끼고 페이백 받기
         </CommonButton>
       </S.FixedButtonContainer>
+
+      <Modal
+        isOpen={isTypeTestModalOpen}
+        onClose={handleTypeTestModalClose}
+        title="안내"
+        content={`청약 상품 추천을 위해서는 당신의 유형이 필요해요.
+원활한 진행을 위해 청약 테스트 먼저 진행해 주세요!`}
+        buttonText="청약 유형 테스트하러 가기"
+      />
     </S.Container>
   );
 };

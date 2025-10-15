@@ -30,6 +30,12 @@ export const QuestionTitle = styled.h2 `
     font-size: 18px;
    
   }
+
+  @media (max-width: 320px) {
+    font-size: 16px;
+    margin-left: calc(50% - 140px);
+    margin-bottom: 32px;
+  }
 `;
 
 export const ChoicesContainer = styled.div`
@@ -50,6 +56,11 @@ export const ChoicesContainer = styled.div`
     margin-bottom: 20px;
     flex-direction: row;
   }
+
+  @media (max-width: 320px) {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
 `;
 
 export const SubmitButtonContainer = styled.div`
@@ -63,5 +74,10 @@ export const SubmitButtonContainer = styled.div`
 
   @media (max-width: 480px) {
     padding: 14px;
+  }
+
+  @media (max-width: 320px) {
+    margin-top: 100px;
+    padding: 12px;
   }
 `;

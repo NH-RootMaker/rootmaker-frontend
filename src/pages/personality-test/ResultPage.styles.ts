@@ -18,6 +18,10 @@ export const ResultContainer = styled.div`
   overflow: hidden;
   box-sizing: border-box;
   background-color: ${(props) => props.theme.colors.grayScale.white};
+
+  @media (max-width: 320px) {
+    padding: 32px 20px;
+  }
 `;
 
 export const ResultHeader = styled.div`
@@ -25,6 +29,11 @@ export const ResultHeader = styled.div`
   margin-top: 24px;
   width: 100%;
   max-width: 400px;
+
+  @media (max-width: 320px) {
+    margin-top: 16px;
+    max-width: 280px;
+  }
 `;
 
 export const ResultTitle = styled.h1`
@@ -63,6 +72,11 @@ export const ResultImageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 320px) {
+    width: 280px;
+    height: 280px;
+  }
 `;
 
 export const ResultImage = styled.img`
@@ -92,6 +106,6 @@ export const ButtonContainer = styled.div`
   width: 100%;
   max-width: 400px;
   margin-top: auto;
-  margin-bottom:auto;
+  margin-bottom: auto;
 `;
 
