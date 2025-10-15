@@ -21,7 +21,7 @@ const ToastMessage = ({ message, variant = 'pine', duration = 3000, onClose }: T
     <>
       <S.Overlay $isVisible={isVisible} />
       <S.ToastContainer $isVisible={isVisible}>
-        <SpeechBubble variant="pine" tailPosition="top" size="large">
+        <SpeechBubble variant={variant} tailPosition="top" size="large">
           {message}
         </SpeechBubble>
       </S.ToastContainer>

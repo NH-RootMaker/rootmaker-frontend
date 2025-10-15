@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BufferPage from './BufferPage';
-import BufferEmptyPage from './BufferEmptyPage';
 
 const BufferRouterPage = () => {
   const navigate = useNavigate();
