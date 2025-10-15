@@ -13,7 +13,14 @@ const BottomNav = () => {
   return (
     <S.Nav>
       {NAV_ITEMS.map((item) => {
-        const isActive = location.pathname === item.path;
+        let isActive = location.pathname === item.path;
+        
+        // buffer 관련 페이지들에서 coin 아이콘 활성화
+        if (item.id === 'subscription') {
+          isActive = location.pathname === item.path || 
+                    location.pathname === '/buffer-empty' || 
+                    location.pathname === '/my-subscription';
+        }
         
         return (
           <S.NavButton

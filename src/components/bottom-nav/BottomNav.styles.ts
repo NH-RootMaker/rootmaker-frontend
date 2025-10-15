@@ -27,7 +27,8 @@ export const Nav = styled.nav`
 export const NavButton = styled.button<{ $isActive?: boolean }>`
   all: unset;
   display: flex;
-  width: 60px;
+  min-width: 60px;
+  min-height: 60px;
   padding: 8px 15px;
   flex-direction: column;
   justify-content: center;
@@ -36,10 +37,25 @@ export const NavButton = styled.button<{ $isActive?: boolean }>`
   flex-shrink: 0;
   cursor: pointer;
   border-radius: 12px;
+  position: relative;
+  z-index: 10;
+  
+  /* 터치 이벤트 개선 */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  
+  /* 호버/액티브 상태 */
+  &:hover {
+  }
+  
+  &:active {
+    transform: none;
+  }
 
   svg {
     width: 24px;
     height: 24px;
+    pointer-events: none;
   }
 `;
 
@@ -48,4 +64,6 @@ export const NavLabel = styled.span<{ $isActive?: boolean }>`
   color: ${({ $isActive, theme }) =>
     $isActive ? theme.colors.primary.gn : theme.colors.grayScale.gy600};
   transition: color 0.2s ease;
+  pointer-events: none;
+  user-select: none;
 `;
