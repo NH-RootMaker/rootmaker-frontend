@@ -5,8 +5,10 @@ export interface HeaderProps {
   hideLeft?: boolean;
   hideRight?: boolean;
   showBackButton?: boolean;
+  showServiceIntro?: boolean;
   onBackClick?: () => void;
   onCloseClick?: () => void;
+  onServiceIntroClick?: () => void;
   opacity?: boolean;
   backPath?: number | string;
   transparent?: boolean;

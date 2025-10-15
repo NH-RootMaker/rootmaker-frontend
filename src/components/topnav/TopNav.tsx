@@ -13,8 +13,10 @@ const TopNav : React.FC<HeaderProps> = ({
   isBack = false,
   // isClose = false,
   title,
+  showServiceIntro = false,
   // onCloseClick,
   onBackClick,
+  onServiceIntroClick,
   backPath = -1,
   opacity = false,
   transparent = false,
@@ -36,6 +38,14 @@ const TopNav : React.FC<HeaderProps> = ({
     }
   };
 
+  const handleServiceIntro = () => {
+    if (onServiceIntroClick) {
+      onServiceIntroClick();
+    } else {
+      navigate('/onboarding');
+    }
+  };
+
   return (
     <S.Container $transparent={transparent} $whiteBackground={whiteBackground}>
       <S.LeftSection $opacity={opacity}>
@@ -52,7 +62,11 @@ const TopNav : React.FC<HeaderProps> = ({
       {title && <S.Title $opacity={opacity}>{title}</S.Title>}
       
       <S.RightSection $opacity={opacity}>
-        {/* 오른쪽 섹션 - 빈 공간으로 중앙 정렬을 위해 유지 */}
+        {showServiceIntro && (
+          <S.ServiceIntroButton onClick={handleServiceIntro}>
+            서비스 소개
+          </S.ServiceIntroButton>
+        )}
       </S.RightSection>
     </S.Container>
   );
