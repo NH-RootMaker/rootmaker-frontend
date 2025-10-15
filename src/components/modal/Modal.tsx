@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import CommonButton from '@/components/common-button';
+import CloseSvg from '@/assets/icons/Close.svg?react';
 import * as S from './Modal.styles';
 
 interface ModalProps {
@@ -8,6 +9,7 @@ interface ModalProps {
   title: string;
   content: string;
   buttonText?: string;
+  onButtonClick?: () => void;
 }
 
 const Modal = ({
@@ -16,6 +18,7 @@ const Modal = ({
   title,
   content,
   buttonText = '확인',
+  onButtonClick,
 }: ModalProps) => {
   useEffect(() => {
     if (isOpen) {
@@ -36,17 +39,28 @@ const Modal = ({
       <S.ModalContent onClick={(e) => e.stopPropagation()}>
         <S.ModalHeader>
           <S.ModalTitle>{title}</S.ModalTitle>
+          {title === "안내" && (
+            <S.CloseButton onClick={onClose}>
+              <CloseSvg width="20" height="20" />
+            </S.CloseButton>
+          )}
         </S.ModalHeader>
         
         <S.ModalBody>
-          <S.ModalText>{content}</S.ModalText>
+          <S.ModalText>
+            {content.split('\n').map((line, index) => (
+              <div key={index}>
+                {line}
+              </div>
+            ))}
+          </S.ModalText>
         </S.ModalBody>
         
         <S.ModalFooter>
           <CommonButton
             variant="primary"
-            onClick={onClose}
-            width="100%"
+            onClick={onButtonClick || onClose}
+            width="80%"
           >
             {buttonText}
           </CommonButton>

@@ -15,13 +15,13 @@ export const ModalOverlay = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background: ${(props) => props.theme.colors.grayScale.white};
-  border-radius: 20px;
+  background: #FAFAFA;
+  border-radius: 16px;
   max-width: 400px;
   width: 100%;
   max-height: 80vh;
   overflow-y: auto;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 16px 0 rgba(66, 206, 121, 0.75);
   animation: modalSlideIn 0.3s ease-out;
 
   @keyframes modalSlideIn {
@@ -37,14 +37,41 @@ export const ModalContent = styled.div`
 `;
 
 export const ModalHeader = styled.div`
-  padding: 24px 24px 0 24px;
+  position: relative;
+  padding: 24px 56px 16px 24px;
   text-align: center;
+  border-bottom: 1px solid ${(props) => props.theme.colors.grayScale.gy200};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ModalTitle = styled.h2`
-  ${(props) => props.theme.fonts.header.h2}
-  color: ${(props) => props.theme.colors.primary.gn};
+  ${(props) => props.theme.fonts.header.h3}
+  color: ${(props) => props.theme.colors.grayScale.black};
   margin: 0;
+  flex: 1;
+  text-align: center;
+`;
+
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 22px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  
+  svg {
+    color: ${(props) => props.theme.colors.grayScale.gy600};
+  }
+  
 `;
 
 export const ModalBody = styled.div`
@@ -53,13 +80,13 @@ export const ModalBody = styled.div`
 `;
 
 export const ModalText = styled.p`
-  ${(props) => props.theme.fonts.body.l600}
-  color: ${(props) => props.theme.colors.grayScale.gy600};
-  line-height: 1.6;
-  margin: 0;
-  white-space: pre-wrap;
+  ${(props) => props.theme.fonts.body.l400}
+  color: ${(props) => props.theme.colors.grayScale.gy800};
+  white-space: pre-line;
 `;
 
 export const ModalFooter = styled.div`
   padding: 0 24px 24px 24px;
+  margin-left: 55px;
+  
 `;
