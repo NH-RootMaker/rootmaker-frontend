@@ -17,18 +17,19 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
-  ${(props) => props.theme.fonts.header.h1}
+  ${(props) => props.theme.fonts.header.h2}
   margin-top: 4rem;
   margin-bottom: 1rem;
   color: ${(props) => props.theme.colors.primary.gn};
+  white-space: pre-wrap;
 
   @media (max-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: 0.75rem;
   }
 
   @media (max-width: 480px) {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     margin-bottom: 0.5rem;
   }
   
@@ -39,10 +40,6 @@ export const Title = styled.h1`
   @media (min-width:410px){
     padding-top: 2.875rem;
   }
-
-  
-
-
 `;
 
 export const Description = styled.p`

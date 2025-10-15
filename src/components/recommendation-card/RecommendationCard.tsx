@@ -10,14 +10,16 @@ const RecommendationCard = ({ image, alt, title, highlightText }: Recommendation
       <S.Content>
         <S.Title>
           {title.split(highlightText).map((part, index, array) => (
-            index < array.length - 1 ? (
-              <>
-                {part}
-                <S.Highlight>{highlightText}</S.Highlight>
-              </>
-            ) : (
-              part
-            )
+            <span key={index}>
+              {index < array.length - 1 ? (
+                <>
+                  {part}
+                  <S.Highlight>{highlightText}</S.Highlight>
+                </>
+              ) : (
+                part
+              )}
+            </span>
           ))}
         </S.Title>
       </S.Content>

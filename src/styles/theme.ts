@@ -85,6 +85,8 @@ const fonts = {
     h2: createFontStyle(1.25, 600, 150, 0), // 20px, 600, 150%
     h3: createFontStyle(1, 600, 150, 0), // 16px, 600, 150%
   },
+  point: createFontStyle(1.25, 700, 150, 0), // 20px, 700, 150%
+  display: createFontStyle(1.5, 500, 150, 0), // 24px, 500, 150%
 };
 
 const effects = {

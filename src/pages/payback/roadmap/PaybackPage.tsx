@@ -28,6 +28,11 @@ const PaybackPage = () => {
         navigate('/home');
     };
 
+    const handleNodeClick = () => {
+        // 챌린지 버튼 클릭 시 이체 페이지로 이동
+        navigate('/transfer');
+    };
+
     // empty 상태일 때 모달 표시
     useEffect(() => {
         if (!isLoggedIn) {
@@ -36,8 +41,12 @@ const PaybackPage = () => {
     }, [isLoggedIn]);
 
 
+
     // 9개 노드 생성
     const generateMonthlyNodes = (): RoadmapNode[] => {
+        // localStorage에서 챌린지 진행 상태 읽기
+        const challengeProgress = JSON.parse(localStorage.getItem('challenge-progress') || '{"completed": [1,2,3], "current": 4}');
+        
         return Array.from({ length: 9 }, (_, index) => {
             const day = index + 1;
             
@@ -45,8 +54,8 @@ const PaybackPage = () => {
                 id: day.toString(),
                 title: '',
                 amount: '',
-                completed: isLoggedIn ? (day <= 3 || day === 5) : false, // empty 상태에서는 완료된 것 없음
-                current: isLoggedIn ? day === 6 : day === 1 // empty 상태에서는 첫 번째가 current
+                completed: isLoggedIn ? challengeProgress.completed.includes(day) : false,
+                current: isLoggedIn ? day === challengeProgress.current : day === 1
             };
         });
     };
@@ -72,7 +81,11 @@ const PaybackPage = () => {
                 </S.HeaderSection>
 
                 <S.ContentSection>
-                    <SnakeRoadmap nodes={roadmapNodes} containerHeight={containerHeight} />
+                    <SnakeRoadmap 
+                        nodes={roadmapNodes} 
+                        containerHeight={containerHeight} 
+                        onNodeClick={handleNodeClick}
+                    />
                 </S.ContentSection>
             </S.MainSection>
 

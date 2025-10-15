@@ -8,8 +8,8 @@ import CommonInput from '@/components/common-input';
 import OptimizedImage from '@/components/optimized-image';
 import Modal from '@/components/modal';
 import { useLayoutStore } from '@/stores/useLayoutStore';
-import { Container, Title, Description, InputSection, ButtonContainer } from './HomePage.styles';
-import * as S from './HomePage.styles';
+import { Container, Title, Description, InputSection, ButtonContainer } from './TestHomePage.styles';
+import * as S from './TestHomePage.styles';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -87,7 +87,7 @@ const HomePage = () => {
 
   return (
       <Container>
-        <Title>NH RootMaker</Title>
+        <Title>{isLoggedIn ? `${loggedInUserName}님, 반가워요!` : 'NH RootMaker'}</Title>
         <Description>
             {'나만의 저축 성향을 알아보고\n맞춤형 청약 가이드를 받아보세요!'}
         </Description>
@@ -104,17 +104,11 @@ const HomePage = () => {
         <InputSection>
           {isLoggedIn ? (
             // 로그인한 경우
-            <>
-              <S.WelcomeMessage>
-                {loggedInUserName}님, 반가워요!
-              </S.WelcomeMessage>
-              
-              <ButtonContainer>
-                <CommonButton variant="primary" onClick={handleStartTest} width="100%">
-                  나의 나무 알아보기
-                </CommonButton>
-              </ButtonContainer>
-            </>
+            <ButtonContainer>
+              <CommonButton variant="primary" onClick={handleStartTest} width="100%">
+                나의 나무 알아보기
+              </CommonButton>
+            </ButtonContainer>
           ) : (
             // 로그인하지 않은 경우
             <>
@@ -138,9 +132,11 @@ const HomePage = () => {
             ※ 테스트 결과는 저장되지 않습니다
           </S.Notice>
           
-          <S.UnderlineButton onClick={handleSignupClick}>
-            회원가입하러 가기
-          </S.UnderlineButton>
+          {!isLoggedIn && (
+            <S.UnderlineButton onClick={handleSignupClick}>
+              회원가입하러 가기
+            </S.UnderlineButton>
+          )}
         </InputSection>
 
         <Modal

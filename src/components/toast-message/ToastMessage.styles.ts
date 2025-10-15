@@ -8,7 +8,7 @@ export const Overlay = styled.div<{ $isVisible: boolean }>`
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 999;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.15s ease-in-out;
   opacity: ${props => props.$isVisible ? 1 : 0};
   pointer-events: ${props => props.$isVisible ? 'auto' : 'none'};
 `;
@@ -19,7 +19,7 @@ export const ToastContainer = styled.div<{ $isVisible: boolean }>`
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.15s ease-in-out;
   opacity: ${props => props.$isVisible ? 1 : 0};
   transform: ${props => props.$isVisible 
     ? 'translateX(-50%) translateY(0)' 

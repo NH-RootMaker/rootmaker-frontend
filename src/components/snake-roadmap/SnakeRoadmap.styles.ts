@@ -17,19 +17,27 @@ export const NodeContainer = styled.div`
   margin-top: 20px;
 `;
 
-export const NodeButton = styled.div`
+export const NodeButton = styled.div<{ $clickable?: boolean }>`
   position: relative;
   width: 95px;
   height: 95px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: ${props => props.$clickable ? 'pointer' : 'default'};
   
   > img {
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
+
+  ${props => props.$clickable && `
+    &:hover {
+      transform: scale(1.05);
+      transition: transform 0.2s ease;
+    }
+  `}
 `;
 
 export const NodeContent = styled.div<{ isLeft?: boolean }>`
