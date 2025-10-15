@@ -4,6 +4,8 @@ export const Container = styled.div`
   min-height: 100vh;
   max-width: 480px;
   margin: 0 auto;
+  background-color: ${(props) => props.theme.colors.grayScale.white};
+  margin-top: 10px;
   
   ${(props) => props.theme.media.tablet} {
     max-width: 768px;
@@ -20,13 +22,15 @@ export const TopSection = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  margin-top: -10px;
 `;
 
-export const BottomSection = styled.div`
+export const BottomSection = styled.div<{ $isExpanded: boolean }>`
   background: ${(props) => props.theme.colors.grayScale.white};
   padding: 20px;
-  padding-bottom: 120px;
-  min-height: 40vh;
+  padding-bottom: ${({ $isExpanded }) => $isExpanded ? '250px' : '0px'};
+  min-height: 0vh;
+  transition: padding-bottom 0.3s ease;
 `;
 
 export const HeaderSection = styled.div`
@@ -35,17 +39,18 @@ export const HeaderSection = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 60px;
-  margin-bottom: 24px;
+  margin-top: 50px;
+  gap: 15px;
+  margin-bottom: 20px;
   
   ${(props) => props.theme.media.tablet} {
     margin-top: 80px;
-    margin-bottom: 32px;
+    gap: 32px;
   }
   
   ${(props) => props.theme.media.desktop} {
     margin-top: 100px;
-    margin-bottom: 40px;
+    gap: 40px;
   }
 `;
 
