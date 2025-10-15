@@ -5,6 +5,7 @@ body {
   overscroll-behavior: none;
   -webkit-overscroll-behavior: none;
   overflow-x: hidden;
+  height: 100vh;
   width: 100%;
 }
 
@@ -25,6 +26,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 #root {

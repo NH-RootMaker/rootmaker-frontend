@@ -1,24 +1,40 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import * as S from './PaybackPage.styles';
 import TopNav from '@/components/topnav';
 import SnakeRoadmap from '@/components/snake-roadmap';
 import ToastMessage from '@/components/toast-message';
-import { useDailyToast } from '@/hooks/useDailyToast';
+import Modal from '@/components/modal';
 import type { RoadmapNode } from '@/components/snake-roadmap/SnakeRoadmap';
 
 const PaybackPage = () => {
     const navigate = useNavigate();
-    const { shouldShowToast, hideToast } = useDailyToast('payback-daily-toast');
+    const [shouldShowToast, setShouldShowToast] = useState(true);
+    const [isTypeTestModalOpen, setIsTypeTestModalOpen] = useState(false);
+    
+    // 로그인 상태 확인
+    const isLoggedIn = localStorage.getItem('user-logged-in') === 'true';
+
+    const hideToast = () => {
+        setShouldShowToast(false);
+    };
 
     const handleBackClick = () => {
         navigate('/');
     };
 
-    // 개발용: 토스트 테스트 함수
-    const handleTestToast = () => {
-        localStorage.removeItem('payback-daily-toast');
-        window.location.reload();
+    const handleTypeTestModalClose = () => {
+        setIsTypeTestModalOpen(false);
+        navigate('/home');
     };
+
+    // empty 상태일 때 모달 표시
+    useEffect(() => {
+        if (!isLoggedIn) {
+            setIsTypeTestModalOpen(true);
+        }
+    }, [isLoggedIn]);
+
 
     // 9개 노드 생성
     const generateMonthlyNodes = (): RoadmapNode[] => {
@@ -29,8 +45,8 @@ const PaybackPage = () => {
                 id: day.toString(),
                 title: '',
                 amount: '',
-                completed: day <= 3 || day === 5, // 1,2,3번째와 5번째 완료
-                current: day === 6
+                completed: isLoggedIn ? (day <= 3 || day === 5) : false, // empty 상태에서는 완료된 것 없음
+                current: isLoggedIn ? day === 6 : day === 1 // empty 상태에서는 첫 번째가 current
             };
         });
     };
@@ -44,27 +60,6 @@ const PaybackPage = () => {
     return (
         <S.Container>
             <TopNav isBack title="나의 로드맵" onBackClick={handleBackClick} />
-            
-            {/* 개발용 테스트 버튼 - 배포 시 제거 */}
-            {import.meta.env.DEV && (
-                <button 
-                    onClick={handleTestToast}
-                    style={{
-                        position: 'fixed',
-                        top: '80px',
-                        right: '10px',
-                        zIndex: 999,
-                        background: 'red',
-                        color: 'white',
-                        border: 'none',
-                        padding: '8px',
-                        borderRadius: '4px',
-                        fontSize: '12px'
-                    }}
-                >
-                    토스트 테스트
-                </button>
-            )}
             
             <S.MainSection>
                 <S.HeaderSection>
@@ -81,7 +76,7 @@ const PaybackPage = () => {
                 </S.ContentSection>
             </S.MainSection>
 
-            {shouldShowToast && (
+            {shouldShowToast && isLoggedIn && (
                 <ToastMessage
                     message={`해당하는 회차의 스탬프를 클릭하면
 오늘의 미션 금액을 입금할 수 있어요!`}
@@ -90,6 +85,15 @@ const PaybackPage = () => {
                     onClose={hideToast}
                 />
             )}
+
+            <Modal
+                isOpen={isTypeTestModalOpen}
+                onClose={handleTypeTestModalClose}
+                title="안내"
+                content={`청약 상품 추천을 위해서는 당신의 유형이 필요해요.
+원활한 진행을 위해 청약 테스트 먼저 진행해 주세요!`}
+                buttonText="청약 유형 테스트하러 가기"
+            />
         </S.Container>
     );
 };

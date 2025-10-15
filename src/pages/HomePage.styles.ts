@@ -7,8 +7,6 @@ export const Container = styled.div`
   justify-content: center;
   min-height: 60vh;
   text-align: center;
-  padding-top: 1.5rem;
-
   @media (max-width: 768px) {
     min-height: 50vh;
   }
@@ -33,6 +31,18 @@ export const Title = styled.h1`
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
   }
+  
+  @media (min-width:390px){
+    padding-top: 0.875rem;
+  }
+
+  @media (min-width:410px){
+    padding-top: 2.875rem;
+  }
+
+  
+
+
 `;
 
 export const Description = styled.p`
@@ -87,11 +97,22 @@ export const Notice = styled.p`
   margin: 0;
 `;
 
-export const TeamLegacy = styled.p`
-  ${(props) => props.theme.fonts.body.m400}
+export const UnderlineButton = styled.button`
+  background: none;
+  border: none;
   color: ${(props) => props.theme.colors.grayScale.gy600};
-  text-align: center;
-  margin-top: px;
+  ${(props) => props.theme.fonts.body.l500};
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 8px;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
 
 export const ButtonContainer = styled.div`
@@ -113,5 +134,16 @@ export const MockupImageContainer = styled.div`
   @media (max-width: 480px) {
     width: 70%;
     max-width: 200px;
+  }
+`;
+
+export const WelcomeMessage = styled.div`
+  ${(props) => props.theme.fonts.header.h3}
+  color: ${(props) => props.theme.colors.grayScale.black};
+  text-align: center;
+  margin-bottom: 0.5rem;
+  
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
   }
 `;

@@ -7,37 +7,35 @@ interface InputContainerProps {
 export const InputContainer = styled.div<InputContainerProps>`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: ${({ $width }) => $width};
+  width: 100%;
 `;
 
 export const Label = styled.label`
   ${(props) => props.theme.fonts.body.m500}
-  color: ${(props) => props.theme.colors.grayScale.black};
+  color: ${(props) => props.theme.colors.primary.gn};
   margin-bottom: 12px;
   align-self: flex-start;
 `;
 
 export const Input = styled.input`
   width: 100%;
-  height: 56px;
-  padding: 16px 20px;
-  border: 2px solid ${(props) => props.theme.colors.grayScale.gy200};
+  height: 55px;
+  padding: 16px 20px 15px 20px;
   border-radius: 16px;
+  background: rgba(66, 206, 121, 0.25);
+  border: none;
   ${(props) => props.theme.fonts.body.xl400}
   color: ${(props) => props.theme.colors.grayScale.black};
-  background: ${(props) => props.theme.colors.grayScale.white};
   transition: border-color 0.3s ease;
   box-sizing: border-box;
 
   &:focus {
     outline: none;
-    border-color: ${(props) => props.theme.colors.primary.gn};
   }
 
   &::placeholder {
     ${(props) => props.theme.fonts.body.xl400}
-    color: ${(props) => props.theme.colors.grayScale.gy400};
+    color: ${(props) => props.theme.colors.primary.gn};
   }
 
   &:disabled {

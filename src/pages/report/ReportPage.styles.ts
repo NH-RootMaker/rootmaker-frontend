@@ -88,6 +88,10 @@ export const SpeechBubbleContainer = styled.div`
     margin-right: 70px;
   }
 
+  @media (max-width: 375px) {
+    margin-right: 45px;
+  }
+
   @media (max-width: 320px) {
     margin-right: 20px;
   }
@@ -251,7 +255,7 @@ export const SectionTitle = styled.h3`
 
 export const FixedButtonContainer = styled.div`
   position: fixed;
-  bottom: 95px;
+  bottom: 110px;
   left: 50%;
   transform: translateX(-50%);
   max-width: 480px;

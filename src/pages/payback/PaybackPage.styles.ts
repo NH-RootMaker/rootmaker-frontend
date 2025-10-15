@@ -29,7 +29,7 @@ export const HeaderSection = styled.div`
   flex-direction: column;
   align-items: left;
   justify-content: left;
-  margin-left: 10px;
+  margin-left: 15px;
   margin-top: 70px;
   margin-bottom: 30px;
   white-space: pre-line;
@@ -37,13 +37,13 @@ export const HeaderSection = styled.div`
   @media (max-width: 768px) {
     margin-top: 60px;
     margin-bottom: 24px;
-    margin-left: 8px;
+    margin-left: 15px;
   }
   
   @media (max-width: 480px) {
     margin-top: 50px;
     margin-bottom: 20px;
-    margin-left: 4px;
+    margin-left: 15px;
   }
 `;
 
