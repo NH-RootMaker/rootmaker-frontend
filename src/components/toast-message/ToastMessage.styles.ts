@@ -15,7 +15,7 @@ export const Overlay = styled.div<{ $isVisible: boolean }>`
 
 export const ToastContainer = styled.div<{ $isVisible: boolean }>`
   position: fixed;
-  bottom: 120px;
+  bottom: 180px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
