@@ -8,8 +8,8 @@ import CommonInput from '@/components/common-input';
 import OptimizedImage from '@/components/optimized-image';
 import Modal from '@/components/modal';
 import { useLayoutStore } from '@/stores/useLayoutStore';
-import { Container, Title, Description, InputSection, ButtonContainer } from './HomePage.styles';
-import * as S from './HomePage.styles';
+import { Container, Title, Description, InputSection, ButtonContainer } from './TestHomePage.styles';
+import * as S from './TestHomePage.styles';
 
 const HomePage = () => {
   const navigate = useNavigate();

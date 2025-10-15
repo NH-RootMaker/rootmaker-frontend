@@ -1,17 +1,19 @@
 import { createBrowserRouter } from 'react-router-dom';
 import type { RouteObject } from 'react-router-dom';
 import Layout from '../layouts/Layout';
-import HomePage from '../pages/HomePage';
+import HomePage from '../pages/personality-test/test-main/TestHomePage';
 import OnboardingPage from '../pages/onboarding/OnboardingPage';
-import LoginPage from '../pages/login/LoginPage';
-import TestPage from '../pages/personality-test/TestPage';
-import ResultPage from '../pages/personality-test/ResultPage';
+import LoginPage from '../pages/onboarding/login/LoginPage';
+import TestPage from '../pages/personality-test/test/TestPage';
+import ResultPage from '../pages/personality-test/result/ResultPage';
 import ErrorPage from '../pages/ErrorPage';
 import BufferPage from '../pages/buffer-account/BufferPage';
-import BufferEmptyPage from '../pages/buffer-account/BufferEmptyPage';
+import BufferEmptyPage from '../pages/buffer-account/empty/BufferEmptyPage';
 import BufferRouterPage from '../pages/buffer-account/BufferRouterPage';
-import PaybackPage from '../pages/payback/PaybackPage';
+import PaybackPage from '../pages/payback/roadmap/PaybackPage';
 import ReportPage from '../pages/report/ReportPage';
+import TransferPage from '../pages/payback/transfer/TransferPage';
+import ActionPage from '@/pages/payback/ActionPage';
 
 const routes: RouteObject[] = [
   {
@@ -58,6 +60,14 @@ const routes: RouteObject[] = [
       {
         path: '/report',
         element: <ReportPage />,
+      },
+      {
+        path: '/transfer',
+        element: <TransferPage />,
+      },
+      {
+        path: '/action',
+        element: <ActionPage />,
       },
     ],
   },

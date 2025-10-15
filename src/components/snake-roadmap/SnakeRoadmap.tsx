@@ -14,11 +14,13 @@ export interface RoadmapNode {
 interface SnakeRoadmapProps {
   nodes: RoadmapNode[];
   containerHeight?: number;
+  onNodeClick?: (nodeId: string) => void;
 }
 
 const SnakeRoadmap: React.FC<SnakeRoadmapProps> = ({
   nodes,
   containerHeight = 0,
+  onNodeClick,
 }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -103,7 +105,14 @@ const SnakeRoadmap: React.FC<SnakeRoadmapProps> = ({
             key={node.id}
             style={{ left: `${x}%`, top: `${y}px` }}
           >
-            <S.NodeButton>
+            <S.NodeButton 
+              onClick={() => {
+                if (!node.completed && onNodeClick) {
+                  onNodeClick(node.id);
+                }
+              }}
+              $clickable={!node.completed}
+            >
               <img src={RoadButton} alt="로드 버튼" />
               {node.completed ? (
                 <S.NodeContent>
