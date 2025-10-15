@@ -63,11 +63,16 @@ const OnboardingPage = () => {
     if (!touchStart || !touchEnd) return;
     
     const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
+    const isLeftSwipe = distance > 30;
+    const isRightSwipe = distance < -30;
 
-    if (isLeftSwipe && currentSlide < ONBOARDING_SLIDES.length - 1) {
-      handleNext();
+    if (isLeftSwipe) {
+      if (currentSlide < ONBOARDING_SLIDES.length - 1) {
+        handleNext();
+      } else if (currentSlide === ONBOARDING_SLIDES.length - 1) {
+        // 마지막 슬라이드에서 왼쪽 스와이프 시 로그인 화면으로
+        handleComplete();
+      }
     }
     if (isRightSwipe && currentSlide > 0) {
       setCurrentSlide(currentSlide - 1);
@@ -82,19 +87,24 @@ const OnboardingPage = () => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          onWheel={(e) => e.preventDefault()}
         >
           {ONBOARDING_SLIDES.map((slide, index) => {
-            let position: 'prev' | 'current' | 'next' = 'current';
+            // 현재, 이전, 다음 카드만 렌더링
+            const isPrevCard = index === currentSlide - 1;
+            const isCurrentCard = index === currentSlide;
+            const isNextCard = index === currentSlide + 1;
             
-            if (index === currentSlide) {
+            if (!isPrevCard && !isCurrentCard && !isNextCard) {
+              return null;
+            }
+            
+            let position: 'prev' | 'current' | 'next';
+            if (isCurrentCard) {
               position = 'current';
-            } else if (index === currentSlide + 1) {
+            } else if (isNextCard) {
               position = 'next';
-            } else if (index === currentSlide - 1) {
-              position = 'prev';
             } else {
-              return null; // 현재, 이전, 다음이 아닌 카드는 렌더링하지 않음
+              position = 'prev';
             }
 
             return (
@@ -109,14 +119,16 @@ const OnboardingPage = () => {
                 index={index}
                 image={slide.image}
                 onClick={() => {
-                  if (position === 'current' && currentSlide < ONBOARDING_SLIDES.length - 1) {
-                    handleNext();
-                  } else if (position === 'current' && currentSlide === ONBOARDING_SLIDES.length - 1) {
-                    handleComplete();
-                  } else if (position === 'next' && currentSlide < ONBOARDING_SLIDES.length - 1) {
-                    handleNext();
+                  if (position === 'next' && currentSlide < ONBOARDING_SLIDES.length - 1) {
+                    setCurrentSlide(currentSlide + 1);
                   } else if (position === 'prev' && currentSlide > 0) {
                     setCurrentSlide(currentSlide - 1);
+                  } else if (position === 'current') {
+                    if (currentSlide < ONBOARDING_SLIDES.length - 1) {
+                      setCurrentSlide(currentSlide + 1);
+                    } else if (currentSlide === ONBOARDING_SLIDES.length - 1) {
+                      handleComplete();
+                    }
                   }
                 }}
               />
@@ -137,9 +149,11 @@ const OnboardingPage = () => {
           <CommonButton variant="primary" onClick={handleSkip} width="100%">
             {currentSlide === ONBOARDING_SLIDES.length - 1 ? '서비스 시작하기' : '서비스 소개 스킵하기'}
           </CommonButton>
-          <S.UnderlineButton onClick={handleTestOnly}>
-            청약 유형 먼저 확인할래요
-          </S.UnderlineButton>
+          {currentSlide !== ONBOARDING_SLIDES.length - 1 && (
+            <S.UnderlineButton onClick={handleTestOnly}>
+              청약 유형 먼저 확인할래요
+            </S.UnderlineButton>
+          )}
         </S.ButtonContainer>
       </S.BottomContainer>
     </S.Container>

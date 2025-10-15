@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Card = styled.div<{ 
-  position: 'prev' | 'current' | 'next';
-  index: number;
+  $position: 'prev' | 'current' | 'next';
+  $index: number;
   $color?: 'yellow' | 'green' | 'blue';
 }>`
   position: absolute;
@@ -25,7 +25,6 @@ export const Card = styled.div<{
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   overflow: visible;
   
@@ -61,8 +60,8 @@ export const Card = styled.div<{
     height: 300px; 
   }
   
-  @media (min-width: 376px) and (max-width: 425px) {
-    width: 280px;  
+  @media (min-width: 375px) and (max-width: 425px) {
+    width: 260px;  
     height: 300px; 
   }
   
@@ -70,62 +69,51 @@ export const Card = styled.div<{
     width: 300px;  /* 더 큰 화면에서는 약간 확대 */
     height: 340px;
   }
-  
-  ${({ position }) => {
-    switch (position) {
+
+  ${({ $position }) => {
+    switch ($position) {
       case 'current':
         return `
-          z-index: 3;
+          z-index: 100;
           transform: translateX(0) scale(1);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+          opacity: 1;
+          transition: all 0.15s ease-out;
         `;
       case 'next':
         return `
-          z-index: 2;
-          transform: translateX(300px) scale(1);
-          margin-left: 164px;
+          z-index: 50;
+          transform: translateX(310px) scale(0.9);
+          opacity: 1;
+          transition: all 0s ease-out;
 
           @media (max-width: 360px) {
-            margin-left: 115px;
+            transform: translateX(290px) scale(0.85);
           }
         `;
       case 'prev':
         return `
-          z-index: 2;
-          transform: translateX(-300px) scale(1);
-          margin-right: 164px;
+          z-index: 10;
+          transform: translateX(-310px) scale(0.9);
+          opacity: 1;
+          transition: all 0.05s cubic-bezier(0.8, 0.0, 0.1, 1);
           
           @media (max-width: 360px) {
-            margin-right: 115px;
+            transform: translateX(-290px) scale(0.85);
           }
         `;
       default:
         return `
-          z-index: 1;
+          z-index: 0;
           transform: translateX(0) scale(0.6);
-          opacity: 0.6;
+          opacity: 0;
         `;
     }
   }}
-
-
-  @media (max-width: 480px) {
-    ${({ position }) => {
-      switch (position) {
-        case 'next':
-          return `transform: translateX(220px) scale(0.75);`;
-        case 'prev':
-          return `transform: translateX(-220px) scale(0.75);`;
-        default:
-          return '';
-      }
-    }}
-
-  }
 `;
 
+
 export const Chip = styled.div<{ 
-  position: 'prev' | 'current' | 'next';
+  $position: 'prev' | 'current' | 'next';
   $color?: 'yellow' | 'green' | 'blue';
 }>`
   border-radius: 12px 12px 12px 0;
@@ -149,7 +137,7 @@ export const Chip = styled.div<{
   text-align: center;
 `;
 
-export const Subtitle = styled.h2<{ position: 'prev' | 'current' | 'next' }>`
+export const Subtitle = styled.h2<{ $position: 'prev' | 'current' | 'next' }>`
   ${(props) => props.theme.fonts.header.h1}
   color: ${(props) => props.theme.colors.grayScale.white};
   margin-top: 14px;
@@ -157,14 +145,14 @@ export const Subtitle = styled.h2<{ position: 'prev' | 'current' | 'next' }>`
   white-space: pre-wrap;
 `;
 
-export const Description = styled.p<{ position: 'prev' | 'current' | 'next' }>`
+export const Description = styled.p<{ $position: 'prev' | 'current' | 'next' }>`
   ${(props) => props.theme.fonts.body.l500}
   color: ${(props) => props.theme.colors.transparency.wt75};
   margin: -10px;
   white-space: pre-wrap;
 `;
 
-export const CardImage = styled.img<{ position: 'prev' | 'current' | 'next' }>`
+export const CardImage = styled.img<{ $position: 'prev' | 'current' | 'next' }>`
   position: absolute;
   bottom: -22%;
   left: 50%;
