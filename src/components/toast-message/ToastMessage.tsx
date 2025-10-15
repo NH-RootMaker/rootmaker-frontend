@@ -3,7 +3,7 @@ import SpeechBubble from '@/components/speech-bubble';
 import * as S from './ToastMessage.styles';
 import type { ToastMessageProps } from './ToastMessage.types';
 
-const ToastMessage = ({ message, variant = 'pine', duration = 3000, onClose }: ToastMessageProps) => {
+const ToastMessage = ({ message, variant = 'pine', duration = 2000, onClose }: ToastMessageProps) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const ToastMessage = ({ message, variant = 'pine', duration = 3000, onClose }: T
       setIsVisible(false);
       setTimeout(() => {
         onClose?.();
-      }, 300); // 애니메이션 완료 후 콜백 실행
+      }, 150); // 애니메이션 완료 후 콜백 실행
     }, duration);
 
     return () => clearTimeout(timer);
