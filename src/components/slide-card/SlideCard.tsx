@@ -13,23 +13,23 @@ const SlideCard = ({
 }: SlideCardProps) => {
   return (
     <S.Card
-      position={position}
-      index={index}
+      $position={position}
+      $index={index}
       $color={color}
       onClick={onClick}
     >
-      <S.Chip position={position} $color={color}>
+      <S.Chip $position={position} $color={color}>
         {chip}
       </S.Chip>
       
-      <S.Subtitle position={position}>{subtitle}</S.Subtitle>
+      <S.Subtitle $position={position}>{subtitle}</S.Subtitle>
       
-      <S.Description position={position}>
+      <S.Description $position={position}>
         {description}
       </S.Description>
 
       {image && (
-        <S.CardImage position={position} src={image} alt={subtitle} />
+        <S.CardImage $position={position} src={image} alt={subtitle} />
       )}
     </S.Card>
   );

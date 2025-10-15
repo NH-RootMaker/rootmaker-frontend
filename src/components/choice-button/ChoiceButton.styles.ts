@@ -19,7 +19,6 @@ export const ChoiceContainer = styled.button<{ $isSelected: boolean; $hasAnySele
     $hasAnySelection ? `0 0 16px 0 ${theme.colors.transparency.wt50}` : 
     `0 0 16px 0 ${theme.colors.transparency.gn75}`};;
   cursor: pointer;
-  transition: all 0.3s ease;
   
   
   &:active {

@@ -16,32 +16,33 @@ export const SlideContainer = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 1rem 1rem;
+  padding: 0;
   overflow-y: hidden;
 
   
   @media (max-width: 325px) {
     margin-top: 60px;
-    padding: 0.5rem;
+    padding: 0;
   }
 
 
   @media (max-width: 375px) {
     margin-top: -5px;
-    padding: 0.5rem;
+    padding: 0;
   }
 
   @media (min-width: 376px) and (max-width: 768px) {
     margin-top: 50px;
+    padding: 0;
   }
 
   @media (min-width: 769px) {
     margin-top: 140px;
-    padding: 2rem;
+    padding: 0;
   }
   @media (max-width:1280px) {
     margin-top: -20px;
-    padding: 2rem;
+    padding: 0;
   }
 `;
 
@@ -53,28 +54,28 @@ export const CarouselContainer = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 0 100px;
+  padding: 0;
   touch-action: pan-y;
 
   @media (max-width: 320px) {
     height: 400px;
-    padding: 0 90px;
+    padding: 0;
     margin-bottom: 30px;
   }
 
   @media (min-width: 360px) and (max-width: 480px) {
     height: 520px;
-    padding: 0 80px;
+    padding: 0;
   }
 
   @media (min-width: 481px) and (max-width: 768px) {
     height: 420px;
-    padding: 0 120px;
+    padding: 0;
   }
 
   @media (min-width: 768px) {
     height: 600px;
-    padding: 0 150px;
+    padding: 0;
   }
 `;
 
@@ -108,8 +109,9 @@ export const BottomContainer = styled.div`
 `;
 
 export const ProgressDotsWrapper = styled.div`
-  @media (max-width: 375px) {
+  @media (min-width: 375px) {
     margin-bottom: -10px;
+    margin-top: 50px;
   } 
   
 `;
