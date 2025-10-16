@@ -35,9 +35,9 @@ export const HeaderSection = styled.section`
 export const ChallengeTitle = styled.h1`
   ${(props) => props.theme.fonts.header.h2}
   color: ${(props) => props.theme.colors.grayScale.black};
-  text-align: center;
-  line-height: 1.5;
-  margin: 0;
+  text-align: left;
+  white-space: pre-wrap;
+  margin-left:12px;
 `;
 
 export const HighlightText = styled.span`
@@ -48,8 +48,10 @@ export const HighlightText = styled.span`
 export const ChallengeSubtitle = styled.p`
   ${(props) => props.theme.fonts.body.l400}
   color: ${(props) => props.theme.colors.grayScale.gy600};
-  text-align: center;
-  margin: 0;
+  text-align: left;
+  white-space: pre-wrap;
+  margin-left: 12px; 
+  margin-top: 0px;
 `;
 
 export const ContentSection = styled.section`
@@ -87,9 +89,9 @@ export const WateringCanImage = styled.div`
   position: relative;
   
   img {
-    width: 335px;
-    height: 330px;
-    margin-right: 50px;
+    width: 320px;
+    height: 310px;
+    margin-right: 40px;
     object-fit: contain;
     transform: rotate(-15deg);
     animation: ${keyframes`
@@ -193,47 +195,13 @@ export const ButtonContainer = styled.div`
   `} 0.6s ease-out 0.8s both;
 `;
 
-// 폭죽 효과 애니메이션
-const fireworkAnimation = keyframes`
-  0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1) rotate(180deg);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1.5) rotate(360deg);
-    opacity: 0;
-  }
-`;
-
-export const FireworkEffect = styled.div`
+export const LottieContainer = styled.div`
   position: absolute;
-  width: 60px;
-  height: 60px;
-  background: radial-gradient(circle, #42CE7A 20%, #FFD700 40%, #FF6B6B 60%, transparent 80%);
-  border-radius: 50%;
-  animation: ${fireworkAnimation} 2s ease-out infinite;
-
-  &.firework-1 {
-    top: 20%;
-    left: 20%;
-    animation-delay: 0.2s;
-  }
-
-  &.firework-2 {
-    top: 30%;
-    right: 15%;
-    animation-delay: 0.8s;
-    background: radial-gradient(circle, #FF6B6B 20%, #42CE7A 40%, #FFD700 60%, transparent 80%);
-  }
-
-  &.firework-3 {
-    bottom: 30%;
-    left: 15%;
-    animation-delay: 1.4s;
-    background: radial-gradient(circle, #FFD700 20%, #FF6B6B 40%, #42CE7A 60%, transparent 80%);
-  }
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
 `;
+

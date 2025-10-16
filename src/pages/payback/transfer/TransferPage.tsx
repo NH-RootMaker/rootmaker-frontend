@@ -1,14 +1,36 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopNav from '@/components/topnav';
 import CommonButton from '@/components/common-button';
 import VirtualKeyboard from '@/components/virtual-keyboard';
+import Modal from '@/components/modal';
+import { preloadImages, preloadLottieAnimation } from '@/utils/imagePreloader';
 import * as S from './TransferPage.styles';
 
-const TransferPage = () => {
+const TransferPage = React.memo(() => {
   const navigate = useNavigate();
   const [amount, setAmount] = useState('');
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  const [preloadedAnimation, setPreloadedAnimation] = useState(null);
+  const [showInsufficientAlert, setShowInsufficientAlert] = useState(false);
+  const [remainingAmount, setRemainingAmount] = useState(0);
+
+  // ActionPage에서 사용할 이미지와 애니메이션 미리 로드
+  useEffect(() => {
+    const actionPageImages = ['/wateringset.webp'];
+    
+    // 이미지와 애니메이션 병렬로 preload
+    Promise.all([
+      preloadImages(actionPageImages),
+      preloadLottieAnimation()
+    ]).then(([_, animationData]) => {
+      if (animationData) {
+        setPreloadedAnimation(animationData);
+      }
+    }).catch(error => {
+      console.warn('Preloading failed:', error);
+    });
+  }, []);
 
   const handleBackClick = () => {
     navigate(-1);
@@ -39,21 +61,31 @@ const TransferPage = () => {
     if (amount && parseInt(amount) > 0) {
       const transferAmount = parseInt(amount);
       
-      // 5000원 이상 이체 시 챌린지 성공 처리
-      if (transferAmount >= 5000) {
-        // 챌린지 성공 상태를 localStorage에 저장
-        const currentProgress = JSON.parse(localStorage.getItem('challenge-progress') || '{"completed": [1,2,3], "current": 4}');
-        if (!currentProgress.completed.includes(currentProgress.current)) {
-          currentProgress.completed.push(currentProgress.current);
-          currentProgress.current = currentProgress.current + 1;
-          localStorage.setItem('challenge-progress', JSON.stringify(currentProgress));
-        }
+      // 오늘의 누적 입금 금액 가져오기
+      const today = new Date().toDateString();
+      const dailyTransfers = JSON.parse(localStorage.getItem('daily-transfers') || '{}');
+      const todayTotal = dailyTransfers[today] || 0;
+      const newTotal = todayTotal + transferAmount;
+      
+      // 누적 금액 저장
+      dailyTransfers[today] = newTotal;
+      localStorage.setItem('daily-transfers', JSON.stringify(dailyTransfers));
+      
+      // 5000원 이상 누적 시 챌린지 성공
+      if (newTotal >= 5000) {
+        // 챌린지 성공 상태를 localStorage에 저장 (2일차만 완료된 상태에서 현재 진행중인 3일차 완료)
+        const currentProgress = {"completed": [2, 3], "current": 4};
+        localStorage.setItem('challenge-progress', JSON.stringify(currentProgress));
         
-        // 축하 페이지로 이동
-        navigate('/action');
+        // 축하 페이지로 이동 (preloaded 애니메이션 데이터와 함께)
+        navigate('/action', { 
+          state: { preloadedAnimation } 
+        });
       } else {
-        alert(`${formatAmount(amount)}원 이체가 완료되었습니다.\n챌린지 성공을 위해서는 5,000원 이상 이체해주세요.`);
-        navigate('/payback');
+        // 부족한 금액 계산 및 알림
+        const remaining = 5000 - newTotal;
+        setRemainingAmount(remaining);
+        setShowInsufficientAlert(true);
       }
     }
   };
@@ -61,6 +93,16 @@ const TransferPage = () => {
   const formatAmount = (value: string) => {
     if (!value) return '';
     return parseInt(value).toLocaleString();
+  };
+
+  const handleQuickTransfer = () => {
+    setAmount(remainingAmount.toString());
+    setShowInsufficientAlert(false);
+  };
+
+  const handleCloseAlert = () => {
+    setShowInsufficientAlert(false);
+    navigate('/payback');
   };
 
   return (
@@ -97,6 +139,8 @@ const TransferPage = () => {
           </S.MyAccountRow>
         </S.MyAccountSection>
 
+      
+
         <S.ButtonContainer>
           <CommonButton 
             variant="primary" 
@@ -115,8 +159,20 @@ const TransferPage = () => {
           onClose={handleKeyboardClose}
         />
       )}
+
+      {/* 부족한 금액 알림 모달 */}
+      <Modal
+        isOpen={showInsufficientAlert}
+        onClose={handleCloseAlert}
+        title="안내"
+        content={`오늘 페이백을 받으려면\n${remainingAmount.toLocaleString()}원 더 입금해야 해요!`}
+        buttonText={`${remainingAmount.toLocaleString()}원 입금하기`}
+        onButtonClick={handleQuickTransfer}
+      />
     </S.Container>
   );
-};
+});
+
+TransferPage.displayName = 'TransferPage';
 
 export default TransferPage;

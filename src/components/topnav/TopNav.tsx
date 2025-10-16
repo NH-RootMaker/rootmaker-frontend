@@ -1,3 +1,4 @@
+import React from 'react';
 import * as S from './TopNav.styles';
 
 import type { HeaderProps } from './TopNav.types';
@@ -9,7 +10,7 @@ import BackIcon from '@/assets/icons/Back.svg?react';
 /**
  * 공통 헤더 컴포넌트
  */
-const TopNav : React.FC<HeaderProps> = ({
+const TopNav : React.FC<HeaderProps> = React.memo(({
   isBack = false,
   // isClose = false,
   title,
@@ -70,6 +71,8 @@ const TopNav : React.FC<HeaderProps> = ({
       </S.RightSection>
     </S.Container>
   );
-};
+});
+
+TopNav.displayName = 'TopNav';
 
 export default TopNav;
