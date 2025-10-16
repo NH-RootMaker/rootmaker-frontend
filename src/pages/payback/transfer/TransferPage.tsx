@@ -14,9 +14,8 @@ const TransferPage = React.memo(() => {
   const [preloadedAnimation, setPreloadedAnimation] = useState(null);
   const [showInsufficientAlert, setShowInsufficientAlert] = useState(false);
   const [remainingAmount, setRemainingAmount] = useState(0);
-  const [todayTotal, setTodayTotal] = useState(0);
 
-  // ActionPage에서 사용할 이미지와 애니메이션 미리 로드 및 오늘 누적 금액 불러오기
+  // ActionPage에서 사용할 이미지와 애니메이션 미리 로드
   useEffect(() => {
     const actionPageImages = ['/wateringset.webp'];
     
@@ -31,12 +30,6 @@ const TransferPage = React.memo(() => {
     }).catch(error => {
       console.warn('Preloading failed:', error);
     });
-
-    // 오늘의 누적 입금 금액 불러오기
-    const today = new Date().toDateString();
-    const dailyTransfers = JSON.parse(localStorage.getItem('daily-transfers') || '{}');
-    const currentTotal = dailyTransfers[today] || 0;
-    setTodayTotal(currentTotal);
   }, []);
 
   const handleBackClick = () => {
@@ -77,7 +70,6 @@ const TransferPage = React.memo(() => {
       // 누적 금액 저장
       dailyTransfers[today] = newTotal;
       localStorage.setItem('daily-transfers', JSON.stringify(dailyTransfers));
-      setTodayTotal(newTotal);
       
       // 5000원 이상 누적 시 챌린지 성공
       if (newTotal >= 5000) {
