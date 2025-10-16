@@ -52,9 +52,9 @@ export const KeyRow = styled.div<{ isLetterRow?: boolean }>`
 `;
 
 export const Key = styled.button<{ $isEmpty?: boolean; $isDelete?: boolean }>`
-  ${(props) => props.theme.fonts.body.l600}
+  ${(props) => props.theme.fonts.body.xl500}
   flex: 1;
-  height: 50px;
+  height: 35px;
   border: 1px solid ${(props) => props.theme.colors.grayScale.gy200};
   border-radius: 8px;
   background-color: ${(props) => props.theme.colors.grayScale.white};
@@ -73,19 +73,5 @@ export const Key = styled.button<{ $isEmpty?: boolean; $isDelete?: boolean }>`
   `}
 `;
 
-export const LetterKey = styled.button`
-  ${(props) => props.theme.fonts.body.s400}
-  width: 35px;
-  height: 35px;
-  border: 1px solid ${(props) => props.theme.colors.grayScale.gy200};
-  border-radius: 6px;
-  background-color: ${(props) => props.theme.colors.grayScale.white};
-  color: ${(props) => props.theme.colors.grayScale.gy600};
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 2px;
-`;
 
 export const index = styled.div``;

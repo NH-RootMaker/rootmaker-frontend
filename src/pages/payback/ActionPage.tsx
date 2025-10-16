@@ -1,15 +1,40 @@
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './ActionPage.styles';
 import TopNav from '@/components/topnav';
 import SnakeRoadmap from '@/components/snake-roadmap';
 import type { RoadmapNode } from '@/components/snake-roadmap/SnakeRoadmap';
 import CommonButton from '@/components/common-button';
+import Lottie from 'lottie-react';
 
-const ActionPage = () => {
+const ActionPage = React.memo(() => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const [confettiAnimation, setConfettiAnimation] = useState(null);
     
     // 로그인 상태 확인
     const isLoggedIn = localStorage.getItem('user-logged-in') === 'true';
+
+    // Lottie 애니메이션 데이터 로드 (preloaded 데이터 우선 사용)
+    useEffect(() => {
+        const preloadedAnimation = location.state?.preloadedAnimation;
+        
+        if (preloadedAnimation) {
+            // preloaded 데이터가 있으면 즉시 사용
+            setConfettiAnimation(preloadedAnimation);
+        } else {
+            // fallback: 직접 로드
+            fetch('/Confetti Effects Lottie Animation.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => setConfettiAnimation(data))
+                .catch(error => console.error('Failed to load Lottie animation:', error));
+        }
+    }, [location.state]);
 
     const handleBackClick = () => {
         navigate('/');
@@ -21,8 +46,8 @@ const ActionPage = () => {
 
     // 9개 노드 생성 (PaybackPage와 동일)
     const generateMonthlyNodes = (): RoadmapNode[] => {
-        // localStorage에서 챌린지 진행 상태 읽기
-        const challengeProgress = JSON.parse(localStorage.getItem('challenge-progress') || '{"completed": [1,2,3], "current": 4}');
+        // 2일차만 완료된 상태로 초기화
+        const challengeProgress = {"completed": [2], "current": 3};
         
         return Array.from({ length: 9 }, (_, index) => {
             const day = index + 1;
@@ -77,7 +102,7 @@ const ActionPage = () => {
                     <S.CelebrationText>
                         <S.MainCelebrationText>미션 성공</S.MainCelebrationText>
                         <S.WateringCanImage>
-                            <img src="/물뿌리개 7.webp" alt="물뿌리개" />
+                            <img src="/wateringset.webp" alt="물뿌리개" />
                             <S.ChipsContainer>
                                 <S.Chip>청약 나무에게 1회 물주기 완료</S.Chip>
                                 <S.SecondaryChip>농협 기프티콕 지급 완료</S.SecondaryChip>
@@ -97,13 +122,22 @@ const ActionPage = () => {
                     </S.ButtonContainer>
                 </S.CelebrationContent>
 
-                {/* 폭죽 효과 */}
-                <S.FireworkEffect className="firework-1" />
-                <S.FireworkEffect className="firework-2" />
-                <S.FireworkEffect className="firework-3" />
+                {/* Lottie 폭죽 애니메이션 */}
+                {confettiAnimation && (
+                    <S.LottieContainer>
+                        <Lottie 
+                            animationData={confettiAnimation} 
+                            loop={true}
+                            autoplay={true}
+                            style={{ width: '100%', height: '100%' }}
+                        />
+                    </S.LottieContainer>
+                )}
             </S.CelebrationOverlay>
         </S.Container>
     );
-};
+});
+
+ActionPage.displayName = 'ActionPage';
 
 export default ActionPage;

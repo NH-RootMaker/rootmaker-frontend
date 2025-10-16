@@ -14,13 +14,13 @@ export const NodeContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 20px;
+  margin-bottom: 30px;
 `;
 
 export const NodeButton = styled.div<{ $clickable?: boolean }>`
   position: relative;
-  width: 95px;
-  height: 95px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +29,9 @@ export const NodeButton = styled.div<{ $clickable?: boolean }>`
   > img {
     width: 100%;
     height: 100%;
+    margin-top: 25px;
     object-fit: contain;
+    border-radius: 50%;
   }
 
   ${props => props.$clickable && `
@@ -42,7 +44,7 @@ export const NodeButton = styled.div<{ $clickable?: boolean }>`
 
 export const NodeContent = styled.div<{ isLeft?: boolean }>`
   position: absolute;
-  top: 50%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -54,11 +56,11 @@ export const NodeContent = styled.div<{ isLeft?: boolean }>`
 
 export const WateringIcon = styled.div`
   position: relative;
-  top: 9px;
+  top: 5px;
   
   img {
-    width: 65px;
-    height: 65px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
     transform: rotate(-15deg);
   }
@@ -74,28 +76,28 @@ export const AmountText = styled.div`
 
 export const RoundNumber = styled.div`
   position: relative;
-  ${(props) => props.theme.fonts.header.h1}
+  ${(props) => props.theme.fonts.header.h2}
   color: ${props => props.theme.colors.transparency.gn50};
-  top: 9px;
+  top: 5px;
 `;
 
 export const PaybackPointText = styled.div`
   position: relative;
   ${(props) => props.theme.fonts.body.m600}
   color: ${props => props.theme.colors.transparency.gn50};
-  top: 30px;
+  top: 22px;
   white-space: nowrap;
 `;
 
 export const CheckSticker = styled.div`
   position: absolute;
-  top: 50px;
-  right: 3px;
+  top: 60px;
+  right: 5px;
   z-index: 10;
   
   img {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
   }
 `;
 

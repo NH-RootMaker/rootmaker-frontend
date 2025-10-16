@@ -9,7 +9,7 @@ import type { RoadmapNode } from '@/components/snake-roadmap/SnakeRoadmap';
 
 const PaybackPage = () => {
     const navigate = useNavigate();
-    const [shouldShowToast, setShouldShowToast] = useState(true);
+    const [shouldShowToast, setShouldShowToast] = useState(false);
     const [isTypeTestModalOpen, setIsTypeTestModalOpen] = useState(false);
     
     // 로그인 상태 확인
@@ -33,10 +33,19 @@ const PaybackPage = () => {
         navigate('/transfer');
     };
 
-    // empty 상태일 때 모달 표시
+    // empty 상태일 때 모달 표시 및 하루에 한 번만 토스트 표시
     useEffect(() => {
         if (!isLoggedIn) {
             setIsTypeTestModalOpen(true);
+        } else {
+            // 하루에 한 번만 토스트 표시 로직
+            const today = new Date().toDateString();
+            const lastToastDate = localStorage.getItem('last-toast-date');
+            
+            if (lastToastDate !== today) {
+                setShouldShowToast(true);
+                localStorage.setItem('last-toast-date', today);
+            }
         }
     }, [isLoggedIn]);
 
@@ -44,8 +53,8 @@ const PaybackPage = () => {
 
     // 9개 노드 생성
     const generateMonthlyNodes = (): RoadmapNode[] => {
-        // localStorage에서 챌린지 진행 상태 읽기
-        const challengeProgress = JSON.parse(localStorage.getItem('challenge-progress') || '{"completed": [1,2,3], "current": 4}');
+        // 2일차만 완료된 상태로 초기화
+        const challengeProgress = {"completed": [2], "current": 3};
         
         return Array.from({ length: 9 }, (_, index) => {
             const day = index + 1;

@@ -83,8 +83,16 @@ export const MyAccountSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   margin-top: -40px;
+`;
+
+export const TodayTotalSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  margin-top: -38px;
 `;
 
 export const MyAccountRow = styled.div`

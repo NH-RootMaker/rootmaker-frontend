@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './SnakeRoadmap.styles';
 import CheckGN from '@/assets/icons/CheckGN.svg';
-import RoadButton from '@/assets/icons/RoadButton.svg';
 
 export interface RoadmapNode {
   id: string;
@@ -42,7 +41,7 @@ const SnakeRoadmap: React.FC<SnakeRoadmapProps> = ({
     const horizontalSpacing = windowWidth <= 480 ? 35 : windowWidth <= 768 ? 36 : 38; // 가로 간격 (%)
     const verticalSpacing = windowWidth <= 480 ? 120 : windowWidth <= 768 ? 130 : 135; // 세로 간격 (px)
     const startX = windowWidth <= 480 ? 15 : windowWidth <= 768 ? 14 : 12.5; // 시작 X 위치 (%)
-    const startY = 40; // 시작 Y 위치 (px)
+    const startY = 20; // 시작 Y 위치 (px)
 
     // 지그재그: 홀수 줄은 순서 반대
     const actualCol = row % 2 === 0 ? col : (nodesPerRow - 1 - col);
@@ -113,7 +112,7 @@ const SnakeRoadmap: React.FC<SnakeRoadmapProps> = ({
               }}
               $clickable={!node.completed}
             >
-              <img src={RoadButton} alt="로드 버튼" />
+              <img src="/stamp_circle.webp" alt="스탬프 원형" />
               {node.completed ? (
                 <S.NodeContent>
                   <S.WateringIcon>

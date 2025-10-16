@@ -1,19 +1,42 @@
 import { createBrowserRouter } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import type { RouteObject } from 'react-router-dom';
 import Layout from '../layouts/Layout';
-import HomePage from '../pages/personality-test/test-main/TestHomePage';
-import OnboardingPage from '../pages/onboarding/OnboardingPage';
-import LoginPage from '../pages/onboarding/login/LoginPage';
-import TestPage from '../pages/personality-test/test/TestPage';
-import ResultPage from '../pages/personality-test/result/ResultPage';
 import ErrorPage from '../pages/ErrorPage';
-import BufferPage from '../pages/buffer-account/BufferPage';
-import BufferEmptyPage from '../pages/buffer-account/empty/BufferEmptyPage';
-import BufferRouterPage from '../pages/buffer-account/BufferRouterPage';
-import PaybackPage from '../pages/payback/roadmap/PaybackPage';
-import ReportPage from '../pages/report/ReportPage';
-import TransferPage from '../pages/payback/transfer/TransferPage';
-import ActionPage from '@/pages/payback/ActionPage';
+
+// Lazy load components for better performance
+const HomePage = lazy(() => import('../pages/personality-test/test-main/TestHomePage'));
+const OnboardingPage = lazy(() => import('../pages/onboarding/OnboardingPage'));
+const LoginPage = lazy(() => import('../pages/onboarding/login/LoginPage'));
+const TestPage = lazy(() => import('../pages/personality-test/test/TestPage'));
+const ResultPage = lazy(() => import('../pages/personality-test/result/ResultPage'));
+const BufferPage = lazy(() => import('../pages/buffer-account/BufferPage'));
+const BufferEmptyPage = lazy(() => import('../pages/buffer-account/empty/BufferEmptyPage'));
+const BufferRouterPage = lazy(() => import('../pages/buffer-account/BufferRouterPage'));
+const PaybackPage = lazy(() => import('../pages/payback/roadmap/PaybackPage'));
+const ReportPage = lazy(() => import('../pages/report/ReportPage'));
+const TransferPage = lazy(() => import('../pages/payback/transfer/TransferPage'));
+const ActionPage = lazy(() => import('@/pages/payback/ActionPage'));
+
+// Loading component
+const LoadingFallback = () => (
+  <div style={{ 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    height: '100vh',
+    backgroundColor: '#f8f9fa'
+  }}>
+    <div>로딩 중...</div>
+  </div>
+);
+
+// Wrapper component for Suspense
+const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<LoadingFallback />}>
+    {children}
+  </Suspense>
+);
 
 const routes: RouteObject[] = [
   {
@@ -23,51 +46,51 @@ const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <OnboardingPage />,
+        element: <SuspenseWrapper><OnboardingPage /></SuspenseWrapper>,
       },
       {
         path: '/home',
-        element: <HomePage />,
+        element: <SuspenseWrapper><HomePage /></SuspenseWrapper>,
       },
       {
         path: '/login',
-        element: <LoginPage />,
+        element: <SuspenseWrapper><LoginPage /></SuspenseWrapper>,
       },
       {
         path: '/test',
-        element: <TestPage />,
+        element: <SuspenseWrapper><TestPage /></SuspenseWrapper>,
       },
       {
         path: '/result',
-        element: <ResultPage />,
+        element: <SuspenseWrapper><ResultPage /></SuspenseWrapper>,
       },
       {
         path: '/buffer',
-        element: <BufferRouterPage />,
+        element: <SuspenseWrapper><BufferRouterPage /></SuspenseWrapper>,
       },
       {
         path: '/my-subscription',
-        element: <BufferPage />,
+        element: <SuspenseWrapper><BufferPage /></SuspenseWrapper>,
       },
       {
         path: '/buffer-empty',
-        element: <BufferEmptyPage />,
+        element: <SuspenseWrapper><BufferEmptyPage /></SuspenseWrapper>,
       },
       {
         path: '/payback',
-        element: <PaybackPage />,
+        element: <SuspenseWrapper><PaybackPage /></SuspenseWrapper>,
       },
       {
         path: '/report',
-        element: <ReportPage />,
+        element: <SuspenseWrapper><ReportPage /></SuspenseWrapper>,
       },
       {
         path: '/transfer',
-        element: <TransferPage />,
+        element: <SuspenseWrapper><TransferPage /></SuspenseWrapper>,
       },
       {
         path: '/action',
-        element: <ActionPage />,
+        element: <SuspenseWrapper><ActionPage /></SuspenseWrapper>,
       },
     ],
   },
