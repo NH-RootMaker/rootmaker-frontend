@@ -22,12 +22,50 @@ const ActionPage = lazy(() => import('@/pages/payback/ActionPage'));
 const LoadingFallback = () => (
   <div style={{ 
     display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
+    flexDirection: 'column',
     height: '100vh',
     backgroundColor: '#f8f9fa'
   }}>
-    <div>로딩 중...</div>
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      height: '62px',
+      backgroundColor: 'white',
+      zIndex: 1000,
+      borderBottom: '1px solid #e0e0e0'
+    }} />
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+      marginTop: '62px',
+      gap: '16px',
+      transform: 'translateY(-50px)'
+    }}>
+      <div style={{
+        width: '40px',
+        height: '40px',
+        border: '3px solid #e0e0e0',
+        borderTop: '3px solid #42CE79',
+        borderRadius: '50%',
+        animation: 'spin 1s linear infinite'
+      }} />
+      <div style={{
+        fontSize: '16px',
+        color: '#42CE79',
+        fontWeight: '500'
+      }}>로딩 중...</div>
+    </div>
+    <style>{`
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `}</style>
   </div>
 );
 
