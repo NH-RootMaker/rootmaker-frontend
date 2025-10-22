@@ -8,6 +8,28 @@ import { useLoadingStore } from '@/stores/useLoadingStore';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+// 중요한 이미지들을 미리 로드
+const preloadCriticalImages = () => {
+  const criticalImages = [
+    '/stamp_circle.webp',
+    '/blossom.webp',
+    '/blossom_3.webp',
+    '/blossom_4.webp',
+    '/maple.webp',
+    '/sprout.webp',
+    '/growth 1.webp',
+    '/NotYet.webp',
+  ];
+  
+  criticalImages.forEach(src => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = src;
+    document.head.appendChild(link);
+  });
+};
+
 
 
 /**
@@ -21,6 +43,11 @@ export default function Layout() {
   const { isLoading, loadingMessage, setLoading } = useLoadingStore();
   const location = useLocation();
   const [isPageReady, setIsPageReady] = useState(false);
+
+  // 앱 시작 시 중요 이미지들 preload
+  useEffect(() => {
+    preloadCriticalImages();
+  }, []);
 
   // 페이지 변경 시 로딩 시작 및 초기화
   useEffect(() => {

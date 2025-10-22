@@ -117,11 +117,11 @@ const SnakeRoadmap: React.FC<SnakeRoadmapProps> = ({
           >
             <S.NodeButton 
               onClick={() => {
-                if ((isNextMission || node.current) && onNodeClick) {
+                if (isNextMission && onNodeClick) {
                   onNodeClick(node.id);
                 }
               }}
-              $clickable={isNextMission || node.current}
+              $clickable={isNextMission}
               $isCurrent={node.current}
               $isNextMission={isNextMission}
             >

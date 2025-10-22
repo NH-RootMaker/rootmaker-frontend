@@ -87,7 +87,7 @@ export const AmountText = styled.div`
 export const RoundNumber = styled.div<{ $isCurrent?: boolean; $isNextMission?: boolean }>`
   position: relative;
   ${(props) => props.theme.fonts.header.h2}
-  color: ${props => (props.$isCurrent || props.$isNextMission) ? props.theme.colors.grayScale.white : props.theme.colors.transparency.gn50};
+  color: ${props => (props.$isNextMission) ? props.theme.colors.grayScale.white : props.theme.colors.transparency.gn50};
   top: 5px;
 
 `;

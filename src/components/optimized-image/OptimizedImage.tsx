@@ -41,12 +41,23 @@ const OptimizedImage = ({
   const [isIntersecting, setIsIntersecting] = useState(false);
   const { setLoading } = useLoadingStore();
 
-  // Priority 이미지는 즉시 로드
+  // 이미지 preload 최적화
+  const preloadImage = (src: string) => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = src;
+    document.head.appendChild(link);
+  };
+
+  // Priority 이미지는 즉시 로드 및 preload
   useEffect(() => {
     if (priority) {
       setIsIntersecting(true);
+      // 중요한 이미지는 preload
+      preloadImage(src);
     }
-  }, [priority]);
+  }, [priority, src]);
 
   // Intersection Observer for lazy loading
   useEffect(() => {
@@ -143,8 +154,9 @@ const OptimizedImage = ({
           onLoad={handleLoad}
           onError={handleError}
           $isLoaded={isLoaded}
-          loading={loading}
+          loading={priority ? 'eager' : loading}
           decoding="async"
+          fetchPriority={priority ? 'high' : 'auto'}
         />
       ) : (
         <div data-src={src} style={{ width, height }} />
