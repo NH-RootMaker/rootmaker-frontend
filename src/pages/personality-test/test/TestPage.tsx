@@ -49,7 +49,7 @@ export default function TestPage() {
       console.log('테스트 완료, 답변:', updatedAnswers);
       console.log('답변 개수:', updatedAnswers.length);
       
-      navigate('/result', { 
+      navigate('/test-result', { 
         state: { answers: updatedAnswers, username },
         replace: true 
       });

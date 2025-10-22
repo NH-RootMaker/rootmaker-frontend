@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './BufferEmptyPage.styles';
 import TopNav from '@/components/topnav';
@@ -14,34 +14,23 @@ import { SUBSCRIPTION_PRODUCT_INFO } from '@/constants/product-info';
 const BufferEmptyPage = () => {
     const navigate = useNavigate();
     const [isInfoExpanded, setIsInfoExpanded] = useState(false);
-    const [isTypeTestModalOpen, setIsTypeTestModalOpen] = useState(false);
+    const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
 
     const handleBackClick = () => {
         navigate('/home'); 
     };
 
     const handleSignupClick = () => {
-        // 청약 가입 페이지로 이동
-        console.log('청약 가입하기 클릭');
+        setIsSignupModalOpen(true);
     };
 
     const handleExpandChange = (isExpanded: boolean) => {
         setIsInfoExpanded(isExpanded);
     };
 
-    const handleTypeTestModalClose = () => {
-        setIsTypeTestModalOpen(false);
+    const handleSignupModalClose = () => {
+        setIsSignupModalOpen(false);
     };
-
-    const handleGoToTypeTest = () => {
-        setIsTypeTestModalOpen(false);
-        navigate('/home');
-    };
-
-    // 페이지 로드 시 모달 표시
-    useEffect(() => {
-        setIsTypeTestModalOpen(true);
-    }, []);
 
     return (
         <S.Container>
@@ -99,13 +88,12 @@ const BufferEmptyPage = () => {
             <BottomNav />
 
             <Modal
-                isOpen={isTypeTestModalOpen}
-                onClose={handleTypeTestModalClose}
+                isOpen={isSignupModalOpen}
+                onClose={handleSignupModalClose}
                 title="안내"
-                content={`청약 상품 추천을 위해서는 당신의 유형이 필요해요.
-원활한 진행을 위해 청약 테스트 먼저 진행해 주세요!`}
-                buttonText="청약 유형 테스트하러 가기"
-                onButtonClick={handleGoToTypeTest}
+                content="청약 가입은 농협 지점에서 가능합니다."
+                buttonText="확인"
+                onButtonClick={handleSignupModalClose}
             />
         </S.Container>
     );

@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { computeResult, type ResultKey } from '@/utils/result-calculator';
 import type { Answer } from '@/types/personality-test.types';
 import { getResultTypeInfo } from '@/constants/result-types';
+import { saveUserType, saveTestResult } from '@/services/api';
 import CommonButton from '@/components/common-button';
-import Modal from '@/components/modal';
 import OptimizedImage from '@/components/optimized-image';
+import LoadingScreen from '@/components/loading-screen';
 import * as S from './ResultPage.styles';
 import TopNav from '@/components/topnav/TopNav';
 
@@ -13,7 +14,8 @@ const ResultPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [result, setResult] = useState<{ winner: ResultKey; score: Record<ResultKey, number> } | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
     const answers = location.state?.answers as Answer[];
@@ -28,42 +30,72 @@ const ResultPage = () => {
     const calculatedResult = computeResult(answers);
     setResult(calculatedResult);
     
-    // 테스트 결과를 localStorage에 저장
-    const testResult = {
-      type: calculatedResult.winner,
-      score: calculatedResult.score,
-      username: username,
-      date: new Date().toISOString(),
-      answers: answers
+    // API로 테스트 결과 저장
+    const saveResultToAPI = async () => {
+      setIsSaving(true);
+      setSaveError(null);
+      
+      try {
+        // 사용자 유형 저장
+        await saveUserType(username, calculatedResult.winner);
+        
+        // 테스트 결과 저장
+        const testResult = {
+          name: username,
+          type: calculatedResult.winner,
+          score: calculatedResult.score,
+          answers: answers
+        };
+        await saveTestResult(testResult);
+        
+        // 백업용 localStorage 저장
+        const backupResult = {
+          type: calculatedResult.winner,
+          score: calculatedResult.score,
+          username: username,
+          date: new Date().toISOString(),
+          answers: answers
+        };
+        localStorage.setItem('personality-test-result', JSON.stringify(backupResult));
+        
+      } catch (error) {
+        console.error('테스트 결과 저장 실패:', error);
+        // setSaveError('결과 저장에 실패했습니다. 다시 시도해주세요.'); // 화면에 표시하지 않음
+        
+        // API 실패 시 localStorage에라도 저장
+        const fallbackResult = {
+          type: calculatedResult.winner,
+          score: calculatedResult.score,
+          username: username,
+          date: new Date().toISOString(),
+          answers: answers
+        };
+        localStorage.setItem('personality-test-result', JSON.stringify(fallbackResult));
+      } finally {
+        setIsSaving(false);
+      }
     };
-    localStorage.setItem('personality-test-result', JSON.stringify(testResult));
+
+    saveResultToAPI();
   }, [location.state, navigate]);
 
   const username = location.state?.username || '익명';
 
-  const handleRetakeTest = () => {
-    navigate('/home', { replace: true });
+  const handleServiceClick= () => {
+    navigate('/payback', { replace: true });
   };
+
 
   const handleGoHome = () => {
     navigate('/home', { replace: true });
   };
 
-  const handleServiceClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    navigate('/home', { replace: true });
-  };
 
   if (!result) {
     return (
-      <div style={{ padding: '40px', textAlign: 'center' }}>
-        <h1>결과를 계산하고 있습니다...</h1>
-        <p>답변 개수: {location.state?.answers?.length || 0}</p>
-      </div>
+      <LoadingScreen 
+        message={isSaving ? "결과를 저장하는 중..." : "결과를 계산하고 있습니다..."} 
+      />
     );
   }
 
@@ -72,6 +104,19 @@ const ResultPage = () => {
   return (
     <S.ResultContainer>
       <TopNav isBack title='나의 유형' onBackClick={handleGoHome} whiteBackground />
+      {saveError && (
+        <div style={{ 
+          padding: '10px', 
+          margin: '10px', 
+          backgroundColor: '#fff2f0', 
+          border: '1px solid #ffccc7',
+          borderRadius: '6px',
+          color: '#ff4d4f',
+          fontSize: '14px'
+        }}>
+          {saveError}
+        </div>
+      )}
       <S.ResultHeader>
         <S.ResultTitle>{username}님은</S.ResultTitle>
         <S.ResultType>
@@ -95,21 +140,16 @@ const ResultPage = () => {
       </S.ResultImageContainer>
 
       <S.ButtonContainer>
-        <CommonButton variant="secondary" onClick={handleRetakeTest} width="100%">
-          다시 테스트하기
-        </CommonButton>
-        <CommonButton variant="primary" onClick={handleServiceClick} width="100%">
-          {resultInfo.name.split(' ')[1]}와 단짝인 청약 추천 보러가기
+        <CommonButton 
+          variant="primary" 
+          onClick={handleServiceClick} 
+          width="100%"
+          customColor={resultInfo.color}
+        >
+          {resultInfo.name.split(' ')[1]}를 위한 맞춤 로드맵 보러가기
         </CommonButton>
       </S.ButtonContainer>
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        title="서비스 준비중"
-        content={`${resultInfo.name.split(' ')[1]} 맞춤 서비스를 준비하고 있습니다!\n곧 만나뵐 수 있도록 열심히 개발 중이에요!\n\n- 두둠칫 개발자 올림 -`}
-        buttonText="확인"
-      />
     </S.ResultContainer>
   );
 };

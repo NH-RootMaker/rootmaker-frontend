@@ -1,10 +1,11 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './BottomNav.styles';
-import { NAV_ITEMS } from './nav-items';
+import { getNavItems } from './nav-items';
 
 const BottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const navItems = getNavItems(); // 동적으로 네비게이션 아이템 가져오기
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -12,7 +13,7 @@ const BottomNav = () => {
 
   return (
     <S.Nav>
-      {NAV_ITEMS.map((item) => {
+      {navItems.map((item) => {
         let isActive = location.pathname === item.path;
         
         // buffer 관련 페이지들에서 coin 아이콘 활성화

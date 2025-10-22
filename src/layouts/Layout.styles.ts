@@ -10,11 +10,10 @@ export const Container = styled.div`
   background-color: ${(props) => props.theme.colors.grayScale.white};
   position: relative;
   padding: 0;
-  padding-bottom: 80px;
 `;
 
 export const Content = styled.div`
   flex: 1;
   width: 100%;
-  overflow-y: auto;
+  padding-bottom: 80px; /* BottomNav 공간 확보 */
 `;

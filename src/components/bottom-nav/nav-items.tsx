@@ -1,4 +1,5 @@
 import type { NavItem } from './nav-types';
+import { getPersonalityNavPath } from '@/utils/test-status';
 
 // 네비게이션 아이콘 import
 import CoinSvg from '@/assets/icons/nav/Coin.svg?react';
@@ -20,7 +21,7 @@ const MapActiveIcon = () => <MapActiveSvg width="24" height="24" />;
 const ReportIcon = () => <ReportSvg width="24" height="24" />;
 const ReportActiveIcon = () => <ReportActiveSvg width="24" height="24" />;
 
-export const NAV_ITEMS: NavItem[] = [
+export const getNavItems = (): NavItem[] => [
   {
     id: 'subscription',
     path: '/buffer',
@@ -30,7 +31,7 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     id: 'personality',
-    path: '/home',
+    path: getPersonalityNavPath(), // 테스트 완료 여부에 따라 동적 경로
     label: '나의 유형',
     defaultIcon: <PeopleIcon />,
     activeIcon: <PeopleActiveIcon />,
@@ -50,3 +51,6 @@ export const NAV_ITEMS: NavItem[] = [
     activeIcon: <ReportActiveIcon />,
   },
 ];
+
+// 기존 호환성을 위한 export (deprecated)
+export const NAV_ITEMS: NavItem[] = getNavItems();

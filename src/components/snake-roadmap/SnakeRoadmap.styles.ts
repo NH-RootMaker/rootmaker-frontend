@@ -17,7 +17,7 @@ export const NodeContainer = styled.div`
   margin-bottom: 30px;
 `;
 
-export const NodeButton = styled.div<{ $clickable?: boolean; $isCurrent?: boolean }>`
+export const NodeButton = styled.div<{ $clickable?: boolean; $isCurrent?: boolean; $isNextMission?: boolean }>`
   position: relative;
   width: 80px;
   height: 80px;
@@ -27,8 +27,8 @@ export const NodeButton = styled.div<{ $clickable?: boolean; $isCurrent?: boolea
   cursor: ${props => props.$clickable ? 'pointer' : 'default'};
   
   > img {
-    width: ${props => props.$isCurrent ? '110%' : '100%'};
-    height: ${props => props.$isCurrent ? '110%' : '100%'};
+    width: ${props => props.$isNextMission ? '110%' : '100%'};
+    height: ${props => props.$isNextMission ? '110%' : '100%'};
     margin-top: 25px;
     object-fit: contain;
     border-radius: 50%;
@@ -84,17 +84,18 @@ export const AmountText = styled.div`
   white-space: nowrap;
 `;
 
-export const RoundNumber = styled.div<{ $isCurrent?: boolean }>`
+export const RoundNumber = styled.div<{ $isCurrent?: boolean; $isNextMission?: boolean }>`
   position: relative;
   ${(props) => props.theme.fonts.header.h2}
-  color: ${props => props.$isCurrent ? props.theme.colors.grayScale.white : props.theme.colors.transparency.gn50};
+  color: ${props => (props.$isCurrent || props.$isNextMission) ? props.theme.colors.grayScale.white : props.theme.colors.transparency.gn50};
   top: 5px;
+
 `;
 
-export const PaybackPointText = styled.div<{ $isCurrent?: boolean }>`
+export const PaybackPointText = styled.div<{ $isCurrent?: boolean; $isNextMission?: boolean }>`
   position: relative;
   ${(props) => props.theme.fonts.body.m600}
-  color: ${props => props.$isCurrent ? props.theme.colors.grayScale.white : props.theme.colors.transparency.gn75};
+  color: ${props => props.$isNextMission ? props.theme.colors.grayScale.white : props.theme.colors.transparency.gn75};
   top: 22px;
   white-space: nowrap;
 `;

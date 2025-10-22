@@ -5,6 +5,8 @@ import CommonButton from '@/components/common-button';
 import VirtualKeyboard from '@/components/virtual-keyboard';
 import Modal from '@/components/modal';
 import { preloadImages, preloadLottieAnimation } from '@/utils/imagePreloader';
+import { saveHabitLog } from '@/services/api';
+import { recordMissionCompletion } from '@/utils/mission-status';
 import * as S from './TransferPage.styles';
 
 const TransferPage = React.memo(() => {
@@ -14,6 +16,7 @@ const TransferPage = React.memo(() => {
   const [preloadedAnimation, setPreloadedAnimation] = useState(null);
   const [showInsufficientAlert, setShowInsufficientAlert] = useState(false);
   const [remainingAmount, setRemainingAmount] = useState(0);
+  const [isSavingHabit, setIsSavingHabit] = useState(false);
 
   // ActionPage에서 사용할 이미지와 애니메이션 미리 로드
   useEffect(() => {
@@ -57,7 +60,7 @@ const TransferPage = React.memo(() => {
     setIsKeyboardVisible(false);
   };
 
-  const handleTransfer = () => {
+  const handleTransfer = async () => {
     if (amount && parseInt(amount) > 0) {
       const transferAmount = parseInt(amount);
       
@@ -73,6 +76,25 @@ const TransferPage = React.memo(() => {
       
       // 5000원 이상 누적 시 챌린지 성공
       if (newTotal >= 5000) {
+        setIsSavingHabit(true);
+        
+        try {
+          // 사용자 정보 가져오기
+          const username = localStorage.getItem('user-name') || '사용자';
+          const accountNumber = localStorage.getItem('account-number') || '123-4567-8910';
+          
+          // API로 습관 로그 저장 (habitId: 1은 저축 습관이라고 가정)
+          await saveHabitLog(username, accountNumber, {
+            habitId: 1,
+            isSuccess: true
+          });
+          
+          console.log('습관 로그 저장 성공');
+        } catch (error) {
+          console.error('습관 로그 저장 실패:', error);
+          // API 실패해도 프론트 진행 계속
+        }
+        
         // 현재 챌린지 진행 상황 가져오기
         const savedProgress = localStorage.getItem('challenge-progress');
         const currentProgress = savedProgress 
@@ -82,10 +104,15 @@ const TransferPage = React.memo(() => {
         // 현재 진행 중인 노드를 완료 목록에 추가하고 다음 노드로 이동
         const updatedProgress = {
           completed: [...currentProgress.completed, currentProgress.current],
-          current: currentProgress.current + 1
+          current: Math.min(currentProgress.current + 1, 9) // 다음 노드로 이동 (최대 9번까지)
         };
         
         localStorage.setItem('challenge-progress', JSON.stringify(updatedProgress));
+        
+        // 미션 완료 시간 기록
+        recordMissionCompletion();
+        
+        setIsSavingHabit(false);
         
         // 축하 페이지로 이동 (preloaded 애니메이션 데이터와 함께)
         navigate('/action', { 
@@ -156,9 +183,9 @@ const TransferPage = React.memo(() => {
             variant="primary" 
             width="100%"
             onClick={handleTransfer}
-            disabled={!amount || parseInt(amount) === 0}
+            disabled={!amount || parseInt(amount) === 0 || isSavingHabit}
           >
-            이체하기
+            {isSavingHabit ? '완료 처리 중...' : '이체하기'}
           </CommonButton>
         </S.ButtonContainer>
       </S.Content>

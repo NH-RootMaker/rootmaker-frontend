@@ -32,7 +32,7 @@ export const GlobalStyle = createGlobalStyle`
         user-select: none;
         -webkit-user-select: none;
         width: 100%;
-        height: 100vh;
+        min-height: 100vh;
         overflow-x: hidden;
         margin: 0;
         padding: 0;
@@ -43,7 +43,7 @@ export const GlobalStyle = createGlobalStyle`
     
     #root {
         width: 100%;
-        height: 100vh;
+        min-height: 100vh;
         margin: 0;
         padding: 0;
         overflow-x: hidden;
