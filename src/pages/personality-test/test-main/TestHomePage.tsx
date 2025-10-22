@@ -101,7 +101,7 @@ const HomePage = () => {
 
   const handleViewResult = () => {
     if (savedResult) {
-      navigate('/result', { 
+      navigate('/test-result', { 
         state: { 
           answers: savedResult.answers,
           username: savedResult.username 
