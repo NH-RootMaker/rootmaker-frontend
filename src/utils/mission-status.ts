@@ -1,10 +1,5 @@
 // 미션 완료 상태 관리 유틸리티
 
-interface MissionStatus {
-  completedDate: string;
-  isCompleted: boolean;
-}
-
 // 오늘 미션 완료 여부 확인
 export const isTodayMissionCompleted = (): boolean => {
   try {
@@ -22,7 +17,6 @@ export const isTodayMissionCompleted = (): boolean => {
 // 현재 진행 중인 미션이 오늘 완료된 건지 확인
 export const isCurrentMissionCompletedToday = (): boolean => {
   try {
-    const today = new Date().toDateString();
     const savedProgress = localStorage.getItem('challenge-progress');
     
     if (!savedProgress) return false;

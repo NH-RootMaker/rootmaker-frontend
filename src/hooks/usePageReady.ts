@@ -62,8 +62,14 @@ export const useImagesReady = (imageUrls: string[]) => {
     const loadImage = (url: string): Promise<void> => {
       return new Promise((resolve) => {
         const img = new Image();
-        img.onload = () => resolve();
-        img.onerror = () => resolve(); // 에러여도 계속 진행
+        img.onload = () => {
+          setLoadedCount(prev => prev + 1);
+          resolve();
+        };
+        img.onerror = () => {
+          setLoadedCount(prev => prev + 1);
+          resolve(); // 에러여도 계속 진행
+        };
         img.src = url;
       });
     };
@@ -73,5 +79,5 @@ export const useImagesReady = (imageUrls: string[]) => {
     });
   }, [imageUrls]);
 
-  return isReady;
+  return { isReady, loadedCount };
 };
