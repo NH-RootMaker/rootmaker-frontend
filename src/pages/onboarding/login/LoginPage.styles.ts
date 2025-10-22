@@ -107,12 +107,12 @@ export const ProgressDotsWrapper = styled.div`
 export const ButtonContainer = styled.div`
   margin-left: 20px;
   padding-right: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   width: 100%;
   
   @media (max-width: 480px) {
     margin-left: 16px;
     padding-right: 16px;
-    margin-bottom: 16px;
+    margin-top: -25px;
   }
 `;

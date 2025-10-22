@@ -17,25 +17,36 @@ const ResultPage = () => {
 
   useEffect(() => {
     const answers = location.state?.answers as Answer[];
+    const username = location.state?.username || '익명';
     
     if (!answers || answers.length !== 6) {
       // 답변이 없거나 불완전하면 홈으로 리다이렉트
-      navigate('/', { replace: true });
+      navigate('/home', { replace: true });
       return;
     }
 
     const calculatedResult = computeResult(answers);
     setResult(calculatedResult);
+    
+    // 테스트 결과를 localStorage에 저장
+    const testResult = {
+      type: calculatedResult.winner,
+      score: calculatedResult.score,
+      username: username,
+      date: new Date().toISOString(),
+      answers: answers
+    };
+    localStorage.setItem('personality-test-result', JSON.stringify(testResult));
   }, [location.state, navigate]);
 
   const username = location.state?.username || '익명';
 
   const handleRetakeTest = () => {
-    navigate('/', { replace: true });
+    navigate('/home', { replace: true });
   };
 
   const handleGoHome = () => {
-    navigate('/', { replace: true });
+    navigate('/home', { replace: true });
   };
 
   const handleServiceClick = () => {
@@ -44,7 +55,7 @@ const ResultPage = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    navigate('/', { replace: true });
+    navigate('/home', { replace: true });
   };
 
   if (!result) {

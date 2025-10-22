@@ -71,6 +71,6 @@ export const Title = styled.h4`
   }
 `;
 
-export const Highlight = styled.span`
-  color: ${(props) => props.theme.colors.primary.gn};
+export const Highlight = styled.span<{ $highlightColor?: string }>`
+  color: ${(props) => props.$highlightColor || props.theme.colors.primary.gn};
 `;

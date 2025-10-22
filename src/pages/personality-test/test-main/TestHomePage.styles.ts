@@ -144,3 +144,43 @@ export const WelcomeMessage = styled.div`
     font-size: 1.1rem;
   }
 `;
+
+export const SavedResultContainer = styled.div`
+  background: ${(props) => props.theme.colors.grayScale.gy100};
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  width: 100%;
+  max-width: 320px;
+  border: 1px solid ${(props) => props.theme.colors.grayScale.gy200};
+`;
+
+export const SavedResultTitle = styled.h3`
+  ${(props) => props.theme.fonts.body.l600}
+  color: ${(props) => props.theme.colors.grayScale.gy800};
+  margin: 0 0 8px 0;
+  text-align: center;
+`;
+
+export const SavedResultInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+  text-align: center;
+  
+  span {
+    ${(props) => props.theme.fonts.body.m400}
+    color: ${(props) => props.theme.colors.grayScale.gy600};
+    
+    strong {
+      color: ${(props) => props.theme.colors.primary.gn};
+      font-weight: 600;
+    }
+  }
+`;
+
+export const SavedResultDate = styled.span`
+  ${(props) => props.theme.fonts.body.s400}
+  color: ${(props) => props.theme.colors.grayScale.gy600};
+`;

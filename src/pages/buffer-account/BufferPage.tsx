@@ -13,10 +13,6 @@ import { DEPOSIT_HISTORY, ACCOUNT_INFO, SAVINGS_GOAL } from '@/constants/buffer-
 const BufferPage = () => {
     const navigate = useNavigate();
 
-    const handleBackClick = () => {
-        navigate('/'); 
-    };
-
     const formatCurrency = (amount: number) => {
         return amount.toLocaleString() + '원';
     };
@@ -29,7 +25,7 @@ const BufferPage = () => {
 
     return (
         <S.Container>
-            <TopNav isBack title="청약 키우기" onBackClick={handleBackClick} />
+            <TopNav title="청약 키우기" />
             
             <S.TopSection>
                 <S.HeaderSection>
@@ -74,9 +70,9 @@ const BufferPage = () => {
                 <CommonButton 
                     variant="primary" 
                     width="100%"
-                    onClick={() => console.log('입금하기 클릭')}
+                    onClick={() => navigate('/payback')}
                 >
-                    입금하기
+                    오늘의 도전 확인하기
                 </CommonButton>
             </S.FixedButtonContainer>
         </S.Container>

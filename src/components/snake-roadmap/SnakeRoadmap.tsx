@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './SnakeRoadmap.styles';
 import CheckGN from '@/assets/icons/CheckGN.svg';
+import TodayNode from '@/assets/icons/TodayNode.svg';
 
 export interface RoadmapNode {
   id: string;
@@ -111,19 +112,23 @@ const SnakeRoadmap: React.FC<SnakeRoadmapProps> = ({
                 }
               }}
               $clickable={!node.completed}
+              $isCurrent={node.current}
             >
-              <img src="/stamp_circle.webp" alt="스탬프 원형" />
+              <img 
+                src={node.current ? TodayNode : "/stamp_circle.webp"} 
+                alt={node.current ? "오늘의 노드" : "스탬프 원형"} 
+              />
               {node.completed ? (
                 <S.NodeContent>
                   <S.WateringIcon>
                     <img src="/물뿌리개 7.webp" alt="물뿌리개" />
                   </S.WateringIcon>
-                  <S.AmountText>{((index + 1) * 10000).toLocaleString()}원 달성</S.AmountText>
+                  <S.AmountText>미션 성공</S.AmountText>
                 </S.NodeContent>
               ) : (
                 <S.NodeContent>
-                  <S.RoundNumber>{index + 1}</S.RoundNumber>
-                  <S.PaybackPointText>1,000원</S.PaybackPointText>
+                  <S.RoundNumber $isCurrent={node.current}>{index + 1}</S.RoundNumber>
+                  <S.PaybackPointText $isCurrent={node.current}>???</S.PaybackPointText>
                 </S.NodeContent>
               )}
               {node.completed && (

@@ -3,4 +3,5 @@ export interface RecommendationCardProps {
   alt: string;
   title: string;
   highlightText: string;
+  highlightColor?: string;
 }

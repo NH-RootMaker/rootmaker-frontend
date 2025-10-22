@@ -5,6 +5,7 @@ export const Container = styled.div`
   margin: 0 auto;
   padding: 0 20px 120px 20px;
   background: ${(props) => props.theme.colors.grayScale.white};
+  position: relative;
   
   ${(props) => props.theme.media.tablet} {
     max-width: 600px;
@@ -20,6 +21,29 @@ export const Container = styled.div`
 
   @media (max-width: 480px) {
     padding: 0 12px 80px 12px;
+  }
+`;
+
+export const TransformationOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 998;
+  cursor: pointer;
+  animation: fadeIn 0.5s ease-in-out;
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 `;
 
@@ -61,15 +85,19 @@ export const Highlight = styled.span`
   color: ${(props) => props.theme.colors.primary.gn};
 `;
 
+export const UsernameHighlight = styled.span`
+  color: ${(props) => props.theme.colors.primary.gn};
+`;
+
 export const SpeechBubbleContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   margin-right: 80px;
   margin-left: auto;
   width: fit-content;
   ${(props) => props.theme.fonts.body.m600};
-  z-index: 10;
+  z-index: 999;
   position: relative;
 
   @media (max-width: 768px) {
@@ -101,7 +129,7 @@ export const AmountHighlight = styled.span`
   color: ${(props) => props.theme.colors.primary.gn};
 `;
 
-export const ComparisonContainer = styled.div`
+export const ComparisonContainer = styled.div<{ $personalityColor?: string }>`
   display: flex;
   justify-content: center;
   gap: 60px;
@@ -117,7 +145,20 @@ export const ComparisonContainer = styled.div`
     transform: translate(-50%, -50%);
     width: 280px;
     height: 280px;
-    background: linear-gradient(114deg, #F3FFE9 -0.93%, #C7FFE8 97.27%);
+    background: ${props => {
+      const color = props.$personalityColor || '#42CE7A';
+      
+      // 벚나무 타입일 때 특별한 그라데이션 적용
+      if (color === '#EE5D90') {
+        return `linear-gradient(114deg, rgba(249, 195, 229, 0.38) -0.93%, rgba(249, 195, 209, 0.38) 97.27%)`;
+      }
+      
+      // 다른 타입들은 기존 로직 사용
+      const r = parseInt(color.slice(1, 3), 16);
+      const g = parseInt(color.slice(3, 5), 16);
+      const b = parseInt(color.slice(5, 7), 16);
+      return `linear-gradient(114deg, rgba(${r}, ${g}, ${b}, 0.1) -0.93%, rgba(${r}, ${g}, ${b}, 0.3) 97.27%)`;
+    }};
     border-radius: 50%;
     filter: blur(25px);
     z-index: 0;
@@ -157,15 +198,30 @@ export const ComparisonItem = styled.div`
   z-index: 1;
 `;
 
-export const ImageContainer = styled.div<{ $isUser?: boolean }>`
+export const ImageContainer = styled.div<{ $isUser?: boolean; $personalityColor?: string }>`
   width: 100px;
   height: 100px;
   margin-bottom: 0px;
-  transform: ${props => props.$isUser ? 'rotate(-18deg) translateY(-30px)' : 'rotate(18deg)'};
+  transform: ${props => {
+    if (props.$personalityColor === '#EE5D90' && props.$isUser) {
+      return 'rotate(-18deg) translateY(-40px) translateX(-10px)';
+    }
+    return props.$isUser ? 'rotate(-18deg) translateY(-30px)' : 'rotate(18deg)';
+  }};
   
   img {
-    width: 100%;
-    height: 100%;
+    width: ${props => {
+      if (props.$personalityColor === '#EE5D90') {
+        return props.$isUser ? '120%' : '80%';
+      }
+      return '100%';
+    }};
+    height: ${props => {
+      if (props.$personalityColor === '#EE5D90') {
+        return props.$isUser ? '130%' : '90%';
+      }
+      return '100%';
+    }};
     object-fit: cover;
     border-radius: 50%;
   }
@@ -173,19 +229,29 @@ export const ImageContainer = styled.div<{ $isUser?: boolean }>`
   @media (max-width: 768px) {
     width: 100px;
     height: 100px;
-    transform: ${props => props.$isUser ? 'rotate(-15deg) translateY(-20px)' : 'rotate(15deg)'};
+    transform: ${props => {
+      if (props.$personalityColor === '#EE5D90' && props.$isUser) {
+        return 'rotate(-15deg) translateY(-30px) translateX(-8px)';
+      }
+      return props.$isUser ? 'rotate(-20deg) translateY(-20px)' : 'rotate(20deg)';
+    }};
   }
 
   @media (max-width: 480px) {
     width: 100px;
     height: 100px;
-    transform: ${props => props.$isUser ? 'rotate(-12deg) translateY(-15px)' : 'rotate(12deg)'};
+    transform: ${props => {
+      if (props.$personalityColor === '#EE5D90' && props.$isUser) {
+        return 'rotate(-12deg) translateY(-40px) translateX(-6px)';
+      }
+      return props.$isUser ? 'rotate(-20deg) translateY(20px)' : 'rotate(20deg)';
+    }};
   }
 `;
 
 export const Label = styled.div<{ $isUser?: boolean }>`
 ${(props) => props.theme.fonts.header.h3};
-  color: ${props => props.$isUser ? props.theme.colors.primary.gn : props.theme.colors.grayScale.gy800};
+  color: ${props => props.$isUser ? props.theme.colors.primary.gn : props.theme.colors.grayScale.gy600};
   margin-bottom: 1px;
 
   @media (max-width: 768px) {
@@ -236,6 +302,7 @@ export const SectionTitle = styled.h3`
   color: ${(props) => props.theme.colors.grayScale.black};
   margin-bottom: 20px;
   margin-left: 32px;
+  white-space: pre-line;
 
   @media (max-width: 768px) {
     font-size: 1.5rem;

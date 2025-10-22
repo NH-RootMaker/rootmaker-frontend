@@ -60,7 +60,7 @@ export default function TestPage() {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
     } else {
-      navigate('/'); // 첫 번째 질문에서 뒤로 가면 홈으로
+      navigate('/home'); // 첫 번째 질문에서 뒤로 가면 홈으로
     }
   };
 

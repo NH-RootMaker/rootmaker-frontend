@@ -4,6 +4,7 @@ interface SpeechBubbleContainerProps {
   $variant?: 'pine' | 'cherry' | 'maple' | 'apple' | 'info';
   $size?: 'small' | 'medium' | 'large';
   $tailPosition?: 'bottom' | 'top';
+  $customColor?: string;
 }
 
 const getVariantColors = (variant: string, theme: any) => {
@@ -47,7 +48,7 @@ const getSizeStyles = (size: string, theme: any) => {
       return `
         ${theme.fonts.body.m600}
         padding: 8px 12px;
-        border-radius: 12px;
+        border-radius: 40px;
       `;
     case 'medium':
       return `
@@ -133,13 +134,23 @@ export const SpeechBubbleContainer = styled.div<SpeechBubbleContainerProps>`
   line-height: 1.5;
   white-space: pre-line;
   margin-top: 20px;
-  box-shadow: 0 1px 16px 0 rgba(66, 206, 121, 0.75);
   
-  ${({ $variant = 'pine', theme }) => {
+  ${({ $variant = 'pine', theme, $customColor }) => {
     const colors = getVariantColors($variant, theme);
+    const textColor = $customColor || colors.text;
+    
+    // 커스텀 색상을 기반으로 box-shadow 생성
+    const shadowColor = $customColor ? (() => {
+      const r = parseInt($customColor.slice(1, 3), 16);
+      const g = parseInt($customColor.slice(3, 5), 16);
+      const b = parseInt($customColor.slice(5, 7), 16);
+      return `rgba(${r}, ${g}, ${b}, 0.75)`;
+    })() : 'rgba(66, 206, 121, 0.75)';
+    
     return `
       background: ${colors.background};
-      color: ${colors.text};
+      color: ${textColor};
+      box-shadow: 0 1px 16px 0 ${shadowColor};
     `;
   }}
   
