@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLoadingStore } from '@/stores/useLoadingStore';
 
 // 페이지 로딩 관리 훅
@@ -28,20 +28,17 @@ export const useDataLoading = () => {
 // 이미지 로딩 관리 훅
 export const useImageLoading = (imageCount: number = 1) => {
   const { setLoading } = useLoadingStore();
-  const [loadedImages, setLoadedImages] = useState(0);
+  let loadedCount = 0;
 
   const onImageLoad = () => {
-    setLoadedImages(prev => {
-      const newCount = prev + 1;
-      if (newCount >= imageCount) {
-        setLoading(false);
-      }
-      return newCount;
-    });
+    loadedCount++;
+    if (loadedCount >= imageCount) {
+      setLoading(false);
+    }
   };
 
   const startImageLoading = (message = '이미지 로딩중') => {
-    setLoadedImages(0);
+    loadedCount = 0;
     setLoading(true, message);
   };
 
