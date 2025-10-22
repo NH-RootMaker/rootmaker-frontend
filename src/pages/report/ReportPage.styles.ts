@@ -135,7 +135,7 @@ export const ComparisonContainer = styled.div<{ $personalityColor?: string }>`
   gap: 60px;
   padding: 10px 50px;
   position: relative;
-  margin-top: 30px;
+  margin-top: 40px;
   
   &::before {
     content: '';
@@ -179,7 +179,7 @@ export const ComparisonContainer = styled.div<{ $personalityColor?: string }>`
   @media (max-width: 480px) {
     gap: 40px;
     padding: 10px 20px;
-    margin-top: 20px;
+    margin-top: 40px;
     
     &::before {
       width: 180px;
@@ -282,7 +282,7 @@ export const RecommendationSection = styled.section`
   width: calc(100% + 40px);
   margin-left: -20px;
   margin-right: -20px;
-  margin-top: 70px;
+  margin-top: 40px;
 
   @media (max-width: 768px) {
     width: calc(100% + 32px);

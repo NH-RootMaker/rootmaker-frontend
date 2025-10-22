@@ -5,6 +5,7 @@ import ProgressBar from '@/components/progress-bar';
 import Chips from '@/components/chips';
 import QuestionForm from '@/components/question-form';
 import TopNav from '@/components/topnav';
+import LoadingScreen from '@/components/loading-screen';
 import { PERSONALITY_QUESTIONS } from '@/constants/personality-test';
 import type { Answer } from '@/types/personality-test.types';
 
@@ -66,14 +67,7 @@ export default function TestPage() {
 
   // 현재 질문이 유효하지 않으면 로딩 상태
   if (currentQuestionIndex < 0 || currentQuestionIndex >= PERSONALITY_QUESTIONS.length) {
-    return (
-      <S.Container>
-        <TopNav isBack title="나의 유형" onBackClick={handleBackClick} whiteBackground />
-        <S.Main>
-          <div>Loading...</div>
-        </S.Main>
-      </S.Container>
-    );
+    return <LoadingScreen message="테스트를 불러오는 중..." />;
   }
 
   const currentQuestion = PERSONALITY_QUESTIONS[currentQuestionIndex];

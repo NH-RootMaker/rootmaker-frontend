@@ -1,14 +1,5 @@
 import styled from 'styled-components';
 
-export const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  ${(props) => props.theme.fonts.body.m400}
-  color: ${(props) => props.theme.colors.grayScale.gy600};
-`;
-
 export const ResultContainer = styled.div`
   display: flex;
   flex-direction: column;
