@@ -11,9 +11,11 @@ const PaybackPage = () => {
     const navigate = useNavigate();
     const [shouldShowToast, setShouldShowToast] = useState(false);
     const [isTypeTestModalOpen, setIsTypeTestModalOpen] = useState(false);
+    const [challengeProgress, setChallengeProgress] = useState<{completed: number[], current: number}>({completed: [], current: 1});
     
     // 로그인 상태 확인
     const isLoggedIn = localStorage.getItem('user-logged-in') === 'true';
+    const username = localStorage.getItem('user-name') || '사용자';
 
     const hideToast = () => {
         setShouldShowToast(false);
@@ -29,9 +31,30 @@ const PaybackPage = () => {
     };
 
     const handleNodeClick = () => {
-        // 챌린지 버튼 클릭 시 이체 페이지로 이동
-        navigate('/transfer');
+        // 챌린지 버튼 클릭 시 미션 페이지로 이동
+        navigate('/mission');
     };
+
+    // challengeProgress 초기화 및 페이지 포커스 시 새로고침
+    useEffect(() => {
+        const loadProgress = () => {
+            const savedProgress = localStorage.getItem('challenge-progress');
+            if (savedProgress) {
+                setChallengeProgress(JSON.parse(savedProgress));
+            }
+        };
+
+        // 초기 로드
+        loadProgress();
+
+        // 페이지 포커스 시 새로고침
+        const handleFocus = () => {
+            loadProgress();
+        };
+
+        window.addEventListener('focus', handleFocus);
+        return () => window.removeEventListener('focus', handleFocus);
+    }, []);
 
     // empty 상태일 때 모달 표시 및 하루에 한 번만 토스트 표시
     useEffect(() => {
@@ -53,9 +76,6 @@ const PaybackPage = () => {
 
     // 9개 노드 생성
     const generateMonthlyNodes = (): RoadmapNode[] => {
-        // 2일차만 완료된 상태로 초기화
-        const challengeProgress = {"completed": [2], "current": 3};
-        
         return Array.from({ length: 9 }, (_, index) => {
             const day = index + 1;
             
@@ -70,8 +90,6 @@ const PaybackPage = () => {
     };
 
     const roadmapNodes = generateMonthlyNodes();
-    const completedCount = roadmapNodes.filter(node => node.completed).length;
-    const totalCount = roadmapNodes.length;
     
     const containerHeight = 350;
 
@@ -85,7 +103,7 @@ const PaybackPage = () => {
                         오늘의 챌린지에 성공하면{'\n'}농협 <S.HighlightText>기프티콕으로 페이백</S.HighlightText>을 드려요
                     </S.ChallengeTitle>
                     <S.ChallengeSubtitle>
-                        현재 {totalCount}회차 중 {completedCount}회차 완료
+                        오늘의 미션은 {username}님의 성향에 따라 매일 달라져요{'\n'}어제와는 다른 성장의 하루를 만나보세요.
                     </S.ChallengeSubtitle>
                 </S.HeaderSection>
 
@@ -101,7 +119,7 @@ const PaybackPage = () => {
             {shouldShowToast && isLoggedIn && (
                 <ToastMessage
                     message={`해당하는 회차의 스탬프를 클릭하면
-오늘의 미션 금액을 입금할 수 있어요!`}
+오늘의 미션을 확인할 수 있어요!`}
                     variant="pine"
                     duration={4000}
                     onClose={hideToast}
@@ -112,7 +130,7 @@ const PaybackPage = () => {
                 isOpen={isTypeTestModalOpen}
                 onClose={handleTypeTestModalClose}
                 title="안내"
-                content={`청약 상품 추천을 위해서는 당신의 유형이 필요해요.
+                content={`나의 로드맵을 보기 위해서는 청약 통장이 필요해요.
 원활한 진행을 위해 청약 테스트 먼저 진행해 주세요!`}
                 buttonText="청약 유형 테스트하러 가기"
             />

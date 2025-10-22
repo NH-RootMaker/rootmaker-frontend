@@ -17,6 +17,7 @@ const PaybackPage = lazy(() => import('../pages/payback/roadmap/PaybackPage'));
 const ReportPage = lazy(() => import('../pages/report/ReportPage'));
 const TransferPage = lazy(() => import('../pages/payback/transfer/TransferPage'));
 const ActionPage = lazy(() => import('@/pages/payback/ActionPage'));
+const MissionPage = lazy(() => import('../pages/mission/MissionPage'));
 
 // Loading component
 const LoadingFallback = () => (
@@ -129,6 +130,10 @@ const routes: RouteObject[] = [
       {
         path: '/action',
         element: <SuspenseWrapper><ActionPage /></SuspenseWrapper>,
+      },
+      {
+        path: '/mission',
+        element: <SuspenseWrapper><MissionPage /></SuspenseWrapper>,
       },
     ],
   },

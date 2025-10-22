@@ -18,4 +18,9 @@ export interface SpeechBubbleProps {
    * 말풍선 꼬리 위치 (항상 가운데 정렬)
    */
   tailPosition?: 'bottom' | 'top';
+  
+  /**
+   * 커스텀 색상 (유형 색상을 직접 전달할 때 사용)
+   */
+  customColor?: string;
 }

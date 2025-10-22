@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
 import { PERSONALITY_QUESTIONS } from '@/constants/personality-test';
-import { RESULT_TYPES } from '@/constants/result-types';
+import { RESULT_TYPES, getResultTypeInfo } from '@/constants/result-types';
 import CommonButton from '@/components/common-button';
 import CommonInput from '@/components/common-input';
 import OptimizedImage from '@/components/optimized-image';
@@ -16,11 +16,25 @@ const HomePage = () => {
   const [username, setUsername] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
+  const [savedResult, setSavedResult] = useState<any>(null);
   const { setIsTopNav, setIsBottomNav } = useLayoutStore();
   
   // 로그인 상태 확인
   const isLoggedIn = localStorage.getItem('user-logged-in') === 'true';
   const loggedInUserName = localStorage.getItem('user-name') || '';
+
+  // 저장된 테스트 결과 확인
+  useEffect(() => {
+    const savedTestResult = localStorage.getItem('personality-test-result');
+    if (savedTestResult) {
+      try {
+        const result = JSON.parse(savedTestResult);
+        setSavedResult(result);
+      } catch (error) {
+        console.error('Failed to parse saved test result:', error);
+      }
+    }
+  }, []);
 
   // 첫 번째 질문의 이미지들과 결과 페이지 이미지들을 미리 로드
   const firstQuestionImages = PERSONALITY_QUESTIONS.length > 0 
@@ -85,12 +99,36 @@ const HomePage = () => {
     navigate('/login');
   };
 
+  const handleViewResult = () => {
+    if (savedResult) {
+      navigate('/result', { 
+        state: { 
+          answers: savedResult.answers,
+          username: savedResult.username 
+        } 
+      });
+    }
+  };
+
   return (
       <Container>
         <Title>{isLoggedIn ? `${loggedInUserName}님, 반가워요!` : 'NH RootMaker'}</Title>
         <Description>
             {'나만의 저축 성향을 알아보고\n맞춤형 청약 가이드를 받아보세요!'}
         </Description>
+        
+        {savedResult && (
+          <S.SavedResultContainer>
+            <S.SavedResultTitle>이전 테스트 결과</S.SavedResultTitle>
+            <S.SavedResultInfo>
+              <span>{savedResult.username}님은 <strong>{getResultTypeInfo(savedResult.type).name}</strong> 타입</span>
+              <S.SavedResultDate>{new Date(savedResult.date).toLocaleDateString()}</S.SavedResultDate>
+            </S.SavedResultInfo>
+            <CommonButton variant="secondary" onClick={handleViewResult} width="100%">
+              결과 다시 보기
+            </CommonButton>
+          </S.SavedResultContainer>
+        )}
         
         <S.MockupImageContainer>
           <OptimizedImage 
@@ -129,7 +167,7 @@ const HomePage = () => {
           )}
           
           <S.Notice>
-            ※ 테스트 결과는 저장되지 않습니다
+            ※ 테스트 결과는 브라우저에 저장됩니다
           </S.Notice>
           
           {!isLoggedIn && (

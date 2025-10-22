@@ -3,12 +3,13 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  overflow-y: hidden;
   background-color: ${(props) => props.theme.colors.grayScale.white};
 `;
 
 export const Content = styled.div`
   flex: 1;
+  overflow-y: hidden;
   padding: 1rem;
   margin-top: 3.845rem;
   padding-bottom: 120px;
@@ -120,8 +121,42 @@ export const BalanceAmount = styled.span`
 `;
 
 export const ButtonContainer = styled.div`
-  padding: 1rem;
-  margin-top: 180px;
+position: fixed;
+bottom: 110px;
+left: 50%;
+transform: translateX(-50%);
+max-width: 480px;
+width: calc(100vw - 40px);
+padding: 20px;
+display: flex;
+justify-content: center;
+
+${(props) => props.theme.media.tablet} {
+  max-width: 768px;
+}
+
+${(props) => props.theme.media.desktop} {
+    max-width: 1024px;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(
+      to top,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.98) 30%,
+      rgba(255, 255, 255, 0.7) 70%,
+      transparent 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: -1;
+  }
 `;
 
 export const KeyboardOverlay = styled.div`

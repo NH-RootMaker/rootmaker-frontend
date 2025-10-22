@@ -7,6 +7,7 @@ interface CommonButtonProps {
   disabled?: boolean;
   width?: string;
   type?: 'button' | 'submit';
+  customColor?: string;
 }
 
 const CommonButton = ({
@@ -16,6 +17,7 @@ const CommonButton = ({
   disabled = false,
   width = '335px',
   type = 'button',
+  customColor,
 }: CommonButtonProps) => {
   return (
     <S.Button
@@ -23,6 +25,7 @@ const CommonButton = ({
       $variant={variant}
       $disabled={disabled}
       $width={width}
+      $customColor={customColor}
       disabled={disabled}
       type={type}
     >

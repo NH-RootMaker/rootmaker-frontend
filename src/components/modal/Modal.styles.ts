@@ -38,7 +38,7 @@ export const ModalContent = styled.div`
 
 export const ModalHeader = styled.div`
   position: relative;
-  padding: 24px 56px 16px 24px;
+  padding: 24px 24px 16px 24px;
   text-align: center;
   border-bottom: 1px solid ${(props) => props.theme.colors.grayScale.gy200};
   display: flex;
@@ -49,9 +49,8 @@ export const ModalHeader = styled.div`
 export const ModalTitle = styled.h2`
   ${(props) => props.theme.fonts.header.h3}
   color: ${(props) => props.theme.colors.grayScale.black};
-  margin: 0;
-  flex: 1;
   text-align: center;
+  margin: 0;
 `;
 
 export const CloseButton = styled.button`

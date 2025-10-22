@@ -1,7 +1,7 @@
 import * as S from './RecommendationCard.styles';
 import type { RecommendationCardProps } from './RecommendationCard.types';
 
-const RecommendationCard = ({ image, alt, title, highlightText }: RecommendationCardProps) => {
+const RecommendationCard = ({ image, alt, title, highlightText, highlightColor }: RecommendationCardProps) => {
   return (
     <S.Card>
       <S.ImageContainer>
@@ -14,7 +14,7 @@ const RecommendationCard = ({ image, alt, title, highlightText }: Recommendation
               {index < array.length - 1 ? (
                 <>
                   {part}
-                  <S.Highlight>{highlightText}</S.Highlight>
+                  <S.Highlight $highlightColor={highlightColor}>{highlightText}</S.Highlight>
                 </>
               ) : (
                 part

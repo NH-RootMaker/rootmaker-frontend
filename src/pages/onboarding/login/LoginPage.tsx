@@ -1,19 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLayoutStore } from '@/stores/useLayoutStore';
-import { useEffect } from 'react';
 import TopNav from '@/components/topnav';
 import CommonButton from '@/components/common-button';
 import CommonInput from '@/components/common-input';
-import ProgressDots from '@/components/progress-dots';
 import { limitAccountNumberInput, validateAccountNumber } from '@/utils/account-validator';
+import { DEFAULT_USER_INFO, PERSONALITY_TEST_RESULTS } from '@/constants/user-data';
 import * as S from './LoginPage.styles';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { setIsNav } = useLayoutStore();
-  const [userName, setUserName] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
+  const [userName, setUserName] = useState<string>(DEFAULT_USER_INFO.name);
+  const [accountNumber, setAccountNumber] = useState<string>(DEFAULT_USER_INFO.accountNumber);
 
   useEffect(() => {
     setIsNav(false);
@@ -36,13 +35,22 @@ const LoginPage = () => {
       return;
     }
 
-    // 임시로 localStorage에 사용자 정보 저장
+    // localStorage에 사용자 정보 저장
     localStorage.setItem('user-name', userName);
     localStorage.setItem('account-number', accountNumber);
     localStorage.setItem('user-logged-in', 'true');
+    
+    // 기본 성격 테스트 결과도 함께 저장 (벚나무 = cherry 타입)
+    const defaultTestResult = {
+      ...PERSONALITY_TEST_RESULTS.cherry,
+      username: userName,
+      date: new Date().toISOString(),
+      answers: []
+    };
+    localStorage.setItem('personality-test-result', JSON.stringify(defaultTestResult));
 
-    // 홈 페이지로 이동
-    navigate('/home');
+    // 버퍼 페이지로 이동 (새로운 홈)
+    navigate('/my-subscription');
   };
 
   const isFormValid = userName.trim() && accountNumber.trim() && validateAccountNumber(accountNumber);
@@ -84,13 +92,6 @@ const LoginPage = () => {
             />
           </S.FormSection>
           <S.BottomSection>
-          <S.ProgressDotsWrapper>
-            <ProgressDots 
-              total={4} 
-              current={3}
-            />
-          </S.ProgressDotsWrapper>
-
           <S.ButtonContainer>
             <CommonButton 
               variant="primary" 

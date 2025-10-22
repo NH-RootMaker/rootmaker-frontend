@@ -4,6 +4,7 @@ interface ButtonProps {
   $variant: 'primary' | 'secondary';
   $disabled: boolean;
   $width: string;
+  $customColor?: string;
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -18,17 +19,17 @@ export const Button = styled.button<ButtonProps>`
   ${(props) => props.theme.fonts.header.h3}
   cursor: ${({ $disabled }) => $disabled ? 'not-allowed' : 'pointer'};
   
-  ${({ $variant, theme, $disabled }) => $variant === 'primary' && `
+  ${({ $variant, theme, $disabled, $customColor }) => $variant === 'primary' && `
     border: none;
-    background: ${$disabled ? theme.colors.grayScale.gy400 : theme.colors.primary.gn};
-    box-shadow: 0 0 16px 0 ${$disabled ? theme.colors.grayScale.gy400 : theme.colors.primary.gn};
+    background: ${$disabled ? theme.colors.grayScale.gy400 : ($customColor || theme.colors.primary.gn)};
+    box-shadow: 0 0 16px 0 ${$disabled ? theme.colors.grayScale.gy400 : ($customColor || theme.colors.primary.gn)};
     color: ${theme.colors.grayScale.white};
   `}
   
-  ${({ $variant, theme, $disabled }) => $variant === 'secondary' && `
-    border: 1px solid ${$disabled ? theme.colors.grayScale.gy400 : theme.colors.primary.gn};
+  ${({ $variant, theme, $disabled, $customColor }) => $variant === 'secondary' && `
+    border: 1px solid ${$disabled ? theme.colors.grayScale.gy400 : ($customColor || theme.colors.primary.gn)};
     background: transparent;
-    color: ${$disabled ? theme.colors.grayScale.gy400 : theme.colors.primary.gn};
+    color: ${$disabled ? theme.colors.grayScale.gy400 : ($customColor || theme.colors.primary.gn)};
     box-shadow: none;
   `}
 

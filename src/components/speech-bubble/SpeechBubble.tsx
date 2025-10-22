@@ -9,13 +9,15 @@ const SpeechBubble = ({
   children, 
   variant = 'pine', 
   size = 'medium',
-  tailPosition 
+  tailPosition,
+  customColor
 }: SpeechBubbleProps) => {
   return (
     <S.SpeechBubbleContainer 
       $variant={variant} 
       $size={size}
       $tailPosition={tailPosition}
+      $customColor={customColor}
     >
       {children}
     </S.SpeechBubbleContainer>

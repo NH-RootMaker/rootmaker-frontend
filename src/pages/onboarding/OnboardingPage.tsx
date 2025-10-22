@@ -140,7 +140,7 @@ const OnboardingPage = () => {
       <S.BottomContainer>
         <S.ProgressDotsWrapper>
           <ProgressDots 
-            total={4} 
+            total={3} 
             current={currentSlide}
           />
         </S.ProgressDotsWrapper>

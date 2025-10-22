@@ -73,9 +73,19 @@ const TransferPage = React.memo(() => {
       
       // 5000원 이상 누적 시 챌린지 성공
       if (newTotal >= 5000) {
-        // 챌린지 성공 상태를 localStorage에 저장 (2일차만 완료된 상태에서 현재 진행중인 3일차 완료)
-        const currentProgress = {"completed": [2, 3], "current": 4};
-        localStorage.setItem('challenge-progress', JSON.stringify(currentProgress));
+        // 현재 챌린지 진행 상황 가져오기
+        const savedProgress = localStorage.getItem('challenge-progress');
+        const currentProgress = savedProgress 
+          ? JSON.parse(savedProgress) 
+          : {"completed": [], "current": 1};
+        
+        // 현재 진행 중인 노드를 완료 목록에 추가하고 다음 노드로 이동
+        const updatedProgress = {
+          completed: [...currentProgress.completed, currentProgress.current],
+          current: currentProgress.current + 1
+        };
+        
+        localStorage.setItem('challenge-progress', JSON.stringify(updatedProgress));
         
         // 축하 페이지로 이동 (preloaded 애니메이션 데이터와 함께)
         navigate('/action', { 

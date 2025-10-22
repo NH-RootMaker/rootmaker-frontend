@@ -100,15 +100,17 @@ const ActionPage = React.memo(() => {
                 <S.CelebrationContent>
                     
                     <S.CelebrationText>
-                        <S.MainCelebrationText>미션 성공</S.MainCelebrationText>
+                        <S.MainCelebrationText>
+                            <img src="/MissionText.webp" alt="미션 성공" />
+                        </S.MainCelebrationText>
                         <S.WateringCanImage>
                             <img src="/wateringset.webp" alt="물뿌리개" />
                             <S.ChipsContainer>
                                 <S.Chip>청약 나무에게 1회 물주기 완료</S.Chip>
-                                <S.SecondaryChip>농협 기프티콕 지급 완료</S.SecondaryChip>
+                                <S.SecondaryChip>NH 포인트 1,000원 지급 완료</S.SecondaryChip>
                             </S.ChipsContainer>
                         </S.WateringCanImage>
-                        <S.SubCelebrationText>{'페이백 5,000원 당첨과 함께\n청약나무가 레벨 2로 성장했어요!'}</S.SubCelebrationText>
+                        <S.SubCelebrationText>{'페이백 NH 포인트 지급과 함께\n청약나무가 레벨 2로 성장했어요!'}</S.SubCelebrationText>
                     </S.CelebrationText>
 
                     <S.ButtonContainer>

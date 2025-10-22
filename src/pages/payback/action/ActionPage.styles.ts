@@ -51,7 +51,6 @@ export const ChallengeSubtitle = styled.p`
   text-align: left;
   white-space: pre-wrap;
   margin-left: 12px; 
-  margin-top: 0px;
 `;
 
 export const ContentSection = styled.section`
@@ -91,6 +90,7 @@ export const WateringCanImage = styled.div`
   img {
     width: 320px;
     height: 310px;
+    margin-top: -30px;
     margin-right: 40px;
     object-fit: contain;
     transform: rotate(-15deg);
@@ -123,8 +123,18 @@ export const MainCelebrationText = styled.h2`
     100% { transform: translateY(0); opacity: 1; }
   `} 0.6s ease-out 0.3s both;
 
+  img {
+    width: 230px;
+    height: auto;
+    object-fit: contain;
+  }
+
   @media (max-width: 480px) {
     font-size: 2.5rem;
+    
+    img {
+      width: 200px;
+    }
   }
 `;
 
@@ -160,7 +170,7 @@ export const Chip = styled.div`
   background: ${(props) => props.theme.colors.grayScale.white};
   box-shadow: 0 0 16px 0 rgba(66, 206, 121, 0.75);
   display: inline-flex;
-  padding: 6px 12px;
+  padding: 6px 10px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -175,7 +185,7 @@ export const SecondaryChip = styled.div`
   background: ${(props) => props.theme.colors.secondary.yg};
   box-shadow: 0 0 16px 0 rgba(66, 206, 121, 0.75);
   display: inline-flex;
-  padding: 6px 8px;
+  padding: 6px 20px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
