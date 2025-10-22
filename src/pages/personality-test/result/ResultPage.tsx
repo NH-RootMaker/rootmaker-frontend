@@ -6,6 +6,7 @@ import { getResultTypeInfo } from '@/constants/result-types';
 import { saveUserType, saveTestResult } from '@/services/api';
 import CommonButton from '@/components/common-button';
 import OptimizedImage from '@/components/optimized-image';
+import LoadingScreen from '@/components/loading-screen';
 import * as S from './ResultPage.styles';
 import TopNav from '@/components/topnav/TopNav';
 
@@ -92,11 +93,9 @@ const ResultPage = () => {
 
   if (!result) {
     return (
-      <div style={{ padding: '40px', textAlign: 'center' }}>
-        <h1>결과를 계산하고 있습니다...</h1>
-        <p>답변 개수: {location.state?.answers?.length || 0}</p>
-        {isSaving && <p style={{ color: '#42CE79' }}>결과를 저장하는 중...</p>}
-      </div>
+      <LoadingScreen 
+        message={isSaving ? "결과를 저장하는 중..." : "결과를 계산하고 있습니다..."} 
+      />
     );
   }
 
