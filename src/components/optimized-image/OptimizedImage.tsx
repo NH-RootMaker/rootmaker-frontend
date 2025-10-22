@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { useLoadingStore } from '@/stores/useLoadingStore';
 import * as S from './OptimizedImage.styles';
 
 interface OptimizedImageProps {
@@ -12,6 +13,7 @@ interface OptimizedImageProps {
   priority?: boolean;
   onLoad?: () => void;
   onError?: () => void;
+  useGlobalLoading?: boolean; // 전역 로딩 사용 여부
 }
 
 /**
@@ -32,10 +34,12 @@ const OptimizedImage = ({
   priority = false,
   onLoad,
   onError,
+  useGlobalLoading = false,
 }: OptimizedImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [isIntersecting, setIsIntersecting] = useState(false);
+  const { setLoading } = useLoadingStore();
 
   // Priority 이미지는 즉시 로드
   useEffect(() => {
@@ -85,15 +89,34 @@ const OptimizedImage = ({
     }
   }, [src, priority]);
 
+  // 전역 로딩 상태 관리
+  useEffect(() => {
+    if (!useGlobalLoading) return;
+    
+    const shouldLoad = loading === 'eager' || priority || isIntersecting;
+    
+    if (shouldLoad && !isLoaded && !hasError) {
+      setLoading(true, '로딩중');
+    } else {
+      setLoading(false);
+    }
+  }, [useGlobalLoading, loading, priority, isIntersecting, isLoaded, hasError, setLoading]);
+
   const handleLoad = useCallback(() => {
     setIsLoaded(true);
+    if (useGlobalLoading) {
+      setLoading(false);
+    }
     onLoad?.();
-  }, [onLoad]);
+  }, [onLoad, useGlobalLoading, setLoading]);
 
   const handleError = useCallback(() => {
     setHasError(true);
+    if (useGlobalLoading) {
+      setLoading(false);
+    }
     onError?.();
-  }, [onError]);
+  }, [onError, useGlobalLoading, setLoading]);
 
   const shouldLoad = loading === 'eager' || priority || isIntersecting;
 

@@ -112,7 +112,7 @@ export const SpeechBubbleContainer = styled.div`
     margin-right: 40px;
   }
 
-  @media (max-width: 425px) {
+  @media (max-width: 430px) {
     margin-right: 70px;
   }
 
@@ -265,7 +265,7 @@ ${(props) => props.theme.fonts.header.h3};
 
 export const Amount = styled.div<{ $isUser?: boolean }>`
   ${(props) => props.theme.fonts.header.h3};
-  color: ${props => props.$isUser ? props.theme.colors.primary.gn : props.theme.colors.grayScale.gy800};
+  color: ${props => props.$isUser ? props.theme.colors.primary.gn : props.theme.colors.grayScale.gy600};
 
   @media (max-width: 768px) {
     font-size: 1rem;
@@ -278,11 +278,11 @@ export const Amount = styled.div<{ $isUser?: boolean }>`
 
 export const RecommendationSection = styled.section`
   margin-bottom: 0px;
-  padding: 0px;
+  padding-bottom: 30px;
   width: calc(100% + 40px);
   margin-left: -20px;
   margin-right: -20px;
-  margin-top: 30px;
+  margin-top: 70px;
 
   @media (max-width: 768px) {
     width: calc(100% + 32px);

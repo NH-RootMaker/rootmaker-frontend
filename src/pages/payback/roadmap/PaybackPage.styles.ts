@@ -11,7 +11,7 @@ export const MainSection = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 100vh;
+  min-height: calc(100vh - 62px - 80px); /* TopNav(62px) + BottomNav(80px) 제외 */
   overflow: hidden;
 
   @media (max-width: 768px) {

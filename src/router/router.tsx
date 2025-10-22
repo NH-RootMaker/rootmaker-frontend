@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import type { RouteObject } from 'react-router-dom';
 import Layout from '../layouts/Layout';
+import LoadingScreen from '../components/loading-screen';
 import ErrorPage from '../pages/ErrorPage';
 
 // Lazy load components for better performance
@@ -10,6 +11,7 @@ const OnboardingPage = lazy(() => import('../pages/onboarding/OnboardingPage'));
 const LoginPage = lazy(() => import('../pages/onboarding/login/LoginPage'));
 const TestPage = lazy(() => import('../pages/personality-test/test/TestPage'));
 const ResultPage = lazy(() => import('../pages/personality-test/result/ResultPage'));
+const ResultPageView = lazy(() => import('../pages/personality-test/result/ResultPageView'));
 const BufferPage = lazy(() => import('../pages/buffer-account/BufferPage'));
 const BufferEmptyPage = lazy(() => import('../pages/buffer-account/empty/BufferEmptyPage'));
 const BufferRouterPage = lazy(() => import('../pages/buffer-account/BufferRouterPage'));
@@ -19,56 +21,8 @@ const TransferPage = lazy(() => import('../pages/payback/transfer/TransferPage')
 const ActionPage = lazy(() => import('../pages/payback/action/ActionPage'));
 const MissionPage = lazy(() => import('../pages/payback/mission/MissionPage'));
 
-// Loading component
-const LoadingFallback = () => (
-  <div style={{ 
-    display: 'flex', 
-    flexDirection: 'column',
-    height: '100vh',
-    backgroundColor: '#f8f9fa'
-  }}>
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      height: '62px',
-      backgroundColor: 'white',
-      zIndex: 1000,
-      borderBottom: '1px solid #e0e0e0'
-    }} />
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flex: 1,
-      marginTop: '62px',
-      gap: '16px',
-      transform: 'translateY(-50px)'
-    }}>
-      <div style={{
-        width: '40px',
-        height: '40px',
-        border: '3px solid #e0e0e0',
-        borderTop: '3px solid #42CE79',
-        borderRadius: '50%',
-        animation: 'spin 1s linear infinite'
-      }} />
-      <div style={{
-        fontSize: '16px',
-        color: '#42CE79',
-        fontWeight: '500'
-      }}>로딩 중...</div>
-    </div>
-    <style>{`
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-    `}</style>
-  </div>
-);
+// Loading component for Suspense fallback
+const LoadingFallback = () => <LoadingScreen message="로딩중" />;
 
 // Wrapper component for Suspense
 const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -100,8 +54,12 @@ const routes: RouteObject[] = [
         element: <SuspenseWrapper><TestPage /></SuspenseWrapper>,
       },
       {
-        path: '/result',
+        path: '/test-result',
         element: <SuspenseWrapper><ResultPage /></SuspenseWrapper>,
+      },
+      {
+        path: '/result',
+        element: <SuspenseWrapper><ResultPageView /></SuspenseWrapper>,
       },
       {
         path: '/buffer',

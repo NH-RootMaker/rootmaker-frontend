@@ -72,21 +72,57 @@ export const setUserPersonalityType = {
   maple: () => initializeDefaultUser('maple')     // 단풍나무 - 지인 소통러
 };
 
-// 사용자 정보 가져오기 함수
-export const getUserInfo = () => {
+// 사용자 정보 가져오기 함수 (API 연동 대응)
+export const getUserInfo = async (fallbackToLocal = true) => {
+  // 로그인 상태 확인
   const isLoggedIn = localStorage.getItem('user-logged-in') === 'true';
+  const userName = localStorage.getItem('user-name');
   
-  if (!isLoggedIn) {
+  if (!isLoggedIn || !userName) {
     return {
       name: null,
       accountNumber: null,
+      personalityType: null,
       isLoggedIn: false
     };
   }
+
+  // API로 사용자 정보 조회 시도
+  if (!fallbackToLocal) {
+    try {
+      const { getUserInfo: apiGetUserInfo } = await import('@/services/api');
+      const response = await apiGetUserInfo(userName);
+      
+      if (response.success && response.data) {
+        return {
+          name: response.data.name,
+          accountNumber: response.data.accountNumber,
+          personalityType: response.data.personalityType,
+          isLoggedIn: response.data.isLoggedIn
+        };
+      }
+    } catch (error) {
+      console.warn('API에서 사용자 정보 조회 실패, localStorage 사용:', error);
+    }
+  }
+  
+  // localStorage에서 정보 가져오기 (fallback)
+  const testResult = localStorage.getItem('personality-test-result');
+  let personalityType = null;
+  
+  if (testResult) {
+    try {
+      const parsed = JSON.parse(testResult);
+      personalityType = parsed.type;
+    } catch (error) {
+      console.warn('localStorage 테스트 결과 파싱 실패:', error);
+    }
+  }
   
   return {
-    name: localStorage.getItem('user-name') || DEFAULT_USER_INFO.name,
+    name: userName || DEFAULT_USER_INFO.name,
     accountNumber: localStorage.getItem('account-number') || DEFAULT_USER_INFO.accountNumber,
+    personalityType: personalityType || DEFAULT_USER_INFO.personalityType,
     isLoggedIn: true
   };
 };

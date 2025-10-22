@@ -9,6 +9,7 @@ export interface RoadmapNode {
   amount: string;
   completed?: boolean;
   current?: boolean;
+  nextMission?: boolean;
 }
 
 interface SnakeRoadmapProps {
@@ -95,11 +96,20 @@ const SnakeRoadmap: React.FC<SnakeRoadmapProps> = ({
     });
   };
 
+  // 진행해야 할 다음 미션 노드 찾기
+  const findNextMissionNode = () => {
+    return nodes.find(node => node.nextMission);
+  };
+
+  const nextMissionNode = findNextMissionNode();
+
   return (
     <S.Container height={containerHeight}>
       {renderConnections()}
       {nodes.map((node, index) => {
         const { x, y } = calculateNodePosition(index);
+        const isNextMission = nextMissionNode?.id === node.id;
+        
         return (
           <S.NodeContainer
             key={node.id}
@@ -107,16 +117,17 @@ const SnakeRoadmap: React.FC<SnakeRoadmapProps> = ({
           >
             <S.NodeButton 
               onClick={() => {
-                if (!node.completed && onNodeClick) {
+                if ((isNextMission || node.current) && onNodeClick) {
                   onNodeClick(node.id);
                 }
               }}
-              $clickable={!node.completed}
+              $clickable={isNextMission || node.current}
               $isCurrent={node.current}
+              $isNextMission={isNextMission}
             >
               <img 
-                src={node.current ? TodayNode : "/stamp_circle.webp"} 
-                alt={node.current ? "오늘의 노드" : "스탬프 원형"} 
+                src={isNextMission && !node.completed ? TodayNode : "/stamp_circle.webp"} 
+                alt={isNextMission && !node.completed ? "다음 미션 노드" : "스탬프 원형"} 
               />
               {node.completed ? (
                 <S.NodeContent>
@@ -127,8 +138,8 @@ const SnakeRoadmap: React.FC<SnakeRoadmapProps> = ({
                 </S.NodeContent>
               ) : (
                 <S.NodeContent>
-                  <S.RoundNumber $isCurrent={node.current}>{index + 1}</S.RoundNumber>
-                  <S.PaybackPointText $isCurrent={node.current}>???</S.PaybackPointText>
+                  <S.RoundNumber $isCurrent={node.current} $isNextMission={node.nextMission}>{index + 1}</S.RoundNumber>
+                  <S.PaybackPointText $isCurrent={node.current} $isNextMission={node.nextMission}>???</S.PaybackPointText>
                 </S.NodeContent>
               )}
               {node.completed && (

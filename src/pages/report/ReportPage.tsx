@@ -19,11 +19,24 @@ const ReportPage = () => {
   const [isTypeTestModalOpen, setIsTypeTestModalOpen] = useState(false);
   const [personalityResult, setPersonalityResult] = useState<any>(null);
   const [showTransformation, setShowTransformation] = useState(false);
+  const [userInfo, setUserInfo] = useState<{
+    name: string | null;
+    accountNumber: string | null;
+    personalityType: any;
+    isLoggedIn: boolean;
+  } | null>(null);
   
   // 사용자 정보 가져오기
-  const userInfo = getUserInfo();
-  const isLoggedIn = userInfo.isLoggedIn;
-  const username = userInfo.name || "농협";
+  useEffect(() => {
+    const loadUserInfo = async () => {
+      const info = await getUserInfo();
+      setUserInfo(info);
+    };
+    loadUserInfo();
+  }, []);
+  
+  const isLoggedIn = userInfo?.isLoggedIn || false;
+  const username = userInfo?.name || "농협";
   const percentageText = showTransformation ? "상위 25%" : (isLoggedIn ? "상위 40%" : "상위 n%");
   const amountText = showTransformation ? "75,555원 더 많아요" : (isLoggedIn ? "55,555원 더 많아요" : "n원 더 많아요");
   
@@ -65,15 +78,15 @@ const ReportPage = () => {
 
   const handleTypeTestModalClose = () => {
     setIsTypeTestModalOpen(false);
-    navigate('/home');
+    navigate('/buffer-empty');
   };
 
   // empty 상태일 때 모달 표시
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn && userInfo) {
       setIsTypeTestModalOpen(true);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, userInfo]);
 
   const handlePaybackClick = () => {
     navigate('/payback');
@@ -213,9 +226,9 @@ const ReportPage = () => {
         isOpen={isTypeTestModalOpen}
         onClose={handleTypeTestModalClose}
         title="안내"
-        content={`청약 상품 추천을 위해서는 당신의 유형이 필요해요.
-원활한 진행을 위해 청약 테스트 먼저 진행해 주세요!`}
-        buttonText="청약 유형 테스트하러 가기"
+        content={`해당 서비스는 청약 통장 가입이 필요해요.
+원활한 진행을 위해 버퍼 통장 가입을 먼저 진행해주세요!`}
+        buttonText="청약 통장 정보 보러 가기"
       />
     </S.Container>
   );

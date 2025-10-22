@@ -1,16 +1,19 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import * as S from './PaybackPage.styles';
 import TopNav from '@/components/topnav';
 import SnakeRoadmap from '@/components/snake-roadmap';
 import ToastMessage from '@/components/toast-message';
 import Modal from '@/components/modal';
+import { isNextMissionAvailable, getTimeUntilNextMission } from '@/utils/mission-status';
 import type { RoadmapNode } from '@/components/snake-roadmap/SnakeRoadmap';
 
 const PaybackPage = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [shouldShowToast, setShouldShowToast] = useState(false);
     const [isTypeTestModalOpen, setIsTypeTestModalOpen] = useState(false);
+    const [isMissionRestrictedModalOpen, setIsMissionRestrictedModalOpen] = useState(false);
     const [challengeProgress, setChallengeProgress] = useState<{completed: number[], current: number}>({completed: [], current: 1});
     
     // 로그인 상태 확인
@@ -31,8 +34,18 @@ const PaybackPage = () => {
     };
 
     const handleNodeClick = () => {
+        // 미션 완료 후 내일까지 제한 확인
+        if (!isNextMissionAvailable()) {
+            setIsMissionRestrictedModalOpen(true);
+            return;
+        }
+        
         // 챌린지 버튼 클릭 시 미션 페이지로 이동
         navigate('/mission');
+    };
+
+    const handleMissionRestrictedModalClose = () => {
+        setIsMissionRestrictedModalOpen(false);
     };
 
     // challengeProgress 초기화 및 페이지 포커스 시 새로고침
@@ -56,6 +69,19 @@ const PaybackPage = () => {
         return () => window.removeEventListener('focus', handleFocus);
     }, []);
 
+    // 페이지 이동 시 progress 업데이트 (미션 완료 후 돌아올 때)
+    useEffect(() => {
+        const loadProgress = () => {
+            const savedProgress = localStorage.getItem('challenge-progress');
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                setChallengeProgress(progress);
+            }
+        };
+        
+        loadProgress();
+    }, [location.pathname, location.key]); // pathname도 추가해서 더 자주 체크
+
     // empty 상태일 때 모달 표시 및 하루에 한 번만 토스트 표시
     useEffect(() => {
         if (!isLoggedIn) {
@@ -78,13 +104,21 @@ const PaybackPage = () => {
     const generateMonthlyNodes = (): RoadmapNode[] => {
         return Array.from({ length: 9 }, (_, index) => {
             const day = index + 1;
+            const isCompleted = isLoggedIn ? challengeProgress.completed.includes(day) : false;
+            const isCurrent = isLoggedIn ? day === challengeProgress.current : day === 1;
+            
+            // nextMission: current 노드의 다음 노드 (current + 1)
+            const isNextMission = isLoggedIn ? 
+                day === challengeProgress.current + 1 :
+                day === 2;
             
             return {
                 id: day.toString(),
                 title: '',
                 amount: '',
-                completed: isLoggedIn ? challengeProgress.completed.includes(day) : false,
-                current: isLoggedIn ? day === challengeProgress.current : day === 1
+                completed: isCompleted,
+                current: isCurrent,
+                nextMission: isNextMission
             };
         });
     };
@@ -130,9 +164,17 @@ const PaybackPage = () => {
                 isOpen={isTypeTestModalOpen}
                 onClose={handleTypeTestModalClose}
                 title="안내"
-                content={`나의 로드맵을 보기 위해서는 청약 통장이 필요해요.
+                content={`로드맵을 보기 위해서는 나의 유형 정보가 필요해요.
 원활한 진행을 위해 청약 테스트 먼저 진행해 주세요!`}
                 buttonText="청약 유형 테스트하러 가기"
+            />
+
+            <Modal
+                isOpen={isMissionRestrictedModalOpen}
+                onClose={handleMissionRestrictedModalClose}
+                title="미션 완료!"
+                content={`오늘의 미션을 이미 완료하셨어요!\n다음 미션은 ${getTimeUntilNextMission() || '내일'}후에 공개됩니다!`}
+                buttonText="확인"
             />
         </S.Container>
     );
