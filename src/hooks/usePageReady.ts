@@ -48,7 +48,6 @@ export const useComponentReady = (delay: number = 50) => {
 // 이미지들이 모두 로드될 때까지 대기하는 훅
 export const useImagesReady = (imageUrls: string[]) => {
   const [isReady, setIsReady] = useState(false);
-  const [loadedCount, setLoadedCount] = useState(0);
 
   useEffect(() => {
     if (imageUrls.length === 0) {
@@ -56,20 +55,13 @@ export const useImagesReady = (imageUrls: string[]) => {
       return;
     }
 
-    setLoadedCount(0);
     setIsReady(false);
 
     const loadImage = (url: string): Promise<void> => {
       return new Promise((resolve) => {
         const img = new Image();
-        img.onload = () => {
-          setLoadedCount(prev => prev + 1);
-          resolve();
-        };
-        img.onerror = () => {
-          setLoadedCount(prev => prev + 1);
-          resolve(); // 에러여도 계속 진행
-        };
+        img.onload = () => resolve();
+        img.onerror = () => resolve(); // 에러여도 계속 진행
         img.src = url;
       });
     };
@@ -79,5 +71,5 @@ export const useImagesReady = (imageUrls: string[]) => {
     });
   }, [imageUrls]);
 
-  return { isReady, loadedCount };
+  return isReady;
 };

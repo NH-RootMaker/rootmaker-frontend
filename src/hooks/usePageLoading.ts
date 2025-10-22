@@ -45,5 +45,5 @@ export const useImageLoading = (imageCount: number = 1) => {
     setLoading(true, message);
   };
 
-  return { onImageLoad, startImageLoading, loadedImages };
+  return { onImageLoad, startImageLoading };
 };
