@@ -6,6 +6,7 @@ import SnakeRoadmap from '@/components/snake-roadmap';
 import ToastMessage from '@/components/toast-message';
 import Modal from '@/components/modal';
 import { getCurrentDay, getNextMissionDay, canAccessMission, getMissionRestrictionReason } from '@/utils/daily-progress';
+import { getUserInfo } from '@/constants/user-data';
 import type { RoadmapNode } from '@/components/snake-roadmap/SnakeRoadmap';
 
 const PaybackPage = () => {
@@ -16,10 +17,24 @@ const PaybackPage = () => {
     const [isMissionRestrictedModalOpen, setIsMissionRestrictedModalOpen] = useState(false);
     const [currentDay, setCurrentDay] = useState(1);
     const [nextMissionDay, setNextMissionDay] = useState(1);
+    const [userInfo, setUserInfo] = useState<{
+        name: string | null;
+        isLoggedIn: boolean;
+    } | null>(null);
+    const [isUserInfoLoaded, setIsUserInfoLoaded] = useState(false);
     
-    // 로그인 상태 확인
-    const isLoggedIn = localStorage.getItem('user-logged-in') === 'true';
-    const username = localStorage.getItem('user-name') || '사용자';
+    // 사용자 정보 로드
+    useEffect(() => {
+        const loadUserInfo = async () => {
+            const info = await getUserInfo();
+            setUserInfo(info);
+            setIsUserInfoLoaded(true);
+        };
+        loadUserInfo();
+    }, []);
+    
+    const isLoggedIn = userInfo?.isLoggedIn || false;
+    const username = userInfo?.name || '사용자';
 
     const hideToast = () => {
         setShouldShowToast(false);
@@ -74,12 +89,15 @@ const PaybackPage = () => {
         setNextMissionDay(getNextMissionDay());
     }, [location.pathname, location.key]);
 
-    // empty 상태일 때 모달 표시 및 하루에 한 번만 토스트 표시
+    // 비로그인 상태일 때만 모달 표시 및 로그인 시 토스트 표시
     useEffect(() => {
+        // userInfo가 로드되지 않았으면 아무것도 하지 않음
+        if (!isUserInfoLoaded) return;
+        
         if (!isLoggedIn) {
             setIsTypeTestModalOpen(true);
         } else {
-            // 하루에 한 번만 토스트 표시 로직
+            // 장민규로 로그인한 경우 토스트 표시 로직
             const today = new Date().toDateString();
             const lastToastDate = localStorage.getItem('last-toast-date');
             
@@ -88,7 +106,7 @@ const PaybackPage = () => {
                 localStorage.setItem('last-toast-date', today);
             }
         }
-    }, [isLoggedIn]);
+    }, [isLoggedIn, isUserInfoLoaded]);
 
 
 

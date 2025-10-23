@@ -4,7 +4,8 @@ export interface QuestionFormProps {
   question: Question;
   onAnswer: (option: 'A' | 'B') => void;
   onSubmit: (selectedOption: 'A' | 'B') => void;
-  isLastQuestion?: boolean;
+  onBack?: () => void;
+  isFirstQuestion?: boolean;
 }
 
 export interface FormData {

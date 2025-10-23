@@ -90,7 +90,8 @@ export default function TestPage() {
           question={currentQuestion}
           onAnswer={handleAnswer}
           onSubmit={handleNext}
-          isLastQuestion={currentQuestionIndex === PERSONALITY_QUESTIONS.length - 1}
+          onBack={handleBackClick}
+          isFirstQuestion={currentQuestionIndex === 0}
         />
       </S.Main>
     </S.Container>

@@ -78,7 +78,8 @@ export const getUserInfo = async (fallbackToLocal = true) => {
   const isLoggedIn = localStorage.getItem('user-logged-in') === 'true';
   const userName = localStorage.getItem('user-name');
   
-  if (!isLoggedIn || !userName) {
+  // username이 "장민규"가 아니면 무조건 비로그인 상태로 처리
+  if (!isLoggedIn || !userName || userName !== '장민규') {
     return {
       name: null,
       accountNumber: null,

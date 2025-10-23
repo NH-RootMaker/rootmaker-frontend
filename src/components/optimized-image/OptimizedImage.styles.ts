@@ -20,7 +20,9 @@ export const ImageContainer = styled.div`
   overflow: hidden;
 `;
 
-export const Image = styled.img<{ $isLoaded: boolean }>`
+export const Image = styled.img.withConfig({
+  shouldForwardProp: (prop) => !['fetchPriority'].includes(prop),
+})<{ $isLoaded: boolean }>`
   width: 100%;
   height: 100%;
   object-fit: cover;

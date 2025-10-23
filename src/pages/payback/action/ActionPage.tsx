@@ -6,14 +6,27 @@ import SnakeRoadmap from '@/components/snake-roadmap';
 import type { RoadmapNode } from '@/components/snake-roadmap/SnakeRoadmap';
 import CommonButton from '@/components/common-button';
 import Lottie from 'lottie-react';
+import { getUserInfo } from '@/constants/user-data';
 
 const ActionPage = React.memo(() => {
     const navigate = useNavigate();
     const location = useLocation();
     const [confettiAnimation, setConfettiAnimation] = useState(null);
+    const [userInfo, setUserInfo] = useState<{
+        name: string | null;
+        isLoggedIn: boolean;
+    } | null>(null);
     
-    // 로그인 상태 확인
-    const isLoggedIn = localStorage.getItem('user-logged-in') === 'true';
+    // 사용자 정보 로드
+    useEffect(() => {
+        const loadUserInfo = async () => {
+            const info = await getUserInfo();
+            setUserInfo(info);
+        };
+        loadUserInfo();
+    }, []);
+    
+    const isLoggedIn = userInfo?.isLoggedIn || false;
 
     // Lottie 애니메이션 데이터 로드 (preloaded 데이터 우선 사용)
     useEffect(() => {

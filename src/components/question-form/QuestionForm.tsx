@@ -8,13 +8,16 @@ const QuestionForm = ({
   question,
   onAnswer,
   onSubmit,
-  isLastQuestion = false,
+  onBack,
+  isFirstQuestion = false,
 }: QuestionFormProps) => {
-  const { control, handleSubmit, watch, reset } = useForm<FormData>();
-  const selectedOption = watch('selectedOption');
+  const { control, handleSubmit, reset } = useForm<FormData>();
 
-  const handleChoiceSelect = () => {
-    // 답안 선택 시에는 폼 상태만 업데이트
+  const handleChoiceSelect = (option: 'A' | 'B') => {
+    // 답안 선택 시 바로 다음 문제로 이동
+    onAnswer(option);
+    onSubmit(option);
+    reset();
   };
 
   const handleFormSubmit = (data: FormData) => {
@@ -42,7 +45,7 @@ const QuestionForm = ({
                   imageUrl={question.imageA}
                   onClick={(option) => {
                     field.onChange(option);
-                    handleChoiceSelect();
+                    handleChoiceSelect(option);
                   }}
                 >
                   {question.optionA}
@@ -55,7 +58,7 @@ const QuestionForm = ({
                   imageUrl={question.imageB}
                   onClick={(option) => {
                     field.onChange(option);
-                    handleChoiceSelect();
+                    handleChoiceSelect(option);
                   }}
                 >
                   {question.optionB}
@@ -66,15 +69,17 @@ const QuestionForm = ({
         </S.ChoicesContainer>
       </S.QuestionContainer>
       
-      <S.SubmitButtonContainer>
-        <CommonButton
-          variant="primary"
-          type="submit"
-          disabled={!selectedOption}
-        >
-          {isLastQuestion ? '결과 보기' : '다음으로'}
-        </CommonButton>
-      </S.SubmitButtonContainer>
+      {!isFirstQuestion && (
+        <S.SubmitButtonContainer>
+          <CommonButton
+            variant="secondary"
+            type="button"
+            onClick={onBack}
+          >
+            뒤로 가기
+          </CommonButton>
+        </S.SubmitButtonContainer>
+      )}
     </S.FormContainer>
   );
 };
