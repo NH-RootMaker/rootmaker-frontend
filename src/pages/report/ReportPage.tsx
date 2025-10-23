@@ -49,16 +49,40 @@ const ReportPage = () => {
     setIsTopNav(false);
     setIsBottomNav(true);
     
-    // 저장된 성격 테스트 결과 불러오기
-    const savedResult = localStorage.getItem('personality-test-result');
-    if (savedResult) {
-      try {
-        const parsedResult = JSON.parse(savedResult);
-        setPersonalityResult(parsedResult);
-      } catch (error) {
-        console.error('Failed to parse personality test result:', error);
+    // 장민규일 때는 무조건 벚나무 타입 결과 표시
+    const loadPersonalityResult = () => {
+      const userName = localStorage.getItem('user-name');
+      
+      if (userName === '장민규') {
+        // 장민규는 무조건 벚나무 타입
+        const cherryResult = {
+          type: 'cherry',
+          username: '장민규',
+          date: new Date().toISOString(),
+          score: {
+            active: 20,
+            careful: 15,
+            secure: 25,
+            challenge: 90
+          }
+        };
+        setPersonalityResult(cherryResult);
+        return;
       }
-    }
+      
+      // 다른 사용자는 저장된 결과 불러오기
+      const savedResult = localStorage.getItem('personality-test-result');
+      if (savedResult) {
+        try {
+          const parsedResult = JSON.parse(savedResult);
+          setPersonalityResult(parsedResult);
+        } catch (error) {
+          console.error('Failed to parse personality test result:', error);
+        }
+      }
+    };
+    
+    loadPersonalityResult();
 
     // 변화 상태 확인
     if (shouldShowTransformation()) {

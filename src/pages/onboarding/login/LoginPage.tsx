@@ -4,6 +4,7 @@ import { useLayoutStore } from '@/stores/useLayoutStore';
 import TopNav from '@/components/topnav';
 import CommonButton from '@/components/common-button';
 import CommonInput from '@/components/common-input';
+import Modal from '@/components/modal';
 import { limitAccountNumberInput, validateAccountNumber } from '@/utils/account-validator';
 import { DEFAULT_USER_INFO, PERSONALITY_TEST_RESULTS } from '@/constants/user-data';
 import * as S from './LoginPage.styles';
@@ -11,8 +12,9 @@ import * as S from './LoginPage.styles';
 const LoginPage = () => {
   const navigate = useNavigate();
   const { setIsNav } = useLayoutStore();
-  const [userName, setUserName] = useState<string>(DEFAULT_USER_INFO.name);
+  const [userName, setUserName] = useState<string>('장민규');
   const [accountNumber, setAccountNumber] = useState<string>(DEFAULT_USER_INFO.accountNumber);
+  const [isDemoOnlyModalOpen, setIsDemoOnlyModalOpen] = useState(false);
 
   useEffect(() => {
     setIsNav(false);
@@ -35,6 +37,12 @@ const LoginPage = () => {
       return;
     }
 
+    // 장민규가 아닌 경우 로그인 제한
+    if (userName.trim() !== '장민규') {
+      setIsDemoOnlyModalOpen(true);
+      return;
+    }
+
     // localStorage에 사용자 정보 저장
     localStorage.setItem('user-name', userName);
     localStorage.setItem('account-number', accountNumber);
@@ -54,6 +62,10 @@ const LoginPage = () => {
   };
 
   const isFormValid = userName.trim() && accountNumber.trim() && validateAccountNumber(accountNumber);
+
+  const handleDemoOnlyModalClose = () => {
+    setIsDemoOnlyModalOpen(false);
+  };
 
   return (
     <>
@@ -104,9 +116,15 @@ const LoginPage = () => {
           </S.ButtonContainer>
         </S.BottomSection>
         </S.Content>
-
-        
       </S.Container>
+
+      <Modal
+        isOpen={isDemoOnlyModalOpen}
+        onClose={handleDemoOnlyModalClose}
+        title="안내"
+        content="데모 회원 버전은 장민규님만 가능합니다."
+        buttonText="확인"
+      />
     </>
   );
 };
