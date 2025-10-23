@@ -97,7 +97,7 @@ export const SpeechBubbleContainer = styled.div`
   margin-left: auto;
   width: fit-content;
   ${(props) => props.theme.fonts.body.m600};
-  z-index: 999;
+  z-index: 50;
   position: relative;
 
   @media (max-width: 768px) {
