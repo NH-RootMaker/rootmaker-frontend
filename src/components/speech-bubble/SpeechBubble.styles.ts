@@ -85,7 +85,7 @@ const getTailStyles = (tailPosition: string, backgroundColor: string, variant?: 
         &::after {
           content: '';
           position: absolute;
-          bottom: -${tailHeight};
+          bottom: -${parseFloat(tailHeight) - 2}px;
           left: 50%;
           transform: translateX(-50%);
           width: 0;
@@ -98,7 +98,7 @@ const getTailStyles = (tailPosition: string, backgroundColor: string, variant?: 
         &::before {
           content: '';
           position: absolute;
-          bottom: -${parseFloat(tailHeight) + 1}px;
+          bottom: -${parseFloat(tailHeight) - 1}px;
           left: 50%;
           transform: translateX(-50%);
           width: 0;
@@ -111,7 +111,7 @@ const getTailStyles = (tailPosition: string, backgroundColor: string, variant?: 
         &::after {
           content: '';
           position: absolute;
-          top: -${parseFloat(tailHeight) - 0.5}px;
+          top: -${parseFloat(tailHeight) - 2.5}px;
           left: 50%;
           transform: translateX(-50%);
           width: 0;

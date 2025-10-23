@@ -5,7 +5,7 @@ import TopNav from '@/components/topnav';
 import SnakeRoadmap from '@/components/snake-roadmap';
 import ToastMessage from '@/components/toast-message';
 import Modal from '@/components/modal';
-import { isNextMissionAvailable, getTimeUntilNextMission } from '@/utils/mission-status';
+import { getCurrentDay, getNextMissionDay, canAccessMission, getMissionRestrictionReason } from '@/utils/daily-progress';
 import type { RoadmapNode } from '@/components/snake-roadmap/SnakeRoadmap';
 
 const PaybackPage = () => {
@@ -14,7 +14,8 @@ const PaybackPage = () => {
     const [shouldShowToast, setShouldShowToast] = useState(false);
     const [isTypeTestModalOpen, setIsTypeTestModalOpen] = useState(false);
     const [isMissionRestrictedModalOpen, setIsMissionRestrictedModalOpen] = useState(false);
-    const [challengeProgress, setChallengeProgress] = useState<{completed: number[], current: number}>({completed: [], current: 1});
+    const [currentDay, setCurrentDay] = useState(1);
+    const [nextMissionDay, setNextMissionDay] = useState(1);
     
     // 로그인 상태 확인
     const isLoggedIn = localStorage.getItem('user-logged-in') === 'true';
@@ -34,8 +35,8 @@ const PaybackPage = () => {
     };
 
     const handleNodeClick = () => {
-        // 미션 완료 후 내일까지 제한 확인
-        if (!isNextMissionAvailable()) {
+        // 미션 접근 가능한지 확인
+        if (!canAccessMission()) {
             setIsMissionRestrictedModalOpen(true);
             return;
         }
@@ -48,21 +49,19 @@ const PaybackPage = () => {
         setIsMissionRestrictedModalOpen(false);
     };
 
-    // challengeProgress 초기화 및 페이지 포커스 시 새로고침
+    // 일별 진행 상황 로드
     useEffect(() => {
-        const loadProgress = () => {
-            const savedProgress = localStorage.getItem('challenge-progress');
-            if (savedProgress) {
-                setChallengeProgress(JSON.parse(savedProgress));
-            }
+        const loadDailyProgress = () => {
+            setCurrentDay(getCurrentDay());
+            setNextMissionDay(getNextMissionDay());
         };
 
         // 초기 로드
-        loadProgress();
+        loadDailyProgress();
 
         // 페이지 포커스 시 새로고침
         const handleFocus = () => {
-            loadProgress();
+            loadDailyProgress();
         };
 
         window.addEventListener('focus', handleFocus);
@@ -71,16 +70,9 @@ const PaybackPage = () => {
 
     // 페이지 이동 시 progress 업데이트 (미션 완료 후 돌아올 때)
     useEffect(() => {
-        const loadProgress = () => {
-            const savedProgress = localStorage.getItem('challenge-progress');
-            if (savedProgress) {
-                const progress = JSON.parse(savedProgress);
-                setChallengeProgress(progress);
-            }
-        };
-        
-        loadProgress();
-    }, [location.pathname, location.key]); // pathname도 추가해서 더 자주 체크
+        setCurrentDay(getCurrentDay());
+        setNextMissionDay(getNextMissionDay());
+    }, [location.pathname, location.key]);
 
     // empty 상태일 때 모달 표시 및 하루에 한 번만 토스트 표시
     useEffect(() => {
@@ -104,13 +96,30 @@ const PaybackPage = () => {
     const generateMonthlyNodes = (): RoadmapNode[] => {
         return Array.from({ length: 9 }, (_, index) => {
             const day = index + 1;
-            const isCompleted = isLoggedIn ? challengeProgress.completed.includes(day) : false;
-            const isCurrent = isLoggedIn ? day === challengeProgress.current : day === 1;
             
-            // nextMission: current 노드의 다음 노드 (current + 1)
-            const isNextMission = isLoggedIn ? 
-                day === challengeProgress.current + 1 :
-                day === 2;
+            if (!isLoggedIn) {
+                return {
+                    id: day.toString(),
+                    title: '',
+                    amount: '',
+                    completed: false,
+                    current: day === 1,
+                    nextMission: day === 1
+                };
+            }
+            
+            // 완료된 날짜들 확인 (daily-progress에서)
+            const dailyProgress = JSON.parse(localStorage.getItem('daily-progress') || '{"completedDays":[]}');
+            const startDate = dailyProgress.startDate || new Date().toISOString().split('T')[0];
+            
+            // day에 해당하는 날짜 계산
+            const dayDate = new Date(startDate);
+            dayDate.setDate(dayDate.getDate() + (day - 1));
+            const dayDateString = dayDate.toISOString().split('T')[0];
+            
+            const isCompleted = dailyProgress.completedDays.includes(dayDateString);
+            const isCurrent = day === currentDay;
+            const isNextMission = day === nextMissionDay;
             
             return {
                 id: day.toString(),
@@ -173,7 +182,7 @@ const PaybackPage = () => {
                 isOpen={isMissionRestrictedModalOpen}
                 onClose={handleMissionRestrictedModalClose}
                 title="미션 완료!"
-                content={`오늘의 미션을 이미 완료하셨어요!\n다음 미션은 ${getTimeUntilNextMission() || '내일'}후에 공개됩니다!`}
+                content={getMissionRestrictionReason()}
                 buttonText="확인"
             />
         </S.Container>

@@ -2,6 +2,7 @@ import * as S from './Layout.styles';
 import TopNav from '@/components/topnav';
 import BottomNav from '@/components/bottom-nav';
 import LoadingScreen from '@/components/loading-screen';
+import DevTools from '@/components/dev-tools/DevTools';
 import { AnimatePresence } from 'framer-motion';
 import { useLayoutStore } from '@/stores/useLayoutStore';
 import { useLoadingStore } from '@/stores/useLoadingStore';
@@ -97,6 +98,7 @@ export default function Layout() {
         </AnimatePresence>
       </S.Content>
       {isBottomNav && <BottomNav />}
+      <DevTools />
     </S.Container>
   );
 }

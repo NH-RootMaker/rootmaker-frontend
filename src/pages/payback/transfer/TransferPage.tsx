@@ -6,7 +6,7 @@ import VirtualKeyboard from '@/components/virtual-keyboard';
 import Modal from '@/components/modal';
 import { preloadImages, preloadLottieAnimation } from '@/utils/imagePreloader';
 import { saveHabitLog } from '@/services/api';
-import { recordMissionCompletion } from '@/utils/mission-status';
+import { completeTodayMission } from '@/utils/daily-progress';
 import * as S from './TransferPage.styles';
 
 const TransferPage = React.memo(() => {
@@ -95,22 +95,8 @@ const TransferPage = React.memo(() => {
           // API 실패해도 프론트 진행 계속
         }
         
-        // 현재 챌린지 진행 상황 가져오기
-        const savedProgress = localStorage.getItem('challenge-progress');
-        const currentProgress = savedProgress 
-          ? JSON.parse(savedProgress) 
-          : {"completed": [], "current": 1};
-        
-        // 현재 진행 중인 노드를 완료 목록에 추가하고 다음 노드로 이동
-        const updatedProgress = {
-          completed: [...currentProgress.completed, currentProgress.current],
-          current: Math.min(currentProgress.current + 1, 9) // 다음 노드로 이동 (최대 9번까지)
-        };
-        
-        localStorage.setItem('challenge-progress', JSON.stringify(updatedProgress));
-        
-        // 미션 완료 시간 기록
-        recordMissionCompletion();
+        // 오늘의 미션 완료 처리
+        completeTodayMission();
         
         setIsSavingHabit(false);
         

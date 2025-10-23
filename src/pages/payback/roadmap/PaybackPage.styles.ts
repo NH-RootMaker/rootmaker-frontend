@@ -94,11 +94,21 @@ export const ChallengeSubtitle = styled.h2`
 export const HighlightText = styled.span`
   ${(props) => props.theme.fonts.header.h2}
   color: ${(props) => props.theme.colors.primary.gn};
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.3rem;
+    line-height: 1.4;
+  }
 `;
 
 export const RoadmapContainer = styled.div`
   margin-top: 20px 0;
   padding: 20px 0;
+  
 `;
 
 
